@@ -35,17 +35,17 @@ export const ChartResult = ({ data }: ChartResultProps) => {
           <div className="flex flex-col items-center bg-surfaceHighlight/50 p-6 rounded-2xl border border-white/5 hover:border-primary/20 transition-all text-center">
             <div className="mb-3 p-3 bg-white/5 rounded-full">{renderIcon('sun')}</div>
             <h4 className="text-white font-medium mb-1">Sol</h4>
-            <span className="text-primary font-bold tracking-wide uppercase text-sm">{summary.sunSign}</span>
+            <span className="text-primary font-bold tracking-wide uppercase text-sm">{summary.sun}</span>
           </div>
           <div className="flex flex-col items-center bg-surfaceHighlight/50 p-6 rounded-2xl border border-white/5 hover:border-primary/20 transition-all text-center">
             <div className="mb-3 p-3 bg-white/5 rounded-full">{renderIcon('moon')}</div>
             <h4 className="text-white font-medium mb-1">Luna</h4>
-            <span className="text-primary font-bold tracking-wide uppercase text-sm">{summary.moonSign}</span>
+            <span className="text-primary font-bold tracking-wide uppercase text-sm">{summary.moon}</span>
           </div>
           <div className="flex flex-col items-center bg-surfaceHighlight/50 p-6 rounded-2xl border border-white/5 hover:border-primary/20 transition-all text-center">
              <div className="mb-3 p-3 bg-white/5 rounded-full">{renderIcon('ascendant')}</div>
             <h4 className="text-white font-medium mb-1">Ascendente</h4>
-            <span className="text-primary font-bold tracking-wide uppercase text-sm">{summary.ascendantSign}</span>
+            <span className="text-primary font-bold tracking-wide uppercase text-sm">{summary.ascendant}</span>
           </div>
         </div>
       </div>
@@ -53,11 +53,14 @@ export const ChartResult = ({ data }: ChartResultProps) => {
       {/* 2. Interpretation Text */}
       {interpretation && (
         <div className="glass-panel p-8 rounded-3xl shadow-xl border-l-[3px] border-l-primary relative">
-           <h3 className="text-xl font-display text-white mb-6">Interpretación Inicial</h3>
+           <h3 className="text-xl font-display text-white mb-4">Interpretación Inicial</h3>
+           {interpretation.headline && (
+             <p className="text-primary font-medium mb-6">{interpretation.headline}</p>
+           )}
            <div className="space-y-6 text-text-muted leading-relaxed">
-             <p><strong className="text-white/90 block mb-1">El Sol en {summary.sunSign}:</strong> {interpretation.sunSignInterpretation}</p>
-             <p><strong className="text-white/90 block mb-1">La Luna en {summary.moonSign}:</strong> {interpretation.moonSignInterpretation}</p>
-             <p><strong className="text-white/90 block mb-1">El Ascendente en {summary.ascendantSign}:</strong> {interpretation.ascendantInterpretation}</p>
+             <p><strong className="text-white/90 block mb-1">El Sol en {summary.sun}:</strong> {interpretation.sun}</p>
+             <p><strong className="text-white/90 block mb-1">La Luna en {summary.moon}:</strong> {interpretation.moon}</p>
+             <p><strong className="text-white/90 block mb-1">El Ascendente en {summary.ascendant}:</strong> {interpretation.ascendant}</p>
            </div>
         </div>
       )}
@@ -80,7 +83,7 @@ export const ChartResult = ({ data }: ChartResultProps) => {
                     <span className="text-xs text-text-muted capitalize">{pt.sign}</span>
                   </div>
                 </div>
-                <span className="text-sm font-mono text-primary/80">{pt.degree.toFixed(2)}°</span>
+                <span className="text-sm font-mono text-primary/80">{pt.degree?.toFixed(2)}°</span>
               </li>
             ))}
           </ul>
@@ -94,10 +97,9 @@ export const ChartResult = ({ data }: ChartResultProps) => {
           <div className="grid grid-cols-2 gap-3">
             {houses.map((house, idx) => (
               <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-surface/30">
-                <span className="text-sm text-text-muted font-medium">Casa {house.houseNumber}</span>
+                <span className="text-sm text-text-muted font-medium">Casa {house.house}</span>
                 <div className="text-right">
                   <span className="block text-sm text-white capitalize">{house.sign}</span>
-                  <span className="text-xs font-mono text-primary/60">{house.degree.toFixed(2)}°</span>
                 </div>
               </div>
             ))}

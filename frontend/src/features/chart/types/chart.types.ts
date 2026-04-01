@@ -1,13 +1,13 @@
 export interface CalculateChartRequest {
-  dateOfBirth: string; // ISO String (YYYY-MM-DD)
-  timeOfBirth: string; // HH:mm
-  location: string;    // Nombre de ciudad
+  birthDate: string; // ISO String (YYYY-MM-DD)
+  birthTime: string; // HH:mm
+  birthPlace: string;    // Nombre de ciudad
 }
 
 export interface ChartSummary {
-  sunSign: string;
-  moonSign: string;
-  ascendantSign: string;
+  sun: string;
+  moon: string;
+  ascendant: string;
 }
 
 export interface PlanetPosition {
@@ -17,15 +17,15 @@ export interface PlanetPosition {
 }
 
 export interface HouseCusp {
-  houseNumber: number;
+  house: number;
   sign: string;
-  degree: number;
 }
 
 export interface ChartInterpretation {
-  sunSignInterpretation: string;
-  moonSignInterpretation: string;
-  ascendantInterpretation: string;
+  headline: string;
+  sun: string;
+  moon: string;
+  ascendant: string;
 }
 
 export interface CalculateChartResponse {

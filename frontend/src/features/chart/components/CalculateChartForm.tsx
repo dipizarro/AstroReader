@@ -9,18 +9,18 @@ interface CalculateChartFormProps {
 
 export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormProps) => {
   const [formData, setFormData] = useState<CalculateChartRequest>({
-    dateOfBirth: '',
-    timeOfBirth: '',
-    location: '',
+    birthDate: '',
+    birthTime: '',
+    birthPlace: '',
   });
 
   const [errors, setErrors] = useState<Partial<CalculateChartRequest>>({});
 
   const validate = (): boolean => {
     const newErrors: Partial<CalculateChartRequest> = {};
-    if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Requerido';
-    if (!formData.timeOfBirth) newErrors.timeOfBirth = 'Requerido';
-    if (!formData.location.trim()) newErrors.location = 'Requerido';
+    if (!formData.birthDate) newErrors.birthDate = 'Requerido';
+    if (!formData.birthTime) newErrors.birthTime = 'Requerido';
+    if (!formData.birthPlace.trim()) newErrors.birthPlace = 'Requerido';
     
     // Add simple date validation sanity checks if necessary...
     setErrors(newErrors);
@@ -54,54 +54,54 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
       <form className="flex flex-col gap-6 relative z-0" onSubmit={handleSubmit} noValidate>
         {/* Date of Birth */}
         <div className="flex flex-col gap-2 relative">
-          <label htmlFor="dateOfBirth" className="text-sm font-medium text-text">Fecha de nacimiento</label>
+          <label htmlFor="birthDate" className="text-sm font-medium text-text">Fecha de nacimiento</label>
           <div className="relative">
             <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-text-muted" />
             <input 
               type="date" 
-              id="dateOfBirth"
-              value={formData.dateOfBirth}
+              id="birthDate"
+              value={formData.birthDate}
               onChange={handleChange}
               disabled={isLoading}
-              className={`w-full rounded-lg border ${errors.dateOfBirth ? 'border-red-500/50 focus:ring-red-500/50' : 'border-white/10 focus:border-primary/50 focus:ring-primary/50'} bg-surface pl-10 pr-4 py-3 text-white focus:outline-none focus:ring-1 transition-all [color-scheme:dark]`}
+              className={`w-full rounded-lg border ${errors.birthDate ? 'border-red-500/50 focus:ring-red-500/50' : 'border-white/10 focus:border-primary/50 focus:ring-primary/50'} bg-surface pl-10 pr-4 py-3 text-white focus:outline-none focus:ring-1 transition-all [color-scheme:dark]`}
             />
           </div>
-          {errors.dateOfBirth && <span className="text-xs text-red-400">{errors.dateOfBirth}</span>}
+          {errors.birthDate && <span className="text-xs text-red-400">{errors.birthDate}</span>}
         </div>
 
         {/* Time of Birth */}
         <div className="flex flex-col gap-2 relative">
-          <label htmlFor="timeOfBirth" className="text-sm font-medium text-text">Hora de nacimiento</label>
+          <label htmlFor="birthTime" className="text-sm font-medium text-text">Hora de nacimiento</label>
           <div className="relative">
             <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-text-muted" />
             <input 
               type="time" 
-              id="timeOfBirth"
-              value={formData.timeOfBirth}
+              id="birthTime"
+              value={formData.birthTime}
               onChange={handleChange}
               disabled={isLoading}
-              className={`w-full rounded-lg border ${errors.timeOfBirth ? 'border-red-500/50 focus:ring-red-500/50' : 'border-white/10 focus:border-primary/50 focus:ring-primary/50'} bg-surface pl-10 pr-4 py-3 text-white focus:outline-none focus:ring-1 transition-all [color-scheme:dark]`}
+              className={`w-full rounded-lg border ${errors.birthTime ? 'border-red-500/50 focus:ring-red-500/50' : 'border-white/10 focus:border-primary/50 focus:ring-primary/50'} bg-surface pl-10 pr-4 py-3 text-white focus:outline-none focus:ring-1 transition-all [color-scheme:dark]`}
             />
           </div>
-          {errors.timeOfBirth && <span className="text-xs text-red-400">{errors.timeOfBirth}</span>}
+          {errors.birthTime && <span className="text-xs text-red-400">{errors.birthTime}</span>}
         </div>
 
         {/* Location */}
         <div className="flex flex-col gap-2 relative">
-          <label htmlFor="location" className="text-sm font-medium text-text">Lugar de nacimiento</label>
+          <label htmlFor="birthPlace" className="text-sm font-medium text-text">Lugar de nacimiento</label>
           <div className="relative">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-text-muted" />
             <input 
               type="text" 
-              id="location"
-              value={formData.location}
+              id="birthPlace"
+              value={formData.birthPlace}
               onChange={handleChange}
               disabled={isLoading}
               placeholder="Ej: Buenos Aires, Argentina"
-              className={`w-full rounded-lg border ${errors.location ? 'border-red-500/50 focus:ring-red-500/50' : 'border-white/10 focus:border-primary/50 focus:ring-primary/50'} bg-surface pl-10 pr-4 py-3 text-white placeholder-text-muted/50 focus:outline-none focus:ring-1 transition-all`}
+              className={`w-full rounded-lg border ${errors.birthPlace ? 'border-red-500/50 focus:ring-red-500/50' : 'border-white/10 focus:border-primary/50 focus:ring-primary/50'} bg-surface pl-10 pr-4 py-3 text-white placeholder-text-muted/50 focus:outline-none focus:ring-1 transition-all`}
             />
           </div>
-          {errors.location && <span className="text-xs text-red-400">{errors.location}</span>}
+          {errors.birthPlace && <span className="text-xs text-red-400">{errors.birthPlace}</span>}
         </div>
 
         <button 

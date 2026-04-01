@@ -1,0 +1,65 @@
+# =========================================================================
+# AstroReader - Configuración Global de Git Ignore
+# Ignora archivos del Sistema, Backend (.NET) y Frontend (Node/React/Vite)
+# =========================================================================
+
+# -------------------------------------------------------------------------
+# 1. Frontend (Vite, React, Node.js)
+# -------------------------------------------------------------------------
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/build/
+frontend/*.local
+
+# Logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+# Entorno frontend
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+
+# -------------------------------------------------------------------------
+# 2. Backend (ASP.NET Core / C#)
+# -------------------------------------------------------------------------
+[Bb]in/
+[Oo]bj/
+backend/**/[Bb]in/
+backend/**/[Oo]bj/
+
+# Archivos de usuario y cache de Visual Studio / Rider
+.vs/
+backend/.vs/
+backend/.idea/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.userprefs
+
+# Logs del sistema backend
+backend/logs/
+backend/*.log
+
+
+# -------------------------------------------------------------------------
+# 3. Archivos del Sistema Operativo y Editores
+# -------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.bak
+*.swp
+*~
+desktop.ini
