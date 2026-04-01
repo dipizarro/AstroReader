@@ -40,3 +40,4 @@ C:\Sistemas\AstroReader\backend\AstroReader.Api\obj\Debug\net8.0\refint\AstroRea
 C:\Sistemas\AstroReader\backend\AstroReader.Api\obj\Debug\net8.0\AstroReader.Api.pdb
 C:\Sistemas\AstroReader\backend\AstroReader.Api\obj\Debug\net8.0\AstroReader.Api.genruntimeconfig.cache
 C:\Sistemas\AstroReader\backend\AstroReader.Api\obj\Debug\net8.0\ref\AstroReader.Api.dll
+C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll

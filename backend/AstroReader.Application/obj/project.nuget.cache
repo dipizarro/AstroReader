@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "tD63PErNhg4=",
+  "dgSpecHash": "HDNdmjr5HZM=",
   "success": true,
   "projectFilePath": "C:\\Sistemas\\AstroReader\\backend\\AstroReader.Application\\AstroReader.Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\dipiz\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.5\\microsoft.extensions.dependencyinjection.abstractions.10.0.5.nupkg.sha512",
+    "C:\\Users\\dipiz\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

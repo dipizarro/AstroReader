@@ -1,7 +1,10 @@
+using AstroReader.Application;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddApplicationServices();
 
 // Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
