@@ -1,0 +1,56 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "AstroReader.Infrastructure/1.0.0": {
+        "dependencies": {
+          "AstroReader.Application": "1.0.0",
+          "AstroReader.Domain": "1.0.0"
+        },
+        "runtime": {
+          "AstroReader.Infrastructure.dll": {}
+        }
+      },
+      "AstroReader.Application/1.0.0": {
+        "dependencies": {
+          "AstroReader.Domain": "1.0.0"
+        },
+        "runtime": {
+          "AstroReader.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "AstroReader.Domain/1.0.0": {
+        "runtime": {
+          "AstroReader.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AstroReader.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AstroReader.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AstroReader.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

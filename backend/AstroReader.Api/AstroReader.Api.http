@@ -1,0 +1,6 @@
+@AstroReader.Api_HostAddress = http://localhost:5137
+
+GET {{AstroReader.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

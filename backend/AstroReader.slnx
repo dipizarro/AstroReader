@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="AstroReader.Api/AstroReader.Api.csproj" />
+  <Project Path="AstroReader.Application/AstroReader.Application.csproj" />
+  <Project Path="AstroReader.AstroEngine/AstroReader.AstroEngine.csproj" />
+  <Project Path="AstroReader.Domain/AstroReader.Domain.csproj" />
+  <Project Path="AstroReader.Infrastructure/AstroReader.Infrastructure.csproj" />
+</Solution>

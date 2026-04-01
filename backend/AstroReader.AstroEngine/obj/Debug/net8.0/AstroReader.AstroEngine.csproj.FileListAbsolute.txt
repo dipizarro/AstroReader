@@ -1,0 +1,12 @@
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\bin\Debug\net8.0\AstroReader.AstroEngine.deps.json
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\bin\Debug\net8.0\AstroReader.AstroEngine.dll
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\bin\Debug\net8.0\AstroReader.AstroEngine.pdb
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\obj\Debug\net8.0\AstroReader.AstroEngine.GeneratedMSBuildEditorConfig.editorconfig
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\obj\Debug\net8.0\AstroReader.AstroEngine.AssemblyInfoInputs.cache
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\obj\Debug\net8.0\AstroReader.AstroEngine.AssemblyInfo.cs
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\obj\Debug\net8.0\AstroReader.AstroEngine.csproj.CoreCompileInputs.cache
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\obj\Debug\net8.0\AstroReader.AstroEngine.sourcelink.json
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\obj\Debug\net8.0\AstroReader.AstroEngine.dll
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\obj\Debug\net8.0\refint\AstroReader.AstroEngine.dll
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\obj\Debug\net8.0\AstroReader.AstroEngine.pdb
+C:\Sistemas\AstroReader\backend\AstroReader.AstroEngine\obj\Debug\net8.0\ref\AstroReader.AstroEngine.dll
