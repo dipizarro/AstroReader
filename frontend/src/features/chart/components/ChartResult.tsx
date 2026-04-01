@@ -1,5 +1,5 @@
 import type { CalculateChartResponse } from '../types/chart.types';
-import { Sparkles, Moon, Sun, CircleDot, ArrowUpCircle } from 'lucide-react';
+import { Sparkles, Moon, Sun, ArrowUpCircle } from 'lucide-react';
 
 interface ChartResultProps {
   data: CalculateChartResponse;
@@ -8,99 +8,150 @@ interface ChartResultProps {
 export const ChartResult = ({ data }: ChartResultProps) => {
   const { summary, planets, houses, interpretation } = data;
 
-  const renderIcon = (name: string) => {
+  const renderIcon = (name: string, className = "w-6 h-6") => {
     switch (name.toLowerCase()) {
-      case 'sun': return <Sun className="w-6 h-6 text-yellow-500" />;
-      case 'moon': return <Moon className="w-6 h-6 text-slate-300" />;
-      case 'ascendant': return <ArrowUpCircle className="w-6 h-6 text-primary" />;
-      default: return <CircleDot className="w-5 h-5 text-primary" />;
+      case 'sun': return <Sun className={`${className} text-[#D4AF37]`} />;
+      case 'moon': return <Moon className={`${className} text-slate-300`} />;
+      case 'ascendant': return <ArrowUpCircle className={`${className} text-[#D4AF37]`} />;
+      default: return <div className={`w-2 h-2 rounded-full bg-primary/40`} />;
     }
   };
 
   return (
-    <div className="w-full animate-in fade-in slide-in-from-bottom-4 duration-700 mt-8 space-y-8">
+    <div className="w-full animate-in fade-in slide-in-from-bottom-4 duration-1000 mt-12 space-y-12 pb-20">
       
-      {/* 1. Header / Big 3 Summary */}
-      <div className="glass-panel p-8 rounded-3xl shadow-2xl relative overflow-hidden">
-        <div className="absolute -top-10 -right-10 w-60 h-60 bg-primary/10 blur-[60px] rounded-full pointer-events-none" />
-        
-        <div className="flex items-center gap-3 mb-8 border-b border-white/10 pb-6">
-          <Sparkles className="w-6 h-6 text-primary" />
-          <h2 className="text-2xl font-display font-medium text-white tracking-wide">
-            Tus Tres Pilares (Big 3)
-          </h2>
+      {/* --- HEADER --- */}
+      <div className="text-center space-y-3">
+        <div className="inline-flex items-center justify-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full mb-2">
+          <Sparkles className="w-4 h-4 text-primary" />
+          <span className="text-xs font-semibold tracking-widest text-primary uppercase">Calculado Exitosamente</span>
         </div>
+        <h2 className="text-4xl md:text-5xl font-display font-medium text-white tracking-wide">
+          AstroReader
+        </h2>
+        <p className="text-text-muted font-light tracking-wide">
+          Tu Mapa Cósmico Personal
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex flex-col items-center bg-surfaceHighlight/50 p-6 rounded-2xl border border-white/5 hover:border-primary/20 transition-all text-center">
-            <div className="mb-3 p-3 bg-white/5 rounded-full">{renderIcon('sun')}</div>
-            <h4 className="text-white font-medium mb-1">Sol</h4>
-            <span className="text-primary font-bold tracking-wide uppercase text-sm">{summary.sun}</span>
+      {/* --- BIG 3 --- */}
+      <div className="relative rounded-3xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/10 bg-gradient-to-b from-[#121216] to-[#0a0a0b]">
+        {/* Glow de fondo tenue */}
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/5 blur-[100px] pointer-events-none rounded-full" />
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 relative z-10">
+          {/* Sol */}
+          <div className="flex flex-col items-center p-10 relative">
+            <div className="absolute bottom-0 inset-x-8 h-px bg-white/5 md:hidden" />
+            <div className="mb-4 drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+              {renderIcon('sun', 'w-10 h-10')}
+            </div>
+            <h4 className="text-text-muted text-xs uppercase tracking-[0.2em] mb-2">Sol</h4>
+            <span className="text-white font-display text-2xl font-medium tracking-wide">{summary.sun}</span>
           </div>
-          <div className="flex flex-col items-center bg-surfaceHighlight/50 p-6 rounded-2xl border border-white/5 hover:border-primary/20 transition-all text-center">
-            <div className="mb-3 p-3 bg-white/5 rounded-full">{renderIcon('moon')}</div>
-            <h4 className="text-white font-medium mb-1">Luna</h4>
-            <span className="text-primary font-bold tracking-wide uppercase text-sm">{summary.moon}</span>
+
+          {/* Luna */}
+          <div className="flex flex-col items-center p-10 md:border-x md:border-white/5 relative">
+            <div className="absolute bottom-0 inset-x-8 h-px bg-white/5 md:hidden" />
+            <div className="mb-4 drop-shadow-[0_0_15px_rgba(203,213,225,0.4)]">
+              {renderIcon('moon', 'w-10 h-10')}
+            </div>
+            <h4 className="text-text-muted text-xs uppercase tracking-[0.2em] mb-2">Luna</h4>
+            <span className="text-white font-display text-2xl font-medium tracking-wide">{summary.moon}</span>
           </div>
-          <div className="flex flex-col items-center bg-surfaceHighlight/50 p-6 rounded-2xl border border-white/5 hover:border-primary/20 transition-all text-center">
-             <div className="mb-3 p-3 bg-white/5 rounded-full">{renderIcon('ascendant')}</div>
-            <h4 className="text-white font-medium mb-1">Ascendente</h4>
-            <span className="text-primary font-bold tracking-wide uppercase text-sm">{summary.ascendant}</span>
+
+          {/* Ascendente */}
+          <div className="flex flex-col items-center p-10">
+            <div className="mb-4 drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+              {renderIcon('ascendant', 'w-10 h-10')}
+            </div>
+            <h4 className="text-text-muted text-xs uppercase tracking-[0.2em] mb-2">Ascendente</h4>
+            <span className="text-white font-display text-2xl font-medium tracking-wide">{summary.ascendant}</span>
           </div>
         </div>
       </div>
 
-      {/* 2. Interpretation Text */}
+      {/* --- INTERPRETATION --- */}
       {interpretation && (
-        <div className="glass-panel p-8 rounded-3xl shadow-xl border-l-[3px] border-l-primary relative">
-           <h3 className="text-xl font-display text-white mb-4">Interpretación Inicial</h3>
-           {interpretation.headline && (
-             <p className="text-primary font-medium mb-6">{interpretation.headline}</p>
-           )}
-           <div className="space-y-6 text-text-muted leading-relaxed">
-             <p><strong className="text-white/90 block mb-1">El Sol en {summary.sun}:</strong> {interpretation.sun}</p>
-             <p><strong className="text-white/90 block mb-1">La Luna en {summary.moon}:</strong> {interpretation.moon}</p>
-             <p><strong className="text-white/90 block mb-1">El Ascendente en {summary.ascendant}:</strong> {interpretation.ascendant}</p>
-           </div>
-        </div>
+        <section className="max-w-4xl mx-auto space-y-8">
+          <div className="text-center mb-10">
+            <h3 className="text-xs uppercase tracking-[0.3em] text-primary mb-6">Interpretación Inicial</h3>
+            {interpretation.headline && (
+              <p className="text-2xl md:text-3xl font-display text-white/90 leading-tight">
+                "{interpretation.headline}"
+              </p>
+            )}
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm leading-relaxed text-text">
+            <div className="glass-panel p-6 rounded-2xl border-t border-t-primary/30">
+              <span className="block text-white font-medium mb-3">Tu Sol en {summary.sun}</span>
+              <p className="opacity-80">{interpretation.sun}</p>
+            </div>
+            <div className="glass-panel p-6 rounded-2xl border-t border-t-slate-400/30">
+              <span className="block text-white font-medium mb-3">Tu Luna en {summary.moon}</span>
+              <p className="opacity-80">{interpretation.moon}</p>
+            </div>
+            <div className="glass-panel p-6 rounded-2xl border-t border-t-primary/30">
+              <span className="block text-white font-medium mb-3">Tu Asc. en {summary.ascendant}</span>
+              <p className="opacity-80">{interpretation.ascendant}</p>
+            </div>
+          </div>
+        </section>
       )}
 
-      {/* 3. Detailed Data (Planets & Houses) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* --- DETAILED DATA (PLANETS & HOUSES) --- */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto pt-8 border-t border-white/5">
         
         {/* Planets List */}
-        <div className="glass-panel p-6 rounded-3xl">
-          <h3 className="text-sm uppercase tracking-[0.2em] text-text-muted mb-6 font-semibold border-b border-white/10 pb-4">
-            Posiciones Planetarias
-          </h3>
-          <ul className="space-y-3">
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-1 h-4 bg-primary rounded-full" />
+            <h3 className="text-lg font-display text-white tracking-wide">Posiciones Planetarias</h3>
+          </div>
+          
+          <div className="flex flex-col">
             {planets.map((pt, idx) => (
-              <li key={idx} className="flex items-center justify-between p-3 rounded-xl bg-surface/30 hover:bg-surface/60 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="text-primary/70">{renderIcon(pt.name)}</div>
+              <div 
+                key={idx} 
+                className={`flex items-center justify-between py-4 ${idx !== planets.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/[0.02] transition-colors rounded-lg px-2 -mx-2`}
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-6 h-6 flex items-center justify-center opacity-80">
+                    {renderIcon(pt.name, 'w-5 h-5')}
+                  </div>
                   <div>
-                    <span className="font-medium text-white text-sm block">{pt.name}</span>
-                    <span className="text-xs text-text-muted capitalize">{pt.sign}</span>
+                    <span className="text-white text-sm font-medium">{pt.name}</span>
                   </div>
                 </div>
-                <span className="text-sm font-mono text-primary/80">{pt.degree?.toFixed(2)}°</span>
-              </li>
+                <div className="text-right">
+                  <span className="text-text-muted text-sm capitalize block">{pt.sign}</span>
+                  <span className="text-primary/60 font-mono text-xs">{pt.degree?.toFixed(2)}°</span>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
 
         {/* Houses List */}
-        <div className="glass-panel p-6 rounded-3xl">
-          <h3 className="text-sm uppercase tracking-[0.2em] text-text-muted mb-6 font-semibold border-b border-white/10 pb-4">
-            Casas Astrológicas
-          </h3>
-          <div className="grid grid-cols-2 gap-3">
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-1 h-4 bg-slate-500 rounded-full" />
+            <h3 className="text-lg font-display text-white tracking-wide">Las Doce Casas</h3>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
             {houses.map((house, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-surface/30">
-                <span className="text-sm text-text-muted font-medium">Casa {house.house}</span>
-                <div className="text-right">
-                  <span className="block text-sm text-white capitalize">{house.sign}</span>
-                </div>
+              <div 
+                key={idx} 
+                className="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-[#121216]/50 hover:border-white/10 transition-colors"
+              >
+                <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">
+                  <span className="opacity-50 mr-1">H</span>
+                  {house.house}
+                </span>
+                <span className="text-sm font-medium text-white capitalize">{house.sign}</span>
               </div>
             ))}
           </div>
