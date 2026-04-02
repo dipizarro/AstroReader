@@ -71,22 +71,31 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         // 4. Mapear Entidades de Dominio -> API Response DTO
         return new CalculateChartResponse
         {
+            Metadata = new ChartMetadata
+            {
+                CalculatedForUtc = parsedDate.ToUniversalTime(),
+                Latitude = mockLatitude,
+                Longitude = mockLongitude
+            },
             Summary = new AstroReader.Application.Charts.DTOs.ChartSummary
             {
                 Sun = sunSign.ToString(),
                 Moon = moonSign.ToString(),
                 Ascendant = ascendantSign.ToString()
             },
-            Planets = natalChart.Planets.Select(p => new AstroReader.Application.Charts.DTOs.PlanetPosition
+            Planets = natalChart.Planets.Select(p => new AstroReader.Application.Charts.DTOs.PlanetPositionDto
             {
                 Name = p.Planet.ToString(),
                 Sign = p.Sign.ToString(),
-                Degree = Math.Round(p.SignDegree, 2)
+                SignDegree = Math.Round(p.SignDegree, 2),
+                AbsoluteDegree = Math.Round(p.AbsoluteDegree, 2),
+                IsRetrograde = p.IsRetrograde
             }).ToList(),
-            Houses = natalChart.Houses.Select(h => new AstroReader.Application.Charts.DTOs.HousePosition
+            Houses = natalChart.Houses.Select(h => new AstroReader.Application.Charts.DTOs.HousePositionDto
             {
-                House = h.HouseNumber,
-                Sign = h.Sign.ToString()
+                Number = h.HouseNumber,
+                Sign = h.Sign.ToString(),
+                AbsoluteDegree = Math.Round(h.AbsoluteDegree, 2)
             }).ToList(),
             Interpretation = _interpretationEngine.GenerateBaseInterpretation(natalChart)
         };
