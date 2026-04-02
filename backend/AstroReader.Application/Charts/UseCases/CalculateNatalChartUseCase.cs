@@ -8,15 +8,19 @@ using AstroReader.Domain.Entities;
 using AstroReader.Domain.Enums;
 using AstroReader.Domain.ValueObjects;
 
+using AstroReader.Application.Interpretations;
+
 namespace AstroReader.Application.Charts.UseCases;
 
 public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
 {
     private readonly IAstroCalculationEngine _engine;
+    private readonly IInterpretationEngine _interpretationEngine;
 
-    public CalculateNatalChartUseCase(IAstroCalculationEngine engine)
+    public CalculateNatalChartUseCase(IAstroCalculationEngine engine, IInterpretationEngine interpretationEngine)
     {
         _engine = engine;
+        _interpretationEngine = interpretationEngine;
     }
 
     public CalculateChartResponse Execute(CalculateChartRequest request)
@@ -84,13 +88,7 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
                 House = h.HouseNumber,
                 Sign = h.Sign.ToString()
             }).ToList(),
-            Interpretation = new ChartInterpretation
-            {
-                Headline = "Cálculo trigonométrico real derivado del AstroEngine.",
-                Sun = $"Tu Sol se encuentra en el signo de {sunSign}.",
-                Moon = $"Tu Luna se sitúa en {moonSign}.",
-                Ascendant = $"Tu Ascendente calculado es {ascendantSign}."
-            }
+            Interpretation = _interpretationEngine.GenerateBaseInterpretation(natalChart)
         };
     }
 
