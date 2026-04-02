@@ -6,15 +6,18 @@ C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.Api
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.Api.runtimeconfig.json
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.Api.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.Api.pdb
+C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.Application.dll
+C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.AstroEngine.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.Domain.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.Infrastructure.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.Application.pdb
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.Infrastructure.pdb
+C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.AstroEngine.pdb
 C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\AstroReader.Domain.pdb
 C:\Sistemas\AstroReader\backend\AstroReader.Api\obj\Debug\net8.0\AstroReader.Api.csproj.AssemblyReference.cache
 C:\Sistemas\AstroReader\backend\AstroReader.Api\obj\Debug\net8.0\rpswa.dswa.cache.json
@@ -40,4 +43,3 @@ C:\Sistemas\AstroReader\backend\AstroReader.Api\obj\Debug\net8.0\refint\AstroRea
 C:\Sistemas\AstroReader\backend\AstroReader.Api\obj\Debug\net8.0\AstroReader.Api.pdb
 C:\Sistemas\AstroReader\backend\AstroReader.Api\obj\Debug\net8.0\AstroReader.Api.genruntimeconfig.cache
 C:\Sistemas\AstroReader\backend\AstroReader.Api\obj\Debug\net8.0\ref\AstroReader.Api.dll
-C:\Sistemas\AstroReader\backend\AstroReader.Api\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll

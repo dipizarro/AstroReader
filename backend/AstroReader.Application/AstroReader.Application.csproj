@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AstroReader.Domain\AstroReader.Domain.csproj" />
+    <ProjectReference Include="..\AstroReader.AstroEngine\AstroReader.AstroEngine.csproj" />
   </ItemGroup>
 
   <ItemGroup>

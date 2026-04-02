@@ -71,11 +71,20 @@
       },
       "AstroReader.Application/1.0.0": {
         "dependencies": {
+          "AstroReader.AstroEngine": "1.0.0",
           "AstroReader.Domain": "1.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5"
         },
         "runtime": {
           "AstroReader.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "AstroReader.AstroEngine/1.0.0": {
+        "runtime": {
+          "AstroReader.AstroEngine.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -152,6 +161,11 @@
       "hashPath": "swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512"
     },
     "AstroReader.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AstroReader.AstroEngine/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -1,8 +1,10 @@
 C:\Sistemas\AstroReader\backend\AstroReader.Application\bin\Debug\net8.0\AstroReader.Application.deps.json
 C:\Sistemas\AstroReader\backend\AstroReader.Application\bin\Debug\net8.0\AstroReader.Application.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Application\bin\Debug\net8.0\AstroReader.Application.pdb
+C:\Sistemas\AstroReader\backend\AstroReader.Application\bin\Debug\net8.0\AstroReader.AstroEngine.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Application\bin\Debug\net8.0\AstroReader.Domain.dll
 C:\Sistemas\AstroReader\backend\AstroReader.Application\bin\Debug\net8.0\AstroReader.Domain.pdb
+C:\Sistemas\AstroReader\backend\AstroReader.Application\bin\Debug\net8.0\AstroReader.AstroEngine.pdb
 C:\Sistemas\AstroReader\backend\AstroReader.Application\obj\Debug\net8.0\AstroReader.Application.csproj.AssemblyReference.cache
 C:\Sistemas\AstroReader\backend\AstroReader.Application\obj\Debug\net8.0\AstroReader.Application.GeneratedMSBuildEditorConfig.editorconfig
 C:\Sistemas\AstroReader\backend\AstroReader.Application\obj\Debug\net8.0\AstroReader.Application.AssemblyInfoInputs.cache
