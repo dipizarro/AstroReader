@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AstroReader.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5e97ba7e01ba64446edadbd2f07c7fafc460a94")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9103fe852273623ed7fedbbb2e9fcd369f267a0b")]
 [assembly: System.Reflection.AssemblyProductAttribute("AstroReader.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AstroReader.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

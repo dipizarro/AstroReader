@@ -37,7 +37,7 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         }
 
         // 2. Combinar en DateTimeOffset usando el offset específico provisto (en minutos)
-        var offsetSpan = TimeSpan.FromMinutes(-1 * request.TimezoneOffsetMinutes);
+        var offsetSpan = TimeSpan.FromMinutes(request.TimezoneOffsetMinutes);
         var dateTimeOffset = new DateTimeOffset(
             dateOnly.Year, dateOnly.Month, dateOnly.Day,
             timeOnly.Hour, timeOnly.Minute, 0,

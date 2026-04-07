@@ -43,6 +43,7 @@ backend/.idea/
 *.sln.docstates
 *.suo
 *.userprefs
+frontend/.env
 
 # Logs del sistema backend
 backend/logs/

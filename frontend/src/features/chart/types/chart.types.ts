@@ -16,12 +16,15 @@ export interface ChartSummary {
 export interface PlanetPosition {
   name: string;
   sign: string;
-  degree: number;
+  signDegree: number;
+  absoluteDegree: number;
+  isRetrograde: boolean;
 }
 
 export interface HouseCusp {
-  house: number;
+  number: number;
   sign: string;
+  absoluteDegree: number;
 }
 
 export interface ChartInterpretation {

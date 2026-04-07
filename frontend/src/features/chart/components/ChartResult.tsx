@@ -138,7 +138,7 @@ export const ChartResult = ({ data }: ChartResultProps) => {
                     </div>
                     <div className="text-right">
                       <span className="text-text-muted text-sm capitalize block">{pt.sign}</span>
-                      <span className="text-primary/60 font-mono text-xs">{pt.degree?.toFixed(2)}°</span>
+                      <span className="text-primary/60 font-mono text-xs">{pt.signDegree?.toFixed(2)}°</span>
                     </div>
                   </div>
                 ))}
@@ -162,7 +162,7 @@ export const ChartResult = ({ data }: ChartResultProps) => {
                   >
                     <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">
                       <span className="opacity-50 mr-1">H</span>
-                      {house.house}
+                      {house.number}
                     </span>
                     <span className="text-sm font-medium text-white capitalize">{house.sign}</span>
                   </div>

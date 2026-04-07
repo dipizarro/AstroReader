@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { MapPin, Calendar, Clock, Loader2, MousePointerClick, Settings2 } from 'lucide-react';
+import { Calendar, Clock, Loader2, MousePointerClick, Settings2 } from 'lucide-react';
 import type { CalculateChartRequest } from '../types/chart.types';
+import { LocationAutocomplete } from './LocationAutocomplete';
+import tzlookup from 'tz-lookup';
+import { DateTime } from 'luxon';
 
 interface CalculateChartFormProps {
   onSubmit: (data: CalculateChartRequest) => Promise<void>;
@@ -17,9 +20,8 @@ interface LocationData {
 export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormProps) => {
   const [birthDate, setBirthDate] = useState('');
   const [birthTime, setBirthTime] = useState('');
-  const [placeSearch, setPlaceSearch] = useState('');
   
-  // Almacena internamente las coordenadas técnicas
+  // Almacena internamente las coordenadas del autocomplete o manuales
   const [selectedLocation, setSelectedLocation] = useState<LocationData | null>(null);
   
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -30,7 +32,7 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
     if (!birthDate) newErrors.birthDate = 'Requerido';
     if (!birthTime) newErrors.birthTime = 'Requerido';
     if (!selectedLocation && !showAdvanced) {
-       newErrors.placeSearch = 'Debes seleccionar una ubicación válida del listado.';
+       newErrors.placeSearch = 'Debes buscar y seleccionar un lugar de nacimiento válido.';
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -39,36 +41,59 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
+      let finalLat = selectedLocation?.latitude ?? 0;
+      let finalLng = selectedLocation?.longitude ?? 0;
+      let finalOffset = selectedLocation?.timezoneOffsetMinutes ?? 0;
+
+      // ✅ RESOLUCIÓN PRECISA DE TIEMPO:
+      // Si el usuario seleccionó un lugar visualmente (no manual con offset harcodeado),
+      // calculamos su offset de huso horario *exacto* para la fecha ingresada 
+      // contemplando los complejos casos de horario de verano históricos.
+      if (!showAdvanced && selectedLocation) {
+        try {
+          // 1. Buscamos el String global IANA del huso horario (ej: "America/Argentina/Buenos_Aires")
+          const ianaZone = tzlookup(finalLat, finalLng);
+          
+          // 2. Construimos una fecha anclada puramente a esa zona local
+          const dt = DateTime.fromISO(`${birthDate}T${birthTime}`, { zone: ianaZone });
+          
+          if (dt.isValid) {
+            // 3. Obtenemos la desviación literal que existía en ESE mismísimo instante (Luxon entrega minutos)
+            finalOffset = dt.offset; 
+          }
+        } catch (error) {
+          console.error("Error resolviendo Timezone dinámico. Usando fallback estático o cero.", error);
+        }
+      }
+
       onSubmit({
         birthDate,
         birthTime,
-        latitude: selectedLocation?.latitude ?? 0,
-        longitude: selectedLocation?.longitude ?? 0,
-        timezoneOffsetMinutes: selectedLocation?.timezoneOffsetMinutes ?? 0,
-        placeName: selectedLocation?.placeName || placeSearch
+        latitude: finalLat,
+        longitude: finalLng,
+        timezoneOffsetMinutes: finalOffset,
+        placeName: selectedLocation?.placeName || "Ubicación Geocodificada"
       });
     }
   };
 
-  // Simulación temporal de un click de "Autocompletado de Google/Mapbox"
-  const handleSelectMockPlace = () => {
-    setPlaceSearch('Buenos Aires, Argentina (Demo)');
-    setSelectedLocation({
-      latitude: -34.6037,
-      longitude: -58.3816,
-      timezoneOffsetMinutes: -180, // UTC-3
-      placeName: 'Buenos Aires, Argentina'
-    });
-    setErrors(prev => ({ ...prev, placeSearch: '' }));
-  };
-
-  // Modo fallback manual para desarrolladores o lugares no listados
   const handleManualLocationUpdate = (field: keyof LocationData, value: string) => {
     const numValue = field === 'placeName' ? value : parseFloat(value) || 0;
     setSelectedLocation(prev => ({
       ...prev,
       [field]: numValue
     }) as LocationData);
+  };
+
+  const handleLocationSelected = (loc: { latitude: number; longitude: number; placeName: string }) => {
+    // Cuando el autocomplete responde, almacenamos lat/lng puros.
+    // El offset se calcula rigurosamente en el handleSubmit dependiendo de la fecha que escribió.
+    setSelectedLocation({
+      latitude: loc.latitude,
+      longitude: loc.longitude,
+      timezoneOffsetMinutes: 0, 
+      placeName: loc.placeName
+    });
   };
 
   return (
@@ -115,65 +140,38 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
           {errors.birthTime && <span className="text-xs text-red-400">{errors.birthTime}</span>}
         </div>
 
-        {/* Location (Autocomplete Proxy) */}
-        <div className="flex flex-col gap-2 relative">
-          <label htmlFor="placeSearch" className="text-sm font-medium text-text flex items-center justify-between">
-            Lugar de nacimiento
-            <button 
-              type="button" 
-              onClick={() => setShowAdvanced(!showAdvanced)}
-              className="text-text-muted hover:text-primary transition-colors flex items-center gap-1 text-xs"
-            >
-              <Settings2 className="w-3 h-3" />
-              Ingreso Manual
-            </button>
-          </label>
-          <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-text-muted" />
-            <input 
-              type="text" 
-              id="placeSearch"
-              value={placeSearch}
-              onChange={(e) => { 
-                setPlaceSearch(e.target.value);
-                setSelectedLocation(null); // Reseteamos la coordenada si cambian el texto
-                setErrors(prev => ({...prev, placeSearch: ''})); 
-              }}
-              disabled={isLoading || showAdvanced}
-              placeholder="Ej: Buenos Aires, Argentina"
-              className={`w-full rounded-lg border ${errors.placeSearch ? 'border-red-500/50 focus:ring-red-500/50' : selectedLocation ? 'border-primary/50 ring-1 ring-primary/30' : 'border-white/10 focus:border-primary/50 focus:ring-primary/50'} bg-surface pl-10 pr-4 py-3 text-white placeholder-text-muted/50 focus:outline-none focus:ring-1 transition-all`}
-            />
-            {/* TO-DO: Aquí se inyectará el dropdown de Resultados Creado con la API de Places */}
-            {!selectedLocation && placeSearch.length > 2 && !showAdvanced && (
-              <div className="absolute top-[110%] left-0 right-0 z-20 bg-background border border-white/10 rounded-lg shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                 <button 
-                   type="button"
-                   onClick={handleSelectMockPlace} 
-                   className="w-full text-left px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors text-sm text-white"
-                 >
-                   <MapPin className="w-4 h-4 text-primary" />
-                   Elegir Buenos Aires (Stub temporal)
-                 </button>
-              </div>
-            )}
-            
-            {/* Status Indicador */}
-            {selectedLocation && !showAdvanced && (
-               <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                 <div className="bg-primary/20 text-primary text-[10px] px-2 py-1 rounded-full font-semibold uppercase tracking-widest flex items-center gap-1">
-                   Coordenadas Fijadas
-                 </div>
-               </div>
-            )}
-          </div>
-          {errors.placeSearch && <span className="text-xs text-red-400">{errors.placeSearch}</span>}
-        </div>
+        {/* Location (Autocomplete Component) */}
+        {!showAdvanced && (
+           <div className="flex flex-col gap-2 relative">
+             <label className="text-sm font-medium text-text flex items-center justify-between">
+               Lugar de nacimiento
+               <button 
+                 type="button" 
+                 onClick={() => { setShowAdvanced(true); setSelectedLocation(null); }}
+                 className="text-text-muted hover:text-primary transition-colors flex items-center gap-1 text-xs"
+               >
+                 <Settings2 className="w-3 h-3" />
+                 Ingreso Manual
+               </button>
+             </label>
+             <LocationAutocomplete 
+               onSelect={handleLocationSelected}
+               disabled={isLoading}
+               error={errors.placeSearch}
+               onClearError={() => setErrors(prev => ({...prev, placeSearch: ''}))}
+             />
+             {errors.placeSearch && <span className="text-xs text-red-400">{errors.placeSearch}</span>}
+           </div>
+        )}
 
         {/* Fallback Técnico (Modo Avanzado) */}
         {showAdvanced && (
            <div className="bg-[#121216] border border-white/5 rounded-xl p-5 space-y-4 animate-in slide-in-from-top-4 fade-in duration-300">
-              <div className="text-xs text-primary bg-primary/10 border border-primary/20 p-2 rounded-lg font-medium text-center">
-                Modo Técnico Activado: Ingresa coordenadas astronómicas crudas.
+              <div className="flex items-center justify-between">
+                 <div className="text-xs text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded-lg font-medium">
+                   Modo Técnico Activado
+                 </div>
+                 <button type="button" onClick={() => setShowAdvanced(false)} className="text-xs text-text-muted underline hover:text-white">Volver a Buscador</button>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
