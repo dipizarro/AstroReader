@@ -25,19 +25,18 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
 
     public CalculateChartResponse Execute(CalculateChartRequest request)
     {
-        // 1. Validar y parsear input básico (En una V2 será UTC que manda el front)
-        if (!DateTime.TryParse($"{request.BirthDate}T{request.BirthTime}:00", out var parsedDate))
+        // 1. Parsear input local
+        if (!DateTime.TryParse($"{request.BirthDate}T{request.BirthTime}:00", out var localDate))
         {
             throw new ArgumentException("Formato de fecha/hora inválido para cálculo trigonométrico.");
         }
 
-        // Mockeamos coordenadas porque aún la API recibe el place como string ("Buenos Aires")
-        // En un futuro el DTO recibirá Latitude y Longitude directamente
-        var mockLatitude = -34.6;
-        var mockLongitude = -58.4;
+        // Restamos el offset para derivar la hora UTC exacta
+        // (Ej: Si es Buenos Aires, GMT-3 -> Offset es -180. 14:30 - (-180 min) = 17:30 UTC)
+        var utcDate = localDate.AddMinutes(-request.TimezoneOffsetMinutes);
 
-        // 2. Ejecutar el Engine Matemático
-        var engineRequest = new AstroCalculationRequest(parsedDate.ToUniversalTime(), mockLatitude, mockLongitude);
+        // 2. Ejecutar el Engine Matemático con Coordenadas Reales
+        var engineRequest = new AstroCalculationRequest(utcDate, request.Latitude, request.Longitude);
         var engineResult = _engine.Calculate(engineRequest);
 
         // 3. Mapear EngineResult (Data cruda) -> Entidades de Dominio
@@ -57,8 +56,8 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
             Sign = GetSignFromDegree(kvp.Value)
         }).ToList();
 
-        var birthData = new BirthData(parsedDate.ToUniversalTime(), "Unknown");
-        var geoLoc = new GeoLocation(mockLatitude, mockLongitude);
+        var birthData = new BirthData(utcDate, request.TimezoneOffsetMinutes.ToString());
+        var geoLoc = new GeoLocation(request.Latitude, request.Longitude);
         
         // Creamos la Carta Natal del Dominio (Pura e inmutable)
         var natalChart = new NatalChart(birthData, geoLoc, planets, houses);
@@ -73,9 +72,9 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         {
             Metadata = new ChartMetadata
             {
-                CalculatedForUtc = parsedDate.ToUniversalTime(),
-                Latitude = mockLatitude,
-                Longitude = mockLongitude
+                CalculatedForUtc = utcDate,
+                Latitude = request.Latitude,
+                Longitude = request.Longitude
             },
             Summary = new AstroReader.Application.Charts.DTOs.ChartSummary
             {
