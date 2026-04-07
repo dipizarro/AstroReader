@@ -6,7 +6,7 @@ interface ChartResultProps {
 }
 
 export const ChartResult = ({ data }: ChartResultProps) => {
-  const { summary, planets, houses, interpretation } = data;
+  const { summary, planets = [], houses = [], interpretation } = data || {};
 
   const renderIcon = (name: string, className = "w-6 h-6") => {
     switch (name.toLowerCase()) {
@@ -16,6 +16,9 @@ export const ChartResult = ({ data }: ChartResultProps) => {
       default: return <div className={`w-2 h-2 rounded-full bg-primary/40`} />;
     }
   };
+
+  // Si no hay datos mínimos para renderizar siquiera el header
+  if (!summary) return null;
 
   return (
     <div className="w-full animate-in fade-in slide-in-from-bottom-4 duration-1000 mt-12 space-y-12 pb-20">
@@ -48,7 +51,7 @@ export const ChartResult = ({ data }: ChartResultProps) => {
               {renderIcon('sun', 'w-10 h-10')}
             </div>
             <h4 className="text-text-muted text-xs uppercase tracking-[0.2em] mb-2">Sol</h4>
-            <span className="text-white font-display text-2xl font-medium tracking-wide">{summary.sun}</span>
+            <span className="text-white font-display text-2xl font-medium tracking-wide">{summary.sun || 'N/A'}</span>
           </div>
 
           {/* Luna */}
@@ -58,7 +61,7 @@ export const ChartResult = ({ data }: ChartResultProps) => {
               {renderIcon('moon', 'w-10 h-10')}
             </div>
             <h4 className="text-text-muted text-xs uppercase tracking-[0.2em] mb-2">Luna</h4>
-            <span className="text-white font-display text-2xl font-medium tracking-wide">{summary.moon}</span>
+            <span className="text-white font-display text-2xl font-medium tracking-wide">{summary.moon || 'N/A'}</span>
           </div>
 
           {/* Ascendente */}
@@ -67,13 +70,13 @@ export const ChartResult = ({ data }: ChartResultProps) => {
               {renderIcon('ascendant', 'w-10 h-10')}
             </div>
             <h4 className="text-text-muted text-xs uppercase tracking-[0.2em] mb-2">Ascendente</h4>
-            <span className="text-white font-display text-2xl font-medium tracking-wide">{summary.ascendant}</span>
+            <span className="text-white font-display text-2xl font-medium tracking-wide">{summary.ascendant || 'N/A'}</span>
           </div>
         </div>
       </div>
 
       {/* --- INTERPRETATION --- */}
-      {interpretation && (
+      {interpretation && (interpretation.sun || interpretation.moon || interpretation.ascendant) && (
         <section className="max-w-4xl mx-auto space-y-8">
           <div className="text-center mb-10">
             <h3 className="text-xs uppercase tracking-[0.3em] text-primary mb-6">Interpretación Inicial</h3>
@@ -85,79 +88,91 @@ export const ChartResult = ({ data }: ChartResultProps) => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm leading-relaxed text-text">
-            <div className="glass-panel p-6 rounded-2xl border-t border-t-primary/30">
-              <span className="block text-white font-medium mb-3">Tu Sol en {summary.sun}</span>
-              <p className="opacity-80">{interpretation.sun}</p>
-            </div>
-            <div className="glass-panel p-6 rounded-2xl border-t border-t-slate-400/30">
-              <span className="block text-white font-medium mb-3">Tu Luna en {summary.moon}</span>
-              <p className="opacity-80">{interpretation.moon}</p>
-            </div>
-            <div className="glass-panel p-6 rounded-2xl border-t border-t-primary/30">
-              <span className="block text-white font-medium mb-3">Tu Asc. en {summary.ascendant}</span>
-              <p className="opacity-80">{interpretation.ascendant}</p>
-            </div>
+            {interpretation.sun && (
+              <div className="glass-panel p-6 rounded-2xl border-t border-t-primary/30">
+                <span className="block text-white font-medium mb-3">Tu Sol en {summary.sun}</span>
+                <p className="opacity-80">{interpretation.sun}</p>
+              </div>
+            )}
+            {interpretation.moon && (
+              <div className="glass-panel p-6 rounded-2xl border-t border-t-slate-400/30">
+                <span className="block text-white font-medium mb-3">Tu Luna en {summary.moon}</span>
+                <p className="opacity-80">{interpretation.moon}</p>
+              </div>
+            )}
+            {interpretation.ascendant && (
+              <div className="glass-panel p-6 rounded-2xl border-t border-t-primary/30">
+                <span className="block text-white font-medium mb-3">Tu Asc. en {summary.ascendant}</span>
+                <p className="opacity-80">{interpretation.ascendant}</p>
+              </div>
+            )}
           </div>
         </section>
       )}
 
       {/* --- DETAILED DATA (PLANETS & HOUSES) --- */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto pt-8 border-t border-white/5">
-        
-        {/* Planets List */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-4 bg-primary rounded-full" />
-            <h3 className="text-lg font-display text-white tracking-wide">Posiciones Planetarias</h3>
-          </div>
+      {(planets.length > 0 || houses.length > 0) && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto pt-8 border-t border-white/5">
           
-          <div className="flex flex-col">
-            {planets.map((pt, idx) => (
-              <div 
-                key={idx} 
-                className={`flex items-center justify-between py-4 ${idx !== planets.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/[0.02] transition-colors rounded-lg px-2 -mx-2`}
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-6 h-6 flex items-center justify-center opacity-80">
-                    {renderIcon(pt.name, 'w-5 h-5')}
-                  </div>
-                  <div>
-                    <span className="text-white text-sm font-medium">{pt.name}</span>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span className="text-text-muted text-sm capitalize block">{pt.sign}</span>
-                  <span className="text-primary/60 font-mono text-xs">{pt.degree?.toFixed(2)}°</span>
-                </div>
+          {/* Planets List */}
+          {planets.length > 0 && (
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-1 h-4 bg-primary rounded-full" />
+                <h3 className="text-lg font-display text-white tracking-wide">Posiciones Planetarias</h3>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Houses List */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-4 bg-slate-500 rounded-full" />
-            <h3 className="text-lg font-display text-white tracking-wide">Las Doce Casas</h3>
-          </div>
-          
-          <div className="grid grid-cols-2 gap-4">
-            {houses.map((house, idx) => (
-              <div 
-                key={idx} 
-                className="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-[#121216]/50 hover:border-white/10 transition-colors"
-              >
-                <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">
-                  <span className="opacity-50 mr-1">H</span>
-                  {house.house}
-                </span>
-                <span className="text-sm font-medium text-white capitalize">{house.sign}</span>
+              
+              <div className="flex flex-col">
+                {planets.map((pt, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`flex items-center justify-between py-4 ${idx !== planets.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/[0.02] transition-colors rounded-lg px-2 -mx-2`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-6 h-6 flex items-center justify-center opacity-80">
+                        {renderIcon(pt.name, 'w-5 h-5')}
+                      </div>
+                      <div>
+                        <span className="text-white text-sm font-medium">{pt.name}</span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-text-muted text-sm capitalize block">{pt.sign}</span>
+                      <span className="text-primary/60 font-mono text-xs">{pt.degree?.toFixed(2)}°</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          )}
 
-      </div>
+          {/* Houses List */}
+          {houses.length > 0 && (
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-1 h-4 bg-slate-500 rounded-full" />
+                <h3 className="text-lg font-display text-white tracking-wide">Las Doce Casas</h3>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                {houses.map((house, idx) => (
+                  <div 
+                    key={idx} 
+                    className="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-[#121216]/50 hover:border-white/10 transition-colors"
+                  >
+                    <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">
+                      <span className="opacity-50 mr-1">H</span>
+                      {house.house}
+                    </span>
+                    <span className="text-sm font-medium text-white capitalize">{house.sign}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+        </div>
+      )}
 
     </div>
   );
