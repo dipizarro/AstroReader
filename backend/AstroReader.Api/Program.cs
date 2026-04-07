@@ -6,6 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 
+// Configure Exception Handler
+builder.Services.AddExceptionHandler<AstroReader.Api.Infrastructure.GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 // Configure CORS
 builder.Services.AddCors(options =>
 {
@@ -34,6 +38,8 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseExceptionHandler();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
