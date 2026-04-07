@@ -17,6 +17,7 @@ public record ChartMetadata
     public DateTime CalculatedForUtc { get; init; }
     public double Latitude { get; init; }
     public double Longitude { get; init; }
+    public string? PlaceName { get; init; }
 }
 
 public record ChartSummary

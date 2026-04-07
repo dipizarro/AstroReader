@@ -86,7 +86,8 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
             {
                 CalculatedForUtc = utcDate,
                 Latitude = request.Latitude,
-                Longitude = request.Longitude
+                Longitude = request.Longitude,
+                PlaceName = request.PlaceName
             },
             Summary = new AstroReader.Application.Charts.DTOs.ChartSummary
             {
