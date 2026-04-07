@@ -1,7 +1,10 @@
 export interface CalculateChartRequest {
   birthDate: string; // ISO String (YYYY-MM-DD)
   birthTime: string; // HH:mm
-  birthPlace: string;    // Nombre de ciudad
+  latitude: number;
+  longitude: number;
+  timezoneOffsetMinutes: number;
+  placeName?: string;
 }
 
 export interface ChartSummary {
