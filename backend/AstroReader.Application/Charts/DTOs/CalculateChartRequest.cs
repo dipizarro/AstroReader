@@ -23,9 +23,11 @@ public record CalculateChartRequest
     public double Longitude { get; init; }
 
     [Required(ErrorMessage = "El desfase de zona horaria (en minutos respecto a UTC) es obligatorio.")]
+    [Range(-720, 840, ErrorMessage = "El offset de zona horaria debe ser realista (entre -12h y +14h).")]
     public int TimezoneOffsetMinutes { get; init; }
 
     // --- Campos Descriptivos para UI ---
 
+    [MaxLength(100, ErrorMessage = "El nombre del lugar no puede exceder los 100 caracteres.")]
     public string? PlaceName { get; init; }
 }
