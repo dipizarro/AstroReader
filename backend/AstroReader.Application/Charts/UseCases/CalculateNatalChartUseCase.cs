@@ -25,17 +25,29 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
 
     public CalculateChartResponse Execute(CalculateChartRequest request)
     {
-        // 1. Parsear input local
-        if (!DateTime.TryParse($"{request.BirthDate}T{request.BirthTime}:00", out var localDate))
+        // 1. Parsear fecha y hora usando tipos seguros nativos de .NET 8
+        if (!DateOnly.TryParseExact(request.BirthDate, "yyyy-MM-dd", out var dateOnly))
         {
-            throw new ArgumentException("Formato de fecha/hora inválido para cálculo trigonométrico.");
+            throw new ArgumentException("Formato de fecha inválido. Se requiere YYYY-MM-DD.");
         }
 
-        // Restamos el offset para derivar la hora UTC exacta
-        // (Ej: Si es Buenos Aires, GMT-3 -> Offset es -180. 14:30 - (-180 min) = 17:30 UTC)
-        var utcDate = localDate.AddMinutes(-request.TimezoneOffsetMinutes);
+        if (!TimeOnly.TryParseExact(request.BirthTime, "HH:mm", out var timeOnly))
+        {
+            throw new ArgumentException("Formato de hora inválido. Se requiere HH:mm.");
+        }
 
-        // 2. Ejecutar el Engine Matemático con Coordenadas Reales
+        // 2. Combinar en DateTimeOffset usando el offset específico provisto (en minutos)
+        var offsetSpan = TimeSpan.FromMinutes(-1 * request.TimezoneOffsetMinutes);
+        var dateTimeOffset = new DateTimeOffset(
+            dateOnly.Year, dateOnly.Month, dateOnly.Day,
+            timeOnly.Hour, timeOnly.Minute, 0,
+            offsetSpan
+        );
+
+        // 3. Extraer el instante exacto en UTC para la trazabilidad y el AstroEngine
+        var utcDate = dateTimeOffset.UtcDateTime;
+
+        // 4. Ejecutar el Engine Matemático con Coordenadas Reales
         var engineRequest = new AstroCalculationRequest(utcDate, request.Latitude, request.Longitude);
         var engineResult = _engine.Calculate(engineRequest);
 
