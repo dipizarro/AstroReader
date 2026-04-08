@@ -46,7 +46,19 @@ public record HousePositionDto
 public record ChartInterpretation
 {
     public string Headline { get; init; } = string.Empty;
+    public string GeneralSummary { get; init; } = string.Empty;
     public string Sun { get; init; } = string.Empty;
     public string Moon { get; init; } = string.Empty;
     public string Ascendant { get; init; } = string.Empty;
+    public string Mercury { get; init; } = string.Empty;
+    public string Venus { get; init; } = string.Empty;
+    public string Mars { get; init; } = string.Empty;
+    public List<HouseInterpretationDto> Houses { get; init; } = [];
+}
+
+public record HouseInterpretationDto
+{
+    public int HouseNumber { get; init; }
+    public string Sign { get; init; } = string.Empty;
+    public string Meaning { get; init; } = string.Empty;
 }
