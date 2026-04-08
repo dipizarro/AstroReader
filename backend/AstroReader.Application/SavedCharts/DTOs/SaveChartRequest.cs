@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using AstroReader.Application.Charts.DTOs;
 
 namespace AstroReader.Application.SavedCharts.DTOs;
 
@@ -30,7 +29,4 @@ public record SaveChartRequest
     public int TimezoneOffsetMinutes { get; init; }
 
     public Guid? UserId { get; init; }
-
-    [Required(ErrorMessage = "El resultado calculado de la carta es obligatorio.")]
-    public CalculateChartResponse Chart { get; init; } = new();
 }

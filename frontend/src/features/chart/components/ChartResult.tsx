@@ -74,7 +74,6 @@ export const ChartResult = ({ data, request, showSavePanel = true }: ChartResult
         latitude: request.latitude,
         longitude: request.longitude,
         timezoneOffsetMinutes: request.timezoneOffsetMinutes,
-        chart: data,
       });
 
       setSaveStatus('success');

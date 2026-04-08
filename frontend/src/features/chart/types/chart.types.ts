@@ -63,7 +63,6 @@ export interface SaveChartRequest {
   longitude: number;
   timezoneOffsetMinutes: number;
   userId?: string | null;
-  chart: CalculateChartResponse;
 }
 
 export interface SavedChartDetail {

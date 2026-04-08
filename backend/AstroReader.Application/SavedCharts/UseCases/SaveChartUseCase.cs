@@ -1,3 +1,5 @@
+using AstroReader.Application.Charts.DTOs;
+using AstroReader.Application.Charts.Interfaces;
 using AstroReader.Application.SavedCharts.DTOs;
 using AstroReader.Application.SavedCharts.Interfaces;
 using AstroReader.Domain.Entities;
@@ -6,10 +8,14 @@ namespace AstroReader.Application.SavedCharts.UseCases;
 
 public class SaveChartUseCase : ISaveChartUseCase
 {
+    private readonly ICalculateNatalChartUseCase _calculateNatalChartUseCase;
     private readonly ISavedChartRepository _savedChartRepository;
 
-    public SaveChartUseCase(ISavedChartRepository savedChartRepository)
+    public SaveChartUseCase(
+        ICalculateNatalChartUseCase calculateNatalChartUseCase,
+        ISavedChartRepository savedChartRepository)
     {
+        _calculateNatalChartUseCase = calculateNatalChartUseCase;
         _savedChartRepository = savedChartRepository;
     }
 
@@ -27,8 +33,18 @@ public class SaveChartUseCase : ISaveChartUseCase
             throw new ArgumentException("Formato de hora inválido. Se requiere HH:mm.");
         }
 
+        var calculatedChart = _calculateNatalChartUseCase.Execute(new CalculateChartRequest
+        {
+            BirthDate = request.BirthDate,
+            BirthTime = request.BirthTime,
+            Latitude = request.Latitude,
+            Longitude = request.Longitude,
+            TimezoneOffsetMinutes = request.TimezoneOffsetMinutes,
+            PlaceName = request.PlaceName
+        });
+
         var birthInstantUtc = BuildBirthInstantUtc(birthDate, birthTime, request.TimezoneOffsetMinutes);
-        var snapshotJson = SavedChartMappings.SerializeSnapshot(request.Chart);
+        var snapshotJson = SavedChartMappings.SerializeSnapshot(calculatedChart);
 
         var savedChart = new SavedChart(
             request.ProfileName,
@@ -39,9 +55,9 @@ public class SaveChartUseCase : ISaveChartUseCase
             birthInstantUtc,
             (decimal)request.Latitude,
             (decimal)request.Longitude,
-            request.Chart.Summary.Sun,
-            request.Chart.Summary.Moon,
-            request.Chart.Summary.Ascendant,
+            calculatedChart.Summary.Sun,
+            calculatedChart.Summary.Moon,
+            calculatedChart.Summary.Ascendant,
             snapshotJson,
             request.UserId);
 
