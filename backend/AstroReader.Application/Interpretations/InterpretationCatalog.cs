@@ -107,4 +107,12 @@ internal static class InterpretationCatalog
         [7] = "La Casa 7 muestra como te vinculas, que buscas en pareja y como negocias con el otro.",
         [10] = "La Casa 10 refleja vocacion, imagen publica, ambicion y direccion de largo plazo."
     };
+
+    public static readonly IReadOnlyDictionary<int, string> HouseTitles = new Dictionary<int, string>
+    {
+        [1] = "Identidad y presencia",
+        [4] = "Raices y mundo privado",
+        [7] = "Vinculos y pareja",
+        [10] = "Vocacion y proyeccion publica"
+    };
 }

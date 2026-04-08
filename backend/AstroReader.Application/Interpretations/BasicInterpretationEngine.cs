@@ -25,21 +25,44 @@ public class BasicInterpretationEngine : IInterpretationEngine
             {
                 HouseNumber = h.HouseNumber,
                 Sign = h.Sign.ToString(),
+                Title = GetHouseTitle(h.HouseNumber),
                 Meaning = BuildHouseInterpretation(h.HouseNumber, h.Sign)
             })
             .ToList();
 
+        var sunInterpretation = GetInterpretation(InterpretationCatalog.SunBySign, sunSign, "Posicion solar indeterminada.");
+        var moonInterpretation = GetInterpretation(InterpretationCatalog.MoonBySign, moonSign, "Posicion lunar indeterminada.");
+        var ascendantInterpretation = GetInterpretation(InterpretationCatalog.AscendantBySign, ascendantSign, "Ascendente indeterminado.");
+        var mercuryInterpretation = GetInterpretation(InterpretationCatalog.MercuryBySign, mercurySign, "Mercurio indeterminado.");
+        var venusInterpretation = GetInterpretation(InterpretationCatalog.VenusBySign, venusSign, "Venus indeterminada.");
+        var marsInterpretation = GetInterpretation(InterpretationCatalog.MarsBySign, marsSign, "Marte indeterminado.");
+        var summary = GetGeneralSummary(sunSign, moonSign, ascendantSign, mercurySign, venusSign, marsSign);
+
         return new ChartInterpretation
         {
             Headline = GetHeadline(sunSign, moonSign, ascendantSign),
-            GeneralSummary = GetGeneralSummary(sunSign, moonSign, ascendantSign, mercurySign, venusSign, marsSign),
-            Sun = GetInterpretation(InterpretationCatalog.SunBySign, sunSign, "Posicion solar indeterminada."),
-            Moon = GetInterpretation(InterpretationCatalog.MoonBySign, moonSign, "Posicion lunar indeterminada."),
-            Ascendant = GetInterpretation(InterpretationCatalog.AscendantBySign, ascendantSign, "Ascendente indeterminado."),
-            Mercury = GetInterpretation(InterpretationCatalog.MercuryBySign, mercurySign, "Mercurio indeterminado."),
-            Venus = GetInterpretation(InterpretationCatalog.VenusBySign, venusSign, "Venus indeterminada."),
-            Mars = GetInterpretation(InterpretationCatalog.MarsBySign, marsSign, "Marte indeterminado."),
-            Houses = relevantHouses
+            Summary = summary,
+            GeneralSummary = summary,
+            Sun = sunInterpretation,
+            Moon = moonInterpretation,
+            Ascendant = ascendantInterpretation,
+            Mercury = mercuryInterpretation,
+            Venus = venusInterpretation,
+            Mars = marsInterpretation,
+            Core = new CoreInterpretation
+            {
+                Sun = sunInterpretation,
+                Moon = moonInterpretation,
+                Ascendant = ascendantInterpretation
+            },
+            PersonalPlanets = new PersonalPlanetsInterpretation
+            {
+                Mercury = mercuryInterpretation,
+                Venus = venusInterpretation,
+                Mars = marsInterpretation
+            },
+            Houses = relevantHouses,
+            Profiles = []
         };
     }
 
@@ -77,5 +100,12 @@ public class BasicInterpretationEngine : IInterpretationEngine
         }
 
         return $"{theme} En tu carta, {sign} colorea esta casa con su estilo particular.";
+    }
+
+    private static string GetHouseTitle(int houseNumber)
+    {
+        return InterpretationCatalog.HouseTitles.TryGetValue(houseNumber, out var title)
+            ? title
+            : $"Casa {houseNumber}";
     }
 }
