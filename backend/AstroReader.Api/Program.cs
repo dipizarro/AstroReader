@@ -1,10 +1,12 @@
 using AstroReader.Application;
+using AstroReader.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 // Configure Exception Handler
 builder.Services.AddExceptionHandler<AstroReader.Api.Infrastructure.GlobalExceptionHandler>();
