@@ -7,6 +7,13 @@ export interface CalculateChartRequest {
   placeName?: string;
 }
 
+export interface ChartMetadata {
+  calculatedForUtc: string;
+  latitude: number;
+  longitude: number;
+  placeName?: string | null;
+}
+
 export interface ChartSummary {
   sun: string;
   moon: string;
@@ -29,14 +36,51 @@ export interface HouseCusp {
 
 export interface ChartInterpretation {
   headline: string;
-  sun: string;
-  moon: string;
-  ascendant: string;
+  summary?: string;
+  generalSummary?: string;
+  sun?: string;
+  moon?: string;
+  ascendant?: string;
+  mercury?: string;
+  venus?: string;
+  mars?: string;
 }
 
 export interface CalculateChartResponse {
+  metadata?: ChartMetadata;
   summary: ChartSummary;
   planets: PlanetPosition[];
   houses: HouseCusp[];
   interpretation: ChartInterpretation;
+}
+
+export interface SaveChartRequest {
+  profileName: string;
+  placeName?: string;
+  birthDate: string;
+  birthTime: string;
+  latitude: number;
+  longitude: number;
+  timezoneOffsetMinutes: number;
+  userId?: string | null;
+  chart: CalculateChartResponse;
+}
+
+export interface SavedChartDetail {
+  id: string;
+  userId?: string | null;
+  profileName: string;
+  placeName?: string | null;
+  birthDate: string;
+  birthTime: string;
+  timezoneOffsetMinutes: number;
+  birthInstantUtc: string;
+  latitude: number;
+  longitude: number;
+  sunSign: string;
+  moonSign: string;
+  ascendantSign: string;
+  createdAtUtc: string;
+  updatedAtUtc: string;
+  chart: CalculateChartResponse;
 }

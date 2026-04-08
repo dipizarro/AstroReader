@@ -8,6 +8,7 @@ export const CalculateChartPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [chartData, setChartData] = useState<CalculateChartResponse | null>(null);
+  const [lastRequest, setLastRequest] = useState<CalculateChartRequest | null>(null);
   
   const resultRef = useRef<HTMLDivElement>(null);
 
@@ -15,6 +16,7 @@ export const CalculateChartPage = () => {
     setLoading(true);
     setError(null);
     setChartData(null);
+    setLastRequest(request);
 
     try {
       const response = await chartService.calculateChart(request);
@@ -57,7 +59,7 @@ export const CalculateChartPage = () => {
 
       <div className="w-full max-w-4xl mt-12" ref={resultRef}>
         {chartData && !loading && (
-          <ChartResult data={chartData} />
+          <ChartResult data={chartData} request={lastRequest} />
         )}
       </div>
     </div>
