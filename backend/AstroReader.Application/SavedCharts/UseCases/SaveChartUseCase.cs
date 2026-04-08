@@ -9,9 +9,6 @@ namespace AstroReader.Application.SavedCharts.UseCases;
 
 public class SaveChartUseCase : ISaveChartUseCase
 {
-    private const int MinExpectedPlanetCount = 3;
-    private const int MinExpectedHouseCount = 12;
-
     private readonly ICalculateNatalChartUseCase _calculateNatalChartUseCase;
     private readonly ISavedChartRepository _savedChartRepository;
 
@@ -150,14 +147,29 @@ public class SaveChartUseCase : ISaveChartUseCase
             throw new SavedChartIntegrityException("La carta calculada no contiene la tríada central completa.");
         }
 
-        if (chart.Planets is null || chart.Planets.Count < MinExpectedPlanetCount)
+        if (chart.Planets is null || chart.Planets.Count == 0)
         {
-            throw new SavedChartIntegrityException("La carta calculada no contiene posiciones planetarias suficientes para guardarse.");
+            throw new SavedChartIntegrityException("La carta calculada no contiene posiciones planetarias para guardarse.");
         }
 
-        if (chart.Houses is null || chart.Houses.Count < MinExpectedHouseCount)
+        var hasSun = chart.Planets.Any(x => string.Equals(x.Name, "Sun", StringComparison.OrdinalIgnoreCase));
+        var hasMoon = chart.Planets.Any(x => string.Equals(x.Name, "Moon", StringComparison.OrdinalIgnoreCase));
+
+        if (!hasSun || !hasMoon)
         {
-            throw new SavedChartIntegrityException("La carta calculada no contiene las casas necesarias para guardarse.");
+            throw new SavedChartIntegrityException("La carta calculada no contiene los puntos planetarios mínimos para guardarse.");
+        }
+
+        if (chart.Houses is null || chart.Houses.Count == 0)
+        {
+            throw new SavedChartIntegrityException("La carta calculada no contiene casas para guardarse.");
+        }
+
+        var hasFirstHouse = chart.Houses.Any(x => x.Number == 1);
+
+        if (!hasFirstHouse)
+        {
+            throw new SavedChartIntegrityException("La carta calculada no contiene la Casa 1 necesaria para guardarse.");
         }
 
         if (chart.Metadata is null)

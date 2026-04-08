@@ -129,6 +129,38 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
         finalPlaceName = 'Ubicación manual';
       }
 
+      if (!Number.isFinite(finalLat) || finalLat < -90 || finalLat > 90) {
+        setErrors(prev => ({
+          ...prev,
+          manualLatitude: showAdvanced ? 'La latitud ingresada no es válida.' : '',
+          placeSearch: !showAdvanced ? 'No pudimos resolver una latitud válida para ese lugar.' : prev.placeSearch,
+        }));
+        return;
+      }
+
+      if (!Number.isFinite(finalLng) || finalLng < -180 || finalLng > 180) {
+        setErrors(prev => ({
+          ...prev,
+          manualLongitude: showAdvanced ? 'La longitud ingresada no es válida.' : '',
+          placeSearch: !showAdvanced ? 'No pudimos resolver una longitud válida para ese lugar.' : prev.placeSearch,
+        }));
+        return;
+      }
+
+      if (!Number.isFinite(finalOffset) || !Number.isInteger(finalOffset) || finalOffset < -720 || finalOffset > 840) {
+        if (showAdvanced) {
+          setErrors(prev => ({
+            ...prev,
+            manualTimezoneOffsetMinutes: 'El offset horario ingresado no es válido.'
+          }));
+          return;
+        }
+
+        // En modo geocodificado preferimos degradar con fallback a UTC
+        // antes que bloquear el flujo por una resolución fina del huso horario.
+        finalOffset = 0;
+      }
+
       onSubmit({
         birthDate,
         birthTime,

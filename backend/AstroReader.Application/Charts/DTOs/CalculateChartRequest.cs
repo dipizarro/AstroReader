@@ -28,6 +28,6 @@ public record CalculateChartRequest
 
     // --- Campos Descriptivos para UI ---
 
-    [MaxLength(100, ErrorMessage = "El nombre del lugar no puede exceder los 100 caracteres.")]
+    [MaxLength(200, ErrorMessage = "El nombre del lugar no puede exceder los 200 caracteres.")]
     public string? PlaceName { get; init; }
 }

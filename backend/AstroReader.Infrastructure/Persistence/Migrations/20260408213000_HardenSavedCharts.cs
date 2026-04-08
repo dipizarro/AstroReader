@@ -1,9 +1,13 @@
+using AstroReader.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace AstroReader.Infrastructure.Persistence.Migrations
 {
+    [DbContext(typeof(AstroReaderDbContext))]
+    [Migration("20260408213000_HardenSavedCharts")]
     public partial class HardenSavedCharts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

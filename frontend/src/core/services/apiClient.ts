@@ -25,9 +25,10 @@ export const apiClient = {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
+        const validationDetails = extractValidationDetails(errorData);
         throw new ApiError(
           response.status,
-          errorData.message || errorData.title || `Error ${response.status}: Ha ocurrido un problema al comunicar con el servidor.`
+          validationDetails || errorData.message || errorData.detail || errorData.title || `Error ${response.status}: Ha ocurrido un problema al comunicar con el servidor.`
         );
       }
 
@@ -63,9 +64,10 @@ export const apiClient = {
       if (!response.ok) {
         // Tratar de obtener el mensaje de error del backend
         const errorData = await response.json().catch(() => ({}));
+        const validationDetails = extractValidationDetails(errorData);
         throw new ApiError(
           response.status, 
-          errorData.message || errorData.title || `Error ${response.status}: Ha ocurrido un problema al comunicar con el servidor.`
+          validationDetails || errorData.message || errorData.detail || errorData.title || `Error ${response.status}: Ha ocurrido un problema al comunicar con el servidor.`
         );
       }
 
@@ -85,3 +87,21 @@ export const apiClient = {
   
   // get<T>... put<T>... delete<T>... pueden añadirse aquí luego.
 };
+
+function extractValidationDetails(errorData: unknown): string | null {
+  if (!errorData || typeof errorData !== 'object' || !('errors' in errorData)) {
+    return null;
+  }
+
+  const errors = (errorData as { errors?: Record<string, string[] | string> }).errors;
+
+  if (!errors || typeof errors !== 'object') {
+    return null;
+  }
+
+  const messages = Object.values(errors)
+    .flatMap((value) => Array.isArray(value) ? value : [value])
+    .filter((value): value is string => typeof value === 'string' && value.trim().length > 0);
+
+  return messages.length > 0 ? messages.join(' ') : null;
+}
