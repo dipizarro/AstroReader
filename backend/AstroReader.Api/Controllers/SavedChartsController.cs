@@ -33,18 +33,18 @@ public class SavedChartsController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyList<SavedChartListItemDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetSavedCharts(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetSavedCharts([FromQuery] Guid? ownerUserId, CancellationToken cancellationToken)
     {
-        var savedCharts = await _getSavedChartsUseCase.ExecuteAsync(cancellationToken);
+        var savedCharts = await _getSavedChartsUseCase.ExecuteAsync(ownerUserId, cancellationToken);
         return Ok(savedCharts);
     }
 
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(SavedChartDetailDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetSavedChartById(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetSavedChartById(Guid id, [FromQuery] Guid? ownerUserId, CancellationToken cancellationToken)
     {
-        var savedChart = await _getSavedChartByIdUseCase.ExecuteAsync(id, cancellationToken);
+        var savedChart = await _getSavedChartByIdUseCase.ExecuteAsync(id, ownerUserId, cancellationToken);
         return Ok(savedChart);
     }
 }

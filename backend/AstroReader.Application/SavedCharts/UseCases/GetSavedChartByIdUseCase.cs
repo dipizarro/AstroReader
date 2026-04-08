@@ -12,9 +12,9 @@ public class GetSavedChartByIdUseCase : IGetSavedChartByIdUseCase
         _savedChartRepository = savedChartRepository;
     }
 
-    public async Task<SavedChartDetailDto> ExecuteAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<SavedChartDetailDto> ExecuteAsync(Guid id, Guid? ownerUserId = null, CancellationToken cancellationToken = default)
     {
-        var savedChart = await _savedChartRepository.GetByIdAsync(id, cancellationToken);
+        var savedChart = await _savedChartRepository.GetByIdAsync(id, ownerUserId, cancellationToken);
 
         if (savedChart is null)
         {

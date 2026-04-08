@@ -21,17 +21,32 @@ public class SavedChartRepository : ISavedChartRepository
         return savedChart;
     }
 
-    public async Task<SavedChart?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<SavedChart?> GetByIdAsync(Guid id, Guid? ownerUserId = null, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.SavedCharts
+        var query = _dbContext.SavedCharts
             .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            .Where(x => x.Id == id);
+
+        if (ownerUserId.HasValue)
+        {
+            query = query.Where(x => x.UserId == ownerUserId.Value);
+        }
+
+        return await query.FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<IReadOnlyList<SavedChartListItemDto>> GetListItemsAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<SavedChartListItemDto>> GetListItemsAsync(Guid? ownerUserId = null, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.SavedCharts
+        var query = _dbContext.SavedCharts
             .AsNoTracking()
+            .AsQueryable();
+
+        if (ownerUserId.HasValue)
+        {
+            query = query.Where(x => x.UserId == ownerUserId.Value);
+        }
+
+        return await query
             .OrderByDescending(x => x.CreatedAtUtc)
             .Select(x => new SavedChartListItemDto
             {

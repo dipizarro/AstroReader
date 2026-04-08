@@ -12,8 +12,8 @@ public class GetSavedChartsUseCase : IGetSavedChartsUseCase
         _savedChartRepository = savedChartRepository;
     }
 
-    public async Task<IReadOnlyList<SavedChartListItemDto>> ExecuteAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<SavedChartListItemDto>> ExecuteAsync(Guid? ownerUserId = null, CancellationToken cancellationToken = default)
     {
-        return await _savedChartRepository.GetListItemsAsync(cancellationToken);
+        return await _savedChartRepository.GetListItemsAsync(ownerUserId, cancellationToken);
     }
 }
