@@ -4,6 +4,7 @@ import type {
   CalculateChartResponse,
   SaveChartRequest,
   SavedChartDetail,
+  SavedChartListItem,
 } from '../types/chart.types';
 
 export const chartService = {
@@ -26,6 +27,26 @@ export const chartService = {
       return result;
     } catch (e) {
       console.error('Error al guardar la carta natal:', e);
+      throw e;
+    }
+  },
+
+  async getSavedCharts(): Promise<SavedChartListItem[]> {
+    try {
+      const result = await apiClient.get<SavedChartListItem[]>('/api/SavedCharts');
+      return result;
+    } catch (e) {
+      console.error('Error al obtener las cartas guardadas:', e);
+      throw e;
+    }
+  },
+
+  async getSavedChartById(id: string): Promise<SavedChartDetail> {
+    try {
+      const result = await apiClient.get<SavedChartDetail>(`/api/SavedCharts/${id}`);
+      return result;
+    } catch (e) {
+      console.error('Error al obtener el detalle de la carta guardada:', e);
       throw e;
     }
   }

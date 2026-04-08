@@ -10,6 +10,40 @@ class ApiError extends Error {
 }
 
 export const apiClient = {
+  async get<T>(endpoint: string): Promise<T> {
+    const url = `${BASE_URL}${endpoint}`;
+
+    const headers: HeadersInit = {
+      'Accept': 'application/json',
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new ApiError(
+          response.status,
+          errorData.message || errorData.title || `Error ${response.status}: Ha ocurrido un problema al comunicar con el servidor.`
+        );
+      }
+
+      if (response.status === 204) {
+        return {} as T;
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof ApiError) {
+        throw error;
+      }
+      throw new Error(error instanceof Error ? error.message : 'Error desconocido de conexión');
+    }
+  },
+
   async post<T, U = unknown>(endpoint: string, body: U): Promise<T> {
     const url = `${BASE_URL}${endpoint}`;
     

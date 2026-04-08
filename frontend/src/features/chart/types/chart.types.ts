@@ -84,3 +84,16 @@ export interface SavedChartDetail {
   updatedAtUtc: string;
   chart: CalculateChartResponse;
 }
+
+export interface SavedChartListItem {
+  id: string;
+  profileName: string;
+  placeName?: string | null;
+  birthDate: string;
+  birthTime: string;
+  timezoneOffsetMinutes: number;
+  sunSign: string;
+  moonSign: string;
+  ascendantSign: string;
+  createdAtUtc: string;
+}

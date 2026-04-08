@@ -21,6 +21,9 @@ export const MainLayout = () => {
             <Link to="/chart/calculate" className="text-sm font-medium text-text-muted transition-colors hover:text-primary">
               Carta Natal
             </Link>
+            <Link to="/charts/saved" className="text-sm font-medium text-text-muted transition-colors hover:text-primary">
+              Cartas guardadas
+            </Link>
           </nav>
 
           <div className="flex items-center gap-4">
