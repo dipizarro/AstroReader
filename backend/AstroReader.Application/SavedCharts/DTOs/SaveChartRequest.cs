@@ -28,5 +28,8 @@ public record SaveChartRequest
     [Range(-720, 840, ErrorMessage = "El offset de zona horaria debe estar entre -12h y +14h.")]
     public int TimezoneOffsetMinutes { get; init; }
 
+    [MaxLength(100, ErrorMessage = "La zona horaria IANA no puede exceder los 100 caracteres.")]
+    public string? TimezoneIana { get; init; }
+
     public Guid? UserId { get; init; }
 }

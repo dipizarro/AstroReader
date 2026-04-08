@@ -19,6 +19,9 @@ public class SavedChartConfiguration : IEntityTypeConfiguration<SavedChart>
         builder.Property(x => x.PlaceName)
             .HasMaxLength(200);
 
+        builder.Property(x => x.TimezoneIana)
+            .HasMaxLength(100);
+
         builder.Property(x => x.BirthDate)
             .IsRequired();
 
@@ -51,7 +54,10 @@ public class SavedChartConfiguration : IEntityTypeConfiguration<SavedChart>
             .HasMaxLength(20)
             .IsRequired();
 
-        builder.Property(x => x.ResultSnapshotJson)
+        builder.Property(x => x.SnapshotVersion)
+            .IsRequired();
+
+        builder.Property(x => x.CalculatedChartJson)
             .HasColumnType("nvarchar(max)")
             .IsRequired();
 

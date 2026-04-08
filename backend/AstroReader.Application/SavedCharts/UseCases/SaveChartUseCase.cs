@@ -49,6 +49,7 @@ public class SaveChartUseCase : ISaveChartUseCase
         var savedChart = new SavedChart(
             request.ProfileName,
             request.PlaceName,
+            request.TimezoneIana,
             birthDate,
             birthTime,
             (short)request.TimezoneOffsetMinutes,
@@ -58,6 +59,7 @@ public class SaveChartUseCase : ISaveChartUseCase
             calculatedChart.Summary.Sun,
             calculatedChart.Summary.Moon,
             calculatedChart.Summary.Ascendant,
+            SavedChart.CurrentSnapshotVersion,
             snapshotJson,
             request.UserId);
 

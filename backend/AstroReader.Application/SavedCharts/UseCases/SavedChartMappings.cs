@@ -14,8 +14,7 @@ internal static class SavedChartMappings
 
     public static SavedChartDetailDto ToDetailDto(SavedChart savedChart)
     {
-        var chart = JsonSerializer.Deserialize<CalculateChartResponse>(savedChart.ResultSnapshotJson, JsonOptions)
-            ?? throw new InvalidOperationException($"Saved chart '{savedChart.Id}' contains an invalid snapshot.");
+        var chart = DeserializeCalculatedChart(savedChart);
 
         return new SavedChartDetailDto
         {
@@ -23,6 +22,7 @@ internal static class SavedChartMappings
             UserId = savedChart.UserId,
             ProfileName = savedChart.ProfileName,
             PlaceName = savedChart.PlaceName,
+            TimezoneIana = savedChart.TimezoneIana,
             BirthDate = savedChart.BirthDate.ToString("yyyy-MM-dd"),
             BirthTime = savedChart.BirthTime.ToString("HH:mm"),
             TimezoneOffsetMinutes = savedChart.TimezoneOffsetMinutes,
@@ -32,6 +32,7 @@ internal static class SavedChartMappings
             SunSign = savedChart.SunSign,
             MoonSign = savedChart.MoonSign,
             AscendantSign = savedChart.AscendantSign,
+            SnapshotVersion = savedChart.SnapshotVersion,
             CreatedAtUtc = savedChart.CreatedAtUtc,
             UpdatedAtUtc = savedChart.UpdatedAtUtc,
             Chart = chart
@@ -58,5 +59,16 @@ internal static class SavedChartMappings
     public static string SerializeSnapshot(CalculateChartResponse chart)
     {
         return JsonSerializer.Serialize(chart, JsonOptions);
+    }
+
+    private static CalculateChartResponse DeserializeCalculatedChart(SavedChart savedChart)
+    {
+        return savedChart.SnapshotVersion switch
+        {
+            SavedChart.CurrentSnapshotVersion => JsonSerializer.Deserialize<CalculateChartResponse>(savedChart.CalculatedChartJson, JsonOptions)
+                ?? throw new InvalidOperationException($"Saved chart '{savedChart.Id}' contains an invalid snapshot."),
+            _ => throw new NotSupportedException(
+                $"Saved chart '{savedChart.Id}' uses unsupported snapshot version '{savedChart.SnapshotVersion}'.")
+        };
     }
 }

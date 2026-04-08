@@ -62,6 +62,7 @@ export interface SaveChartRequest {
   latitude: number;
   longitude: number;
   timezoneOffsetMinutes: number;
+  timezoneIana?: string;
   userId?: string | null;
 }
 
@@ -70,6 +71,7 @@ export interface SavedChartDetail {
   userId?: string | null;
   profileName: string;
   placeName?: string | null;
+  timezoneIana?: string | null;
   birthDate: string;
   birthTime: string;
   timezoneOffsetMinutes: number;
@@ -79,6 +81,7 @@ export interface SavedChartDetail {
   sunSign: string;
   moonSign: string;
   ascendantSign: string;
+  snapshotVersion: number;
   createdAtUtc: string;
   updatedAtUtc: string;
   chart: CalculateChartResponse;

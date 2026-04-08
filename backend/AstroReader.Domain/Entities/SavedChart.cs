@@ -4,6 +4,8 @@ namespace AstroReader.Domain.Entities;
 
 public class SavedChart
 {
+    public const int CurrentSnapshotVersion = 1;
+
     private SavedChart()
     {
     }
@@ -11,8 +13,10 @@ public class SavedChart
     public Guid Id { get; private set; }
     public Guid? UserId { get; private set; }
 
+    // Original input provided by the user at save time.
     public string ProfileName { get; private set; } = string.Empty;
     public string? PlaceName { get; private set; }
+    public string? TimezoneIana { get; private set; }
 
     public DateOnly BirthDate { get; private set; }
     public TimeOnly BirthTime { get; private set; }
@@ -22,11 +26,14 @@ public class SavedChart
     public decimal Latitude { get; private set; }
     public decimal Longitude { get; private set; }
 
+    // Explicit derived fields kept for fast listing and future querying.
     public string SunSign { get; private set; } = string.Empty;
     public string MoonSign { get; private set; } = string.Empty;
     public string AscendantSign { get; private set; } = string.Empty;
 
-    public string ResultSnapshotJson { get; private set; } = string.Empty;
+    // Versioned serialized chart payload produced by the backend.
+    public int SnapshotVersion { get; private set; }
+    public string CalculatedChartJson { get; private set; } = string.Empty;
 
     public DateTime CreatedAtUtc { get; private set; }
     public DateTime UpdatedAtUtc { get; private set; }
@@ -34,6 +41,7 @@ public class SavedChart
     public SavedChart(
         string profileName,
         string? placeName,
+        string? timezoneIana,
         DateOnly birthDate,
         TimeOnly birthTime,
         short timezoneOffsetMinutes,
@@ -43,7 +51,8 @@ public class SavedChart
         string sunSign,
         string moonSign,
         string ascendantSign,
-        string resultSnapshotJson,
+        int snapshotVersion,
+        string calculatedChartJson,
         Guid? userId = null)
     {
         Id = Guid.NewGuid();
@@ -51,6 +60,7 @@ public class SavedChart
 
         ProfileName = RequireValue(profileName, nameof(profileName));
         PlaceName = NormalizeOptional(placeName);
+        TimezoneIana = NormalizeOptional(timezoneIana);
 
         BirthDate = birthDate;
         BirthTime = birthTime;
@@ -63,7 +73,10 @@ public class SavedChart
         SunSign = RequireValue(sunSign, nameof(sunSign));
         MoonSign = RequireValue(moonSign, nameof(moonSign));
         AscendantSign = RequireValue(ascendantSign, nameof(ascendantSign));
-        ResultSnapshotJson = RequireValue(resultSnapshotJson, nameof(resultSnapshotJson));
+        SnapshotVersion = snapshotVersion > 0
+            ? snapshotVersion
+            : throw new ArgumentOutOfRangeException(nameof(snapshotVersion), "snapshotVersion must be greater than zero.");
+        CalculatedChartJson = RequireValue(calculatedChartJson, nameof(calculatedChartJson));
 
         CreatedAtUtc = DateTime.UtcNow;
         UpdatedAtUtc = CreatedAtUtc;
@@ -81,16 +94,26 @@ public class SavedChart
         Touch();
     }
 
+    public void UpdateTimezoneIana(string? timezoneIana)
+    {
+        TimezoneIana = NormalizeOptional(timezoneIana);
+        Touch();
+    }
+
     public void UpdateSnapshot(
         string sunSign,
         string moonSign,
         string ascendantSign,
-        string resultSnapshotJson)
+        int snapshotVersion,
+        string calculatedChartJson)
     {
         SunSign = RequireValue(sunSign, nameof(sunSign));
         MoonSign = RequireValue(moonSign, nameof(moonSign));
         AscendantSign = RequireValue(ascendantSign, nameof(ascendantSign));
-        ResultSnapshotJson = RequireValue(resultSnapshotJson, nameof(resultSnapshotJson));
+        SnapshotVersion = snapshotVersion > 0
+            ? snapshotVersion
+            : throw new ArgumentOutOfRangeException(nameof(snapshotVersion), "snapshotVersion must be greater than zero.");
+        CalculatedChartJson = RequireValue(calculatedChartJson, nameof(calculatedChartJson));
 
         Touch();
     }
