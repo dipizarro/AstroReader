@@ -47,13 +47,6 @@ public record ChartInterpretation
 {
     public string Headline { get; init; } = string.Empty;
     public string Summary { get; init; } = string.Empty;
-    public string GeneralSummary { get; init; } = string.Empty;
-    public string Sun { get; init; } = string.Empty;
-    public string Moon { get; init; } = string.Empty;
-    public string Ascendant { get; init; } = string.Empty;
-    public string Mercury { get; init; } = string.Empty;
-    public string Venus { get; init; } = string.Empty;
-    public string Mars { get; init; } = string.Empty;
     public CoreInterpretation Core { get; init; } = new();
     public PersonalPlanetsInterpretation PersonalPlanets { get; init; } = new();
     public List<HouseInterpretationDto> Houses { get; init; } = [];

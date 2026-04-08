@@ -36,14 +36,36 @@ export interface HouseCusp {
 
 export interface ChartInterpretation {
   headline: string;
-  summary?: string;
-  generalSummary?: string;
-  sun?: string;
-  moon?: string;
-  ascendant?: string;
-  mercury?: string;
-  venus?: string;
-  mars?: string;
+  summary: string;
+  core: CoreInterpretation;
+  personalPlanets: PersonalPlanetsInterpretation;
+  houses: HouseInterpretation[];
+  profiles: InterpretationProfile[];
+}
+
+export interface CoreInterpretation {
+  sun: string;
+  moon: string;
+  ascendant: string;
+}
+
+export interface PersonalPlanetsInterpretation {
+  mercury: string;
+  venus: string;
+  mars: string;
+}
+
+export interface HouseInterpretation {
+  houseNumber: number;
+  sign: string;
+  title: string;
+  meaning: string;
+}
+
+export interface InterpretationProfile {
+  key: string;
+  title: string;
+  summary: string;
 }
 
 export interface CalculateChartResponse {

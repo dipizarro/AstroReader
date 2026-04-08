@@ -42,13 +42,6 @@ public class BasicInterpretationEngine : IInterpretationEngine
         {
             Headline = GetHeadline(sunSign, moonSign, ascendantSign),
             Summary = summary,
-            GeneralSummary = summary,
-            Sun = sunInterpretation,
-            Moon = moonInterpretation,
-            Ascendant = ascendantInterpretation,
-            Mercury = mercuryInterpretation,
-            Venus = venusInterpretation,
-            Mars = marsInterpretation,
             Core = new CoreInterpretation
             {
                 Sun = sunInterpretation,
