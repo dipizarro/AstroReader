@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AstroReader.Application.SavedCharts.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,21 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
                 Status = StatusCodes.Status404NotFound,
                 Title = "Recurso no encontrado",
                 Detail = keyNotFoundException.Message
+            };
+
+            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+            return true;
+        }
+
+        if (exception is SavedChartIntegrityException integrityException)
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+
+            var problemDetails = new ProblemDetails
+            {
+                Status = StatusCodes.Status422UnprocessableEntity,
+                Title = "Error de integridad del guardado",
+                Detail = integrityException.Message
             };
 
             await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);

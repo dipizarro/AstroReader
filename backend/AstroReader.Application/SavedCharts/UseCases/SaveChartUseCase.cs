@@ -1,6 +1,7 @@
 using AstroReader.Application.Charts.DTOs;
 using AstroReader.Application.Charts.Interfaces;
 using AstroReader.Application.SavedCharts.DTOs;
+using AstroReader.Application.SavedCharts.Exceptions;
 using AstroReader.Application.SavedCharts.Interfaces;
 using AstroReader.Domain.Entities;
 
@@ -8,6 +9,9 @@ namespace AstroReader.Application.SavedCharts.UseCases;
 
 public class SaveChartUseCase : ISaveChartUseCase
 {
+    private const int MinExpectedPlanetCount = 3;
+    private const int MinExpectedHouseCount = 12;
+
     private readonly ICalculateNatalChartUseCase _calculateNatalChartUseCase;
     private readonly ISavedChartRepository _savedChartRepository;
 
@@ -23,25 +27,11 @@ public class SaveChartUseCase : ISaveChartUseCase
         SaveChartRequest request,
         CancellationToken cancellationToken = default)
     {
-        if (!DateOnly.TryParseExact(request.BirthDate, "yyyy-MM-dd", out var birthDate))
-        {
-            throw new ArgumentException("Formato de fecha inválido. Se requiere YYYY-MM-DD.");
-        }
+        var (birthDate, birthTime) = ParseInputFormat(request);
+        ValidateSaveIntegrity(request);
 
-        if (!TimeOnly.TryParseExact(request.BirthTime, "HH:mm", out var birthTime))
-        {
-            throw new ArgumentException("Formato de hora inválido. Se requiere HH:mm.");
-        }
-
-        var calculatedChart = _calculateNatalChartUseCase.Execute(new CalculateChartRequest
-        {
-            BirthDate = request.BirthDate,
-            BirthTime = request.BirthTime,
-            Latitude = request.Latitude,
-            Longitude = request.Longitude,
-            TimezoneOffsetMinutes = request.TimezoneOffsetMinutes,
-            PlaceName = request.PlaceName
-        });
+        var calculatedChart = CalculateChartOrThrowIntegrityError(request);
+        ValidateCalculatedChartIntegrity(calculatedChart, request);
 
         var birthInstantUtc = BuildBirthInstantUtc(birthDate, birthTime, request.TimezoneOffsetMinutes);
         var snapshotJson = SavedChartMappings.SerializeSnapshot(calculatedChart);
@@ -65,6 +55,121 @@ public class SaveChartUseCase : ISaveChartUseCase
 
         var persistedChart = await _savedChartRepository.AddAsync(savedChart, cancellationToken);
         return SavedChartMappings.ToDetailDto(persistedChart);
+    }
+
+    private static (DateOnly BirthDate, TimeOnly BirthTime) ParseInputFormat(SaveChartRequest request)
+    {
+        // Format validation: checks lexical correctness of the incoming birth fields.
+        if (!DateOnly.TryParseExact(request.BirthDate, "yyyy-MM-dd", out var birthDate))
+        {
+            throw new ArgumentException("Formato de fecha inválido. Se requiere YYYY-MM-DD.");
+        }
+
+        if (!TimeOnly.TryParseExact(request.BirthTime, "HH:mm", out var birthTime))
+        {
+            throw new ArgumentException("Formato de hora inválido. Se requiere HH:mm.");
+        }
+
+        return (birthDate, birthTime);
+    }
+
+    private static void ValidateSaveIntegrity(SaveChartRequest request)
+    {
+        // Integrity validation: protects persisted records from incomplete or semantically invalid data.
+        if (string.IsNullOrWhiteSpace(request.ProfileName))
+        {
+            throw new SavedChartIntegrityException("La carta no se puede guardar sin un nombre visible.");
+        }
+
+        if (double.IsNaN(request.Latitude) || double.IsInfinity(request.Latitude))
+        {
+            throw new SavedChartIntegrityException("La carta no se puede guardar con una latitud inválida.");
+        }
+
+        if (double.IsNaN(request.Longitude) || double.IsInfinity(request.Longitude))
+        {
+            throw new SavedChartIntegrityException("La carta no se puede guardar con una longitud inválida.");
+        }
+
+        if (request.Latitude is < -90 or > 90)
+        {
+            throw new SavedChartIntegrityException("La carta no se puede guardar con una latitud fuera de rango.");
+        }
+
+        if (request.Longitude is < -180 or > 180)
+        {
+            throw new SavedChartIntegrityException("La carta no se puede guardar con una longitud fuera de rango.");
+        }
+
+        if (request.TimezoneOffsetMinutes is < -720 or > 840)
+        {
+            throw new SavedChartIntegrityException("La carta no se puede guardar con un offset horario fuera de rango.");
+        }
+    }
+
+    private CalculateChartResponse CalculateChartOrThrowIntegrityError(SaveChartRequest request)
+    {
+        try
+        {
+            return _calculateNatalChartUseCase.Execute(new CalculateChartRequest
+            {
+                BirthDate = request.BirthDate,
+                BirthTime = request.BirthTime,
+                Latitude = request.Latitude,
+                Longitude = request.Longitude,
+                TimezoneOffsetMinutes = request.TimezoneOffsetMinutes,
+                PlaceName = request.PlaceName
+            });
+        }
+        catch (SavedChartIntegrityException)
+        {
+            throw;
+        }
+        catch (ArgumentException)
+        {
+            throw;
+        }
+        catch (Exception)
+        {
+            throw new SavedChartIntegrityException(
+                "No fue posible generar una carta válida para guardar con los datos natales entregados.");
+        }
+    }
+
+    private static void ValidateCalculatedChartIntegrity(CalculateChartResponse chart, SaveChartRequest request)
+    {
+        if (chart.Summary is null)
+        {
+            throw new SavedChartIntegrityException("La carta calculada no contiene un resumen válido para ser guardada.");
+        }
+
+        if (string.IsNullOrWhiteSpace(chart.Summary.Sun) ||
+            string.IsNullOrWhiteSpace(chart.Summary.Moon) ||
+            string.IsNullOrWhiteSpace(chart.Summary.Ascendant))
+        {
+            throw new SavedChartIntegrityException("La carta calculada no contiene la tríada central completa.");
+        }
+
+        if (chart.Planets is null || chart.Planets.Count < MinExpectedPlanetCount)
+        {
+            throw new SavedChartIntegrityException("La carta calculada no contiene posiciones planetarias suficientes para guardarse.");
+        }
+
+        if (chart.Houses is null || chart.Houses.Count < MinExpectedHouseCount)
+        {
+            throw new SavedChartIntegrityException("La carta calculada no contiene las casas necesarias para guardarse.");
+        }
+
+        if (chart.Metadata is null)
+        {
+            throw new SavedChartIntegrityException("La carta calculada no contiene metadata suficiente para guardarse.");
+        }
+
+        if (Math.Abs(chart.Metadata.Latitude - request.Latitude) > 0.000001 ||
+            Math.Abs(chart.Metadata.Longitude - request.Longitude) > 0.000001)
+        {
+            throw new SavedChartIntegrityException("La carta calculada no coincide con las coordenadas solicitadas.");
+        }
     }
 
     private static DateTime BuildBirthInstantUtc(DateOnly birthDate, TimeOnly birthTime, int timezoneOffsetMinutes)
