@@ -33,6 +33,10 @@ frontend/.env.production.local
 [Oo]bj/
 backend/**/[Bb]in/
 backend/**/[Oo]bj/
+*.dll
+*.exe
+*.pdb
+apphost.exe
 
 # Archivos de usuario y cache de Visual Studio / Rider
 .vs/
