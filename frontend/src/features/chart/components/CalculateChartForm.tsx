@@ -17,23 +17,80 @@ interface LocationData {
   placeName: string;
 }
 
+interface ManualLocationForm {
+  latitude: string;
+  longitude: string;
+  timezoneOffsetMinutes: string;
+}
+
 export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormProps) => {
   const [birthDate, setBirthDate] = useState('');
   const [birthTime, setBirthTime] = useState('');
   
   // Almacena internamente las coordenadas del autocomplete o manuales
   const [selectedLocation, setSelectedLocation] = useState<LocationData | null>(null);
+  const [manualLocation, setManualLocation] = useState<ManualLocationForm>({
+    latitude: '',
+    longitude: '',
+    timezoneOffsetMinutes: '',
+  });
   
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const hasManualLocationInput =
+    manualLocation.latitude.trim().length > 0 &&
+    manualLocation.longitude.trim().length > 0 &&
+    manualLocation.timezoneOffsetMinutes.trim().length > 0;
 
   const validate = (): boolean => {
     const newErrors: { [key: string]: string } = {};
     if (!birthDate) newErrors.birthDate = 'Requerido';
     if (!birthTime) newErrors.birthTime = 'Requerido';
-    if (!selectedLocation && !showAdvanced) {
-       newErrors.placeSearch = 'Debes buscar y seleccionar un lugar de nacimiento válido.';
+
+    if (!showAdvanced) {
+      if (!selectedLocation) {
+        newErrors.placeSearch = 'Debes buscar y seleccionar un lugar de nacimiento válido.';
+      }
+    } else {
+      const latitudeRaw = manualLocation.latitude.trim();
+      const longitudeRaw = manualLocation.longitude.trim();
+      const offsetRaw = manualLocation.timezoneOffsetMinutes.trim();
+
+      if (!latitudeRaw) {
+        newErrors.manualLatitude = 'Ingresa una latitud decimal.';
+      } else {
+        const latitude = Number(latitudeRaw);
+        if (!Number.isFinite(latitude)) {
+          newErrors.manualLatitude = 'La latitud debe ser un número válido.';
+        } else if (latitude < -90 || latitude > 90) {
+          newErrors.manualLatitude = 'La latitud debe estar entre -90 y 90.';
+        }
+      }
+
+      if (!longitudeRaw) {
+        newErrors.manualLongitude = 'Ingresa una longitud decimal.';
+      } else {
+        const longitude = Number(longitudeRaw);
+        if (!Number.isFinite(longitude)) {
+          newErrors.manualLongitude = 'La longitud debe ser un número válido.';
+        } else if (longitude < -180 || longitude > 180) {
+          newErrors.manualLongitude = 'La longitud debe estar entre -180 y 180.';
+        }
+      }
+
+      if (!offsetRaw) {
+        newErrors.manualTimezoneOffsetMinutes = 'Ingresa el offset horario en minutos.';
+      } else {
+        const offset = Number(offsetRaw);
+        if (!Number.isInteger(offset)) {
+          newErrors.manualTimezoneOffsetMinutes = 'El offset debe ser un número entero en minutos.';
+        } else if (offset < -720 || offset > 840) {
+          newErrors.manualTimezoneOffsetMinutes = 'El offset debe estar entre -720 y +840 minutos.';
+        }
+      }
     }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -44,6 +101,7 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
       let finalLat = selectedLocation?.latitude ?? 0;
       let finalLng = selectedLocation?.longitude ?? 0;
       let finalOffset = selectedLocation?.timezoneOffsetMinutes ?? 0;
+      let finalPlaceName = selectedLocation?.placeName || "Ubicación Geocodificada";
 
       // ✅ RESOLUCIÓN PRECISA DE TIEMPO:
       // Si el usuario seleccionó un lugar visualmente (no manual con offset harcodeado),
@@ -64,6 +122,11 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
         } catch (error) {
           console.error("Error resolviendo Timezone dinámico. Usando fallback estático o cero.", error);
         }
+      } else {
+        finalLat = Number(manualLocation.latitude.trim());
+        finalLng = Number(manualLocation.longitude.trim());
+        finalOffset = Number(manualLocation.timezoneOffsetMinutes.trim());
+        finalPlaceName = 'Ubicación manual';
       }
 
       onSubmit({
@@ -72,17 +135,18 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
         latitude: finalLat,
         longitude: finalLng,
         timezoneOffsetMinutes: finalOffset,
-        placeName: selectedLocation?.placeName || "Ubicación Geocodificada"
+        placeName: finalPlaceName
       });
     }
   };
 
-  const handleManualLocationUpdate = (field: keyof LocationData, value: string) => {
-    const numValue = field === 'placeName' ? value : parseFloat(value) || 0;
-    setSelectedLocation(prev => ({
+  const handleManualLocationUpdate = (field: keyof ManualLocationForm, value: string) => {
+    setManualLocation(prev => ({
       ...prev,
-      [field]: numValue
-    }) as LocationData);
+      [field]: value
+    }));
+    const errorKey = `manual${field.charAt(0).toUpperCase()}${field.slice(1)}`;
+    setErrors(prev => ({ ...prev, [errorKey]: '' }));
   };
 
   const handleLocationSelected = (loc: { latitude: number; longitude: number; placeName: string }) => {
@@ -147,7 +211,17 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
                Lugar de nacimiento
                <button 
                  type="button" 
-                 onClick={() => { setShowAdvanced(true); setSelectedLocation(null); }}
+                 onClick={() => {
+                   setShowAdvanced(true);
+                   setSelectedLocation(null);
+                   setErrors(prev => ({
+                     ...prev,
+                     placeSearch: '',
+                     manualLatitude: '',
+                     manualLongitude: '',
+                     manualTimezoneOffsetMinutes: '',
+                   }));
+                 }}
                  className="text-text-muted hover:text-primary transition-colors flex items-center gap-1 text-xs"
                >
                  <Settings2 className="w-3 h-3" />
@@ -171,22 +245,65 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
                  <div className="text-xs text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded-lg font-medium">
                    Modo Técnico Activado
                  </div>
-                 <button type="button" onClick={() => setShowAdvanced(false)} className="text-xs text-text-muted underline hover:text-white">Volver a Buscador</button>
+                 <button
+                   type="button"
+                   onClick={() => {
+                     setShowAdvanced(false);
+                     setManualLocation({
+                       latitude: '',
+                       longitude: '',
+                       timezoneOffsetMinutes: '',
+                     });
+                     setErrors(prev => ({
+                       ...prev,
+                       manualLatitude: '',
+                       manualLongitude: '',
+                       manualTimezoneOffsetMinutes: '',
+                     }));
+                   }}
+                   className="text-xs text-text-muted underline hover:text-white"
+                 >
+                   Volver a Buscador
+                 </button>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[11px] text-text-muted uppercase">Latitud (Decimal)</label>
-                  <input type="number" step="any" onChange={e => handleManualLocationUpdate('latitude', e.target.value)} className="w-full bg-background border border-white/10 rounded p-2 text-sm text-white" placeholder="-34.6037" />
+                  <input
+                    type="number"
+                    step="any"
+                    value={manualLocation.latitude}
+                    onChange={e => handleManualLocationUpdate('latitude', e.target.value)}
+                    className={`w-full bg-background border rounded p-2 text-sm text-white ${errors.manualLatitude ? 'border-red-500/50' : 'border-white/10'}`}
+                    placeholder="-34.6037"
+                  />
+                  {errors.manualLatitude && <span className="text-xs text-red-400">{errors.manualLatitude}</span>}
                 </div>
                 <div className="space-y-1">
                   <label className="text-[11px] text-text-muted uppercase">Longitud (Decimal)</label>
-                  <input type="number" step="any" onChange={e => handleManualLocationUpdate('longitude', e.target.value)} className="w-full bg-background border border-white/10 rounded p-2 text-sm text-white" placeholder="-58.3816" />
+                  <input
+                    type="number"
+                    step="any"
+                    value={manualLocation.longitude}
+                    onChange={e => handleManualLocationUpdate('longitude', e.target.value)}
+                    className={`w-full bg-background border rounded p-2 text-sm text-white ${errors.manualLongitude ? 'border-red-500/50' : 'border-white/10'}`}
+                    placeholder="-58.3816"
+                  />
+                  {errors.manualLongitude && <span className="text-xs text-red-400">{errors.manualLongitude}</span>}
                 </div>
               </div>
               <div className="space-y-1">
                 <label className="text-[11px] text-text-muted uppercase">Offset Zona Horaria (Minutos)</label>
-                <input type="number" onChange={e => handleManualLocationUpdate('timezoneOffsetMinutes', e.target.value)} className="w-full bg-background border border-white/10 rounded p-2 text-sm text-white" placeholder="-180" />
-                <span className="text-[10px] text-text-muted/60">Ej: GMT-3 = -180 minutos. Usado para calcular UTC exacto.</span>
+                <input
+                  type="number"
+                  step="1"
+                  value={manualLocation.timezoneOffsetMinutes}
+                  onChange={e => handleManualLocationUpdate('timezoneOffsetMinutes', e.target.value)}
+                  className={`w-full bg-background border rounded p-2 text-sm text-white ${errors.manualTimezoneOffsetMinutes ? 'border-red-500/50' : 'border-white/10'}`}
+                  placeholder="-180"
+                />
+                {errors.manualTimezoneOffsetMinutes && <span className="text-xs text-red-400">{errors.manualTimezoneOffsetMinutes}</span>}
+                <span className="text-[10px] text-text-muted/60">Ej: GMT-3 = -180 minutos. Completa los tres campos antes de calcular.</span>
               </div>
            </div>
         )}
@@ -194,7 +311,7 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
         {/* Submit */}
         <button 
           type="submit" 
-          disabled={isLoading || (!selectedLocation && !showAdvanced)}
+          disabled={isLoading || (!showAdvanced && !selectedLocation) || (showAdvanced && !hasManualLocationInput)}
           className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-sm font-semibold text-[#0a0a0b] shadow-[0_0_15px_rgba(212,175,55,0.3)] transition-all hover:bg-primary-hover hover:shadow-[0_0_25px_rgba(212,175,55,0.5)] disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? (
