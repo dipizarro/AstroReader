@@ -30,6 +30,21 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
             return true; // Excepción manejada
         }
 
+        if (exception is KeyNotFoundException keyNotFoundException)
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+
+            var problemDetails = new ProblemDetails
+            {
+                Status = StatusCodes.Status404NotFound,
+                Title = "Recurso no encontrado",
+                Detail = keyNotFoundException.Message
+            };
+
+            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+            return true;
+        }
+
         // 2. Manejo Genérico (Fallos del motor de cálculo, nulos, desconexiones, etc.)
         httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
 

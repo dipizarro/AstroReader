@@ -1,4 +1,5 @@
 using AstroReader.Infrastructure.Persistence;
+using AstroReader.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,7 @@ public static class DependencyInjection
                 sql.MigrationsAssembly(typeof(AstroReaderDbContext).Assembly.FullName);
             });
         });
+        services.AddScoped<AstroReader.Application.SavedCharts.Interfaces.ISavedChartRepository, SavedChartRepository>();
 
         return services;
     }

@@ -1,0 +1,20 @@
+using AstroReader.Application.SavedCharts.DTOs;
+using AstroReader.Application.SavedCharts.Interfaces;
+
+namespace AstroReader.Application.SavedCharts.UseCases;
+
+public class GetSavedChartsUseCase : IGetSavedChartsUseCase
+{
+    private readonly ISavedChartRepository _savedChartRepository;
+
+    public GetSavedChartsUseCase(ISavedChartRepository savedChartRepository)
+    {
+        _savedChartRepository = savedChartRepository;
+    }
+
+    public async Task<IReadOnlyList<SavedChartListItemDto>> ExecuteAsync(CancellationToken cancellationToken = default)
+    {
+        var savedCharts = await _savedChartRepository.GetAllAsync(cancellationToken);
+        return savedCharts.Select(SavedChartMappings.ToListItemDto).ToList();
+    }
+}
