@@ -39,23 +39,6 @@ internal static class SavedChartMappings
         };
     }
 
-    public static SavedChartListItemDto ToListItemDto(SavedChart savedChart)
-    {
-        return new SavedChartListItemDto
-        {
-            Id = savedChart.Id,
-            ProfileName = savedChart.ProfileName,
-            PlaceName = savedChart.PlaceName,
-            BirthDate = savedChart.BirthDate.ToString("yyyy-MM-dd"),
-            BirthTime = savedChart.BirthTime.ToString("HH:mm"),
-            TimezoneOffsetMinutes = savedChart.TimezoneOffsetMinutes,
-            SunSign = savedChart.SunSign,
-            MoonSign = savedChart.MoonSign,
-            AscendantSign = savedChart.AscendantSign,
-            CreatedAtUtc = savedChart.CreatedAtUtc
-        };
-    }
-
     public static string SerializeSnapshot(CalculateChartResponse chart)
     {
         return JsonSerializer.Serialize(chart, JsonOptions);
