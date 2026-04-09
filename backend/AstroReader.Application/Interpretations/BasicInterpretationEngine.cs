@@ -12,12 +12,13 @@ public class BasicInterpretationEngine : IInterpretationEngine
 {
     public ChartInterpretation GenerateBaseInterpretation(NatalChart chart)
     {
-        var sunSign = chart.Planets.FirstOrDefault(p => p.Planet == Planet.Sun)?.Sign ?? ZodiacSign.Aries;
-        var moonSign = chart.Planets.FirstOrDefault(p => p.Planet == Planet.Moon)?.Sign ?? ZodiacSign.Aries;
-        var ascendantSign = chart.Houses.FirstOrDefault(h => h.HouseNumber == 1)?.Sign ?? ZodiacSign.Aries;
-        var mercurySign = chart.Planets.FirstOrDefault(p => p.Planet == Planet.Mercury)?.Sign ?? ZodiacSign.Aries;
-        var venusSign = chart.Planets.FirstOrDefault(p => p.Planet == Planet.Venus)?.Sign ?? ZodiacSign.Aries;
-        var marsSign = chart.Planets.FirstOrDefault(p => p.Planet == Planet.Mars)?.Sign ?? ZodiacSign.Aries;
+        var sun = GetPlanet(chart, Planet.Sun);
+        var moon = GetPlanet(chart, Planet.Moon);
+        var mercury = GetPlanet(chart, Planet.Mercury);
+        var venus = GetPlanet(chart, Planet.Venus);
+        var mars = GetPlanet(chart, Planet.Mars);
+        var ascendantHouse = GetHouse(chart, 1);
+
         var relevantHouses = chart.Houses
             .Where(h => InterpretationCatalog.HouseThemes.ContainsKey(h.HouseNumber))
             .OrderBy(h => h.HouseNumber)
@@ -30,17 +31,20 @@ public class BasicInterpretationEngine : IInterpretationEngine
             })
             .ToList();
 
-        var sunInterpretation = GetInterpretation(InterpretationCatalog.SunBySign, sunSign, "Posicion solar indeterminada.");
-        var moonInterpretation = GetInterpretation(InterpretationCatalog.MoonBySign, moonSign, "Posicion lunar indeterminada.");
-        var ascendantInterpretation = GetInterpretation(InterpretationCatalog.AscendantBySign, ascendantSign, "Ascendente indeterminado.");
-        var mercuryInterpretation = GetInterpretation(InterpretationCatalog.MercuryBySign, mercurySign, "Mercurio indeterminado.");
-        var venusInterpretation = GetInterpretation(InterpretationCatalog.VenusBySign, venusSign, "Venus indeterminada.");
-        var marsInterpretation = GetInterpretation(InterpretationCatalog.MarsBySign, marsSign, "Marte indeterminado.");
-        var summary = GetGeneralSummary(sunSign, moonSign, ascendantSign, mercurySign, venusSign, marsSign);
+        var sunInterpretation = BuildPlanetInterpretation(sun, InterpretationCatalog.SunBySign, "Posicion solar no disponible.");
+        var moonInterpretation = BuildPlanetInterpretation(moon, InterpretationCatalog.MoonBySign, "Posicion lunar no disponible.");
+        var ascendantInterpretation = BuildHouseInterpretation(
+            ascendantHouse,
+            InterpretationCatalog.AscendantBySign,
+            "Ascendente no disponible.");
+        var mercuryInterpretation = BuildPlanetInterpretation(mercury, InterpretationCatalog.MercuryBySign, "Posicion de Mercurio no disponible.");
+        var venusInterpretation = BuildPlanetInterpretation(venus, InterpretationCatalog.VenusBySign, "Posicion de Venus no disponible.");
+        var marsInterpretation = BuildPlanetInterpretation(mars, InterpretationCatalog.MarsBySign, "Posicion de Marte no disponible.");
+        var summary = BuildGeneralSummary(sun, moon, ascendantHouse, mercury, venus, mars);
 
         return new ChartInterpretation
         {
-            Headline = GetHeadline(sunSign, moonSign, ascendantSign),
+            Headline = BuildHeadline(sun, moon, ascendantHouse),
             Summary = summary,
             Core = new CoreInterpretation
             {
@@ -59,30 +63,100 @@ public class BasicInterpretationEngine : IInterpretationEngine
         };
     }
 
-    private string GetHeadline(ZodiacSign sun, ZodiacSign moon, ZodiacSign ascendant)
+    private static PlanetPosition? GetPlanet(NatalChart chart, Planet planet)
     {
-        return $"Tu carta combina un Sol en {sun}, una Luna en {moon} y un Ascendente en {ascendant}, formando una personalidad con identidad, sensibilidad y presencia muy marcadas.";
+        return chart.Planets.FirstOrDefault(p => p.Planet == planet);
     }
 
-    private string GetGeneralSummary(
-        ZodiacSign sun,
-        ZodiacSign moon,
-        ZodiacSign ascendant,
-        ZodiacSign mercury,
-        ZodiacSign venus,
-        ZodiacSign mars)
+    private static HousePosition? GetHouse(NatalChart chart, int houseNumber)
     {
-        return $"En conjunto, la identidad se apoya en {sun}, la emocionalidad se mueve desde {moon} y tu forma de entrar al mundo pasa por {ascendant}. En lo mental sobresale Mercurio en {mercury}, en lo afectivo Venus en {venus} y en la accion Marte en {mars}, creando un perfil mas completo entre pensamiento, deseo y empuje.";
+        return chart.Houses.FirstOrDefault(h => h.HouseNumber == houseNumber);
     }
 
-    private static string GetInterpretation(
+    private static string BuildPlanetInterpretation(
+        PlanetPosition? position,
         IReadOnlyDictionary<ZodiacSign, string> catalog,
-        ZodiacSign sign,
         string fallback)
     {
-        return catalog.TryGetValue(sign, out var interpretation)
+        if (position is null)
+        {
+            return fallback;
+        }
+
+        var baseText = catalog.TryGetValue(position.Sign, out var interpretation)
             ? interpretation
             : fallback;
+
+        return position.IsRetrograde
+            ? $"{baseText} Esta energia opera en fase retrograda, volviendose mas introspectiva, revisora o internalizada."
+            : baseText;
+    }
+
+    private static string BuildHouseInterpretation(
+        HousePosition? house,
+        IReadOnlyDictionary<ZodiacSign, string> catalog,
+        string fallback)
+    {
+        if (house is null)
+        {
+            return fallback;
+        }
+
+        return catalog.TryGetValue(house.Sign, out var interpretation)
+            ? interpretation
+            : fallback;
+    }
+
+    private static string BuildHeadline(
+        PlanetPosition? sun,
+        PlanetPosition? moon,
+        HousePosition? ascendantHouse)
+    {
+        if (sun is null || moon is null || ascendantHouse is null)
+        {
+            return "Tu carta ya ofrece una base real para leer identidad, emocionalidad y forma de presencia, aunque algunos factores centrales no esten disponibles.";
+        }
+
+        return $"Tu carta combina un Sol en {sun.Sign}, una Luna en {moon.Sign} y un Ascendente en {ascendantHouse.Sign}, formando una personalidad con identidad, sensibilidad y presencia bien diferenciadas.";
+    }
+
+    private static string BuildGeneralSummary(
+        PlanetPosition? sun,
+        PlanetPosition? moon,
+        HousePosition? ascendantHouse,
+        PlanetPosition? mercury,
+        PlanetPosition? venus,
+        PlanetPosition? mars)
+    {
+        var identity = sun is not null
+            ? $"la identidad se apoya en {sun.Sign}"
+            : "la identidad necesita una lectura solar mas completa";
+
+        var emotional = moon is not null
+            ? $"la emocionalidad se mueve desde {moon.Sign}"
+            : "la emocionalidad necesita una lectura lunar mas completa";
+
+        var presence = ascendantHouse is not null
+            ? $"tu forma de entrar al mundo pasa por {ascendantHouse.Sign}"
+            : "la forma de presencia necesita un ascendente disponible";
+
+        var mercuryText = DescribePlanet(mercury, "Mercurio");
+        var venusText = DescribePlanet(venus, "Venus");
+        var marsText = DescribePlanet(mars, "Marte");
+
+        return $"En conjunto, {identity}, {emotional} y {presence}. En lo mental sobresale {mercuryText}, en lo afectivo {venusText} y en la accion {marsText}, creando un perfil mas rico entre pensamiento, deseo y empuje.";
+    }
+
+    private static string DescribePlanet(PlanetPosition? position, string label)
+    {
+        if (position is null)
+        {
+            return $"{label.ToLowerInvariant()} no disponible";
+        }
+
+        return position.IsRetrograde
+            ? $"{label} en {position.Sign} retrogrado"
+            : $"{label} en {position.Sign}";
     }
 
     private static string BuildHouseInterpretation(int houseNumber, ZodiacSign sign)
