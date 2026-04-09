@@ -16,6 +16,6 @@ internal sealed class SwissEphClientFactory : ISwissEphClientFactory
     {
         // SwissEphNet no es thread-safe por instancia.
         // Creamos una instancia nueva por operación y la descartamos al final.
-        return new SwissEphClient(_options.EphemerisPath);
+        return new SwissEphClient(_options.EphemerisPath, _options.HouseSystem);
     }
 }

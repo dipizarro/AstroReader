@@ -1,20 +1,25 @@
 using AstroReader.AstroEngine.Constants;
 using AstroReader.AstroEngine.Contracts;
+using AstroReader.AstroEngine.Internal;
 
 namespace AstroReader.AstroEngine.Implementations;
 
 /// <summary>
 /// Spike experimental: usa Swiss Ephemeris para posiciones planetarias reales,
-/// pero todavía no resuelve ascendente ni casas.
+/// ascendente y casas útiles para la primera carta natal real.
 /// El mock sigue siendo la implementación default hasta que validemos el motor.
 /// </summary>
-public sealed class SwissEphAstroCalculationEngine : IAstroCalculationEngine
+internal sealed class SwissEphAstroCalculationEngine : IAstroCalculationEngine
 {
     private readonly IAstroLongitudeProbe _longitudeProbe;
+    private readonly ISwissEphClientFactory _swissEphClientFactory;
 
-    public SwissEphAstroCalculationEngine(IAstroLongitudeProbe longitudeProbe)
+    public SwissEphAstroCalculationEngine(
+        IAstroLongitudeProbe longitudeProbe,
+        ISwissEphClientFactory swissEphClientFactory)
     {
         _longitudeProbe = longitudeProbe;
+        _swissEphClientFactory = swissEphClientFactory;
     }
 
     public AstroCalculationResult Calculate(AstroCalculationRequest request)
@@ -31,12 +36,15 @@ public sealed class SwissEphAstroCalculationEngine : IAstroCalculationEngine
                 result.IsRetrograde);
         }
 
+        using var swiss = _swissEphClientFactory.CreateClient();
+        var julianDayUt = swiss.CalculateJulianDayUt(request.UtcDateTime);
+        var housesCalculation = swiss.CalculateHouses(julianDayUt, request.Latitude, request.Longitude);
+
         return new AstroCalculationResult
         {
-            // Sprint spike: ascendente y casas quedarán para la siguiente fase.
-            AscendantDegree = 0,
+            AscendantDegree = housesCalculation.AscendantDegree,
             PlanetaryPositions = planetaryPositions,
-            Houses = new Dictionary<int, double>()
+            Houses = housesCalculation.HouseCusps
         };
     }
 }

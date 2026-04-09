@@ -5,6 +5,7 @@ namespace AstroReader.AstroEngine.Configuration;
 public sealed record SwissEphOptions
 {
     public const string SectionName = "AstroEngine:SwissEph";
+    public const string DefaultHouseSystem = "P";
 
     /// <summary>
     /// Mantiene el mock como default y permite activar SwissEph por configuración cuando el spike madure.
@@ -17,4 +18,10 @@ public sealed record SwissEphOptions
     /// </summary>
     [MaxLength(500)]
     public string? EphemerisPath { get; init; }
+
+    /// <summary>
+    /// Sistema de casas Swiss Ephemeris. Para MVP usamos Placidus ("P") por defecto.
+    /// </summary>
+    [MaxLength(1)]
+    public string HouseSystem { get; init; } = DefaultHouseSystem;
 }
