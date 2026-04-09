@@ -26,7 +26,7 @@ public static class DependencyInjection
         {
             var options = serviceProvider.GetRequiredService<IOptions<SwissEphOptions>>().Value;
 
-            return options.EnableSwissEphForNatalCharts
+            return options.ShouldUseSwissEph()
                 ? serviceProvider.GetRequiredService<SwissEphAstroCalculationEngine>()
                 : serviceProvider.GetRequiredService<MockAstroCalculationEngine>();
         });

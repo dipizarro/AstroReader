@@ -6,9 +6,19 @@ public sealed record SwissEphOptions
 {
     public const string SectionName = "AstroEngine:SwissEph";
     public const string DefaultHouseSystem = "P";
+    public const string MockEngineMode = "Mock";
+    public const string SwissEphEngineMode = "SwissEph";
 
     /// <summary>
-    /// Mantiene el mock como default y permite activar SwissEph por configuración cuando el spike madure.
+    /// Selector explícito del engine astral durante el spike.
+    /// Valores admitidos: Mock, SwissEph.
+    /// </summary>
+    [MaxLength(32)]
+    public string CalculationEngine { get; init; } = MockEngineMode;
+
+    /// <summary>
+    /// Compatibilidad temporal con la activación inicial del spike.
+    /// Si viene true y no se configuró CalculationEngine, se activa SwissEph.
     /// </summary>
     public bool EnableSwissEphForNatalCharts { get; init; }
 
@@ -24,4 +34,27 @@ public sealed record SwissEphOptions
     /// </summary>
     [MaxLength(1)]
     public string HouseSystem { get; init; } = DefaultHouseSystem;
+
+    public bool ShouldUseSwissEph()
+    {
+        var normalizedMode = (CalculationEngine ?? string.Empty).Trim();
+
+        if (normalizedMode.Equals(SwissEphEngineMode, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (normalizedMode.Equals(MockEngineMode, StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(normalizedMode))
+        {
+            return EnableSwissEphForNatalCharts;
+        }
+
+        throw new InvalidOperationException(
+            $"AstroEngine:SwissEph:CalculationEngine='{CalculationEngine}' no es válido. Usa '{MockEngineMode}' o '{SwissEphEngineMode}'.");
+    }
 }
