@@ -10,11 +10,11 @@ namespace AstroReader.AstroEngine.Implementations;
 /// </summary>
 public sealed class SwissEphAstroCalculationEngine : IAstroCalculationEngine
 {
-    private readonly ISwissEphPlanetaryProbe _planetaryProbe;
+    private readonly IAstroLongitudeProbe _longitudeProbe;
 
-    public SwissEphAstroCalculationEngine(ISwissEphPlanetaryProbe planetaryProbe)
+    public SwissEphAstroCalculationEngine(IAstroLongitudeProbe longitudeProbe)
     {
-        _planetaryProbe = planetaryProbe;
+        _longitudeProbe = longitudeProbe;
     }
 
     public AstroCalculationResult Calculate(AstroCalculationRequest request)
@@ -23,7 +23,7 @@ public sealed class SwissEphAstroCalculationEngine : IAstroCalculationEngine
 
         foreach (var planetId in SwissEphPlanetIds.CorePlanets)
         {
-            var result = _planetaryProbe.CalculateEclipticLongitudeUtc(request.UtcDateTime, planetId);
+            var result = _longitudeProbe.CalculateEclipticLongitudeUtc(request.UtcDateTime, planetId);
             planetaryPositions[planetId] = new AsteroidalData(result.EclipticLongitude, result.IsRetrograde);
         }
 

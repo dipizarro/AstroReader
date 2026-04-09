@@ -1,33 +1,31 @@
-using AstroReader.AstroEngine.Configuration;
 using AstroReader.AstroEngine.Contracts;
-using Microsoft.Extensions.Options;
+using AstroReader.AstroEngine.Internal;
 
 namespace AstroReader.AstroEngine.Implementations;
 
-public sealed class SwissEphPlanetaryProbe : ISwissEphPlanetaryProbe
+internal sealed class AstroLongitudeProbe : IAstroLongitudeProbe
 {
-    private readonly SwissEphOptions _options;
+    private readonly ISwissEphClientFactory _clientFactory;
 
-    public SwissEphPlanetaryProbe(IOptions<SwissEphOptions> options)
+    public AstroLongitudeProbe(ISwissEphClientFactory clientFactory)
     {
-        _options = options.Value;
+        _clientFactory = clientFactory;
     }
 
     public PlanetLongitudeResult CalculateEclipticLongitudeUtc(DateTime utcDateTime, int planetId)
     {
-        using var swiss = new SwissEphReflectionBridge();
-        swiss.ConfigureEphemerisPath(_options.EphemerisPath);
+        using var swiss = _clientFactory.CreateClient();
 
         var julianDayUt = swiss.CalculateJulianDayUt(utcDateTime);
-        var flags = swiss.GetConstant("SEFLG_SWIEPH") | swiss.GetConstant("SEFLG_SPEED");
+        var flags = swiss.GetSwissEphemerisPlanetFlags();
         var calculation = swiss.CalculatePlanetLongitude(julianDayUt, planetId, flags);
 
         if (calculation.ReturnFlag < 0)
         {
             throw new InvalidOperationException(
                 string.IsNullOrWhiteSpace(calculation.ErrorText)
-                    ? "Swiss Ephemeris devolvió un error al calcular la longitud eclíptica."
-                    : $"Swiss Ephemeris devolvió un error: {calculation.ErrorText}");
+                    ? "No fue posible calcular la longitud eclíptica del planeta solicitado."
+                    : "No fue posible calcular la longitud eclíptica del planeta solicitado.");
         }
 
         return new PlanetLongitudeResult
@@ -39,7 +37,7 @@ public sealed class SwissEphPlanetaryProbe : ISwissEphPlanetaryProbe
             LongitudeSpeed = calculation.Positions[3],
             IsRetrograde = calculation.Positions[3] < 0,
             FlagsUsed = flags,
-            EphemerisPath = _options.EphemerisPath,
+            EphemerisPath = swiss.EphemerisPath,
             Warning = string.IsNullOrWhiteSpace(calculation.ErrorText) ? null : calculation.ErrorText
         };
     }

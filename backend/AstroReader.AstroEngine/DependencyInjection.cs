@@ -1,6 +1,7 @@
 using AstroReader.AstroEngine.Configuration;
 using AstroReader.AstroEngine.Contracts;
 using AstroReader.AstroEngine.Implementations;
+using AstroReader.AstroEngine.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -16,7 +17,8 @@ public static class DependencyInjection
         services.AddOptions<SwissEphOptions>()
             .Bind(configuration.GetSection(SwissEphOptions.SectionName));
 
-        services.AddSingleton<ISwissEphPlanetaryProbe, SwissEphPlanetaryProbe>();
+        services.AddSingleton<ISwissEphClientFactory, SwissEphClientFactory>();
+        services.AddSingleton<IAstroLongitudeProbe, AstroLongitudeProbe>();
         services.AddSingleton<MockAstroCalculationEngine>();
         services.AddSingleton<SwissEphAstroCalculationEngine>();
 

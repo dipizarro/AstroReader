@@ -8,11 +8,11 @@ namespace AstroReader.Api.Controllers;
 [Route("api/swiss-eph-spike")]
 public class SwissEphSpikeController : ControllerBase
 {
-    private readonly ISwissEphPlanetaryProbe _planetaryProbe;
+    private readonly IAstroLongitudeProbe _longitudeProbe;
 
-    public SwissEphSpikeController(ISwissEphPlanetaryProbe planetaryProbe)
+    public SwissEphSpikeController(IAstroLongitudeProbe longitudeProbe)
     {
-        _planetaryProbe = planetaryProbe;
+        _longitudeProbe = longitudeProbe;
     }
 
     [HttpGet("planet-longitude")]
@@ -39,7 +39,7 @@ public class SwissEphSpikeController : ControllerBase
             _ => throw new ArgumentException("Planet inválido. Usa: sun, moon, mercury, venus, mars, jupiter o saturn.")
         };
 
-        var result = _planetaryProbe.CalculateEclipticLongitudeUtc(
+        var result = _longitudeProbe.CalculateEclipticLongitudeUtc(
             utcDateTime.Kind == DateTimeKind.Unspecified
                 ? DateTime.SpecifyKind(utcDateTime, DateTimeKind.Utc)
                 : utcDateTime.ToUniversalTime(),

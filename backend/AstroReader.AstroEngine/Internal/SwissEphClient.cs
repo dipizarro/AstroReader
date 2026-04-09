@@ -1,13 +1,9 @@
 using System.Reflection;
 using System.Text;
 
-namespace AstroReader.AstroEngine.Implementations;
+namespace AstroReader.AstroEngine.Internal;
 
-/// <summary>
-/// Wrapper reflection-based para mantener el spike desacoplado de detalles finos del API del port.
-/// Si SwissEphNet cambia alguna firma menor, este punto absorbe el impacto mejor que el resto del sistema.
-/// </summary>
-internal sealed class SwissEphReflectionBridge : IDisposable
+internal sealed class SwissEphClient : ISwissEphClient
 {
     private const string SwissEphTypeName = "SwissEphNet.SwissEph, SwissEphNet";
 
@@ -15,7 +11,7 @@ internal sealed class SwissEphReflectionBridge : IDisposable
     private readonly object _swissEphInstance;
     private bool _disposed;
 
-    public SwissEphReflectionBridge()
+    public SwissEphClient(string? ephemerisPath)
     {
         _swissEphType = Type.GetType(SwissEphTypeName, throwOnError: false)
             ?? throw new InvalidOperationException(
@@ -23,26 +19,17 @@ internal sealed class SwissEphReflectionBridge : IDisposable
 
         _swissEphInstance = Activator.CreateInstance(_swissEphType)
             ?? throw new InvalidOperationException("No se pudo crear una instancia de SwissEphNet.SwissEph.");
-    }
 
-    public void ConfigureEphemerisPath(string? ephemerisPath)
-    {
-        if (string.IsNullOrWhiteSpace(ephemerisPath))
+        EphemerisPath = string.IsNullOrWhiteSpace(ephemerisPath) ? null : ephemerisPath.Trim();
+
+        if (EphemerisPath is not null)
         {
-            return;
+            var method = FindInstanceMethod("swe_set_ephe_path", parameterCount: 1);
+            method.Invoke(_swissEphInstance, [EphemerisPath]);
         }
-
-        var method = FindInstanceMethod("swe_set_ephe_path", parameterCount: 1);
-        method.Invoke(_swissEphInstance, [ephemerisPath]);
     }
 
-    public int GetConstant(string name)
-    {
-        var field = _swissEphType.GetField(name, BindingFlags.Public | BindingFlags.Static)
-            ?? throw new InvalidOperationException($"SwissEphNet no expone la constante '{name}'.");
-
-        return Convert.ToInt32(field.GetValue(null));
-    }
+    public string? EphemerisPath { get; }
 
     public double CalculateJulianDayUt(DateTime utcDateTime)
     {
@@ -67,10 +54,12 @@ internal sealed class SwissEphReflectionBridge : IDisposable
         return Convert.ToDouble(result);
     }
 
-    public (double[] Positions, int ReturnFlag, string ErrorText) CalculatePlanetLongitude(
-        double julianDayUt,
-        int planetId,
-        int flags)
+    public int GetSwissEphemerisPlanetFlags()
+    {
+        return GetConstant("SEFLG_SWIEPH") | GetConstant("SEFLG_SPEED");
+    }
+
+    public SwissPlanetCalculation CalculatePlanetLongitude(double julianDayUt, int planetId, int flags)
     {
         var method = FindInstanceMethod("swe_calc_ut", parameterCount: 5);
         var parameters = method.GetParameters();
@@ -84,11 +73,10 @@ internal sealed class SwissEphReflectionBridge : IDisposable
 
         var returnValue = method.Invoke(_swissEphInstance, callArguments);
 
-        return (
+        return new SwissPlanetCalculation(
             Positions: (double[])callArguments[3],
             ReturnFlag: Convert.ToInt32(returnValue),
-            ErrorText: ExtractErrorText(callArguments[4])
-        );
+            ErrorText: ExtractErrorText(callArguments[4]));
     }
 
     public void Dispose()
@@ -100,6 +88,14 @@ internal sealed class SwissEphReflectionBridge : IDisposable
 
         (_swissEphInstance as IDisposable)?.Dispose();
         _disposed = true;
+    }
+
+    private int GetConstant(string name)
+    {
+        var field = _swissEphType.GetField(name, BindingFlags.Public | BindingFlags.Static)
+            ?? throw new InvalidOperationException($"SwissEphNet no expone la constante '{name}'.");
+
+        return Convert.ToInt32(field.GetValue(null));
     }
 
     private MethodInfo FindInstanceMethod(string name, int parameterCount)
