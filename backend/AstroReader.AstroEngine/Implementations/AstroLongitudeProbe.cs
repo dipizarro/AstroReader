@@ -34,6 +34,8 @@ internal sealed class AstroLongitudeProbe : IAstroLongitudeProbe
             PlanetId = planetId,
             JulianDayUt = julianDayUt,
             EclipticLongitude = NormalizeDegrees(calculation.Positions[0]),
+            ZodiacSignIndex = GetZodiacSignIndex(calculation.Positions[0]),
+            SignDegree = GetRelativeSignDegree(calculation.Positions[0]),
             LongitudeSpeed = calculation.Positions[3],
             IsRetrograde = calculation.Positions[3] < 0,
             FlagsUsed = flags,
@@ -55,5 +57,15 @@ internal sealed class AstroLongitudeProbe : IAstroLongitudeProbe
     private static double NormalizeDegrees(double degrees)
     {
         return (degrees % 360 + 360) % 360;
+    }
+
+    private static int GetZodiacSignIndex(double absoluteLongitude)
+    {
+        return (int)(NormalizeDegrees(absoluteLongitude) / 30d);
+    }
+
+    private static double GetRelativeSignDegree(double absoluteLongitude)
+    {
+        return NormalizeDegrees(absoluteLongitude) % 30d;
     }
 }

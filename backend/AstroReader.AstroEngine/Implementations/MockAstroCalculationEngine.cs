@@ -18,8 +18,8 @@ public class MockAstroCalculationEngine : IAstroCalculationEngine
             AscendantDegree = 185.0, // Libra (180+)
             PlanetaryPositions = new Dictionary<int, AsteroidalData>
             {
-                { 0, new AsteroidalData(49.4, false) }, // Sun ~ 49.4° (Taurus)
-                { 1, new AsteroidalData(127.8, false) }, // Moon ~ 127.8° (Leo)
+                { 0, new AsteroidalData(49.4, 1, 19.4, false) }, // Sun ~ 49.4° (Taurus)
+                { 1, new AsteroidalData(127.8, 4, 7.8, false) }, // Moon ~ 127.8° (Leo)
             },
             Houses = new Dictionary<int, double>
             {

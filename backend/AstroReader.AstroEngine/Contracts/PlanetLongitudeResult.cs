@@ -6,6 +6,8 @@ public sealed record PlanetLongitudeResult
     public int PlanetId { get; init; }
     public double JulianDayUt { get; init; }
     public double EclipticLongitude { get; init; }
+    public int ZodiacSignIndex { get; init; }
+    public double SignDegree { get; init; }
     public double LongitudeSpeed { get; init; }
     public bool IsRetrograde { get; init; }
     public int FlagsUsed { get; init; }

@@ -24,7 +24,11 @@ public sealed class SwissEphAstroCalculationEngine : IAstroCalculationEngine
         foreach (var planetId in SwissEphPlanetIds.CorePlanets)
         {
             var result = _longitudeProbe.CalculateEclipticLongitudeUtc(request.UtcDateTime, planetId);
-            planetaryPositions[planetId] = new AsteroidalData(result.EclipticLongitude, result.IsRetrograde);
+            planetaryPositions[planetId] = new AsteroidalData(
+                result.EclipticLongitude,
+                result.ZodiacSignIndex,
+                result.SignDegree,
+                result.IsRetrograde);
         }
 
         return new AstroCalculationResult

@@ -31,5 +31,7 @@ public record AstroCalculationResult
 /// </summary>
 public record AsteroidalData(
     double AbsoluteDegree,
+    int ZodiacSignIndex,
+    double SignDegree,
     bool IsRetrograde
 );

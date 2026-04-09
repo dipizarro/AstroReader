@@ -56,8 +56,8 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         {
             Planet = MapPlanetIdToEnum(kvp.Key),
             AbsoluteDegree = kvp.Value.AbsoluteDegree,
-            Sign = GetSignFromDegree(kvp.Value.AbsoluteDegree),
-            SignDegree = kvp.Value.AbsoluteDegree % 30,
+            Sign = MapSignIndexToEnum(kvp.Value.ZodiacSignIndex),
+            SignDegree = kvp.Value.SignDegree,
             IsRetrograde = kvp.Value.IsRetrograde
         }).ToList();
 
@@ -134,5 +134,11 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         degree = (degree % 360 + 360) % 360; // Normalize
         int signIndex = (int)(degree / 30);
         return (ZodiacSign)signIndex;
+    }
+
+    private ZodiacSign MapSignIndexToEnum(int signIndex)
+    {
+        var normalizedIndex = ((signIndex % 12) + 12) % 12;
+        return (ZodiacSign)normalizedIndex;
     }
 }
