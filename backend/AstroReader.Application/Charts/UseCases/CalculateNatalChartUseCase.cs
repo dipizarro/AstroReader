@@ -121,6 +121,10 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
             0 => Planet.Sun,
             1 => Planet.Moon,
             2 => Planet.Mercury,
+            3 => Planet.Venus,
+            4 => Planet.Mars,
+            5 => Planet.Jupiter,
+            6 => Planet.Saturn,
             _ => Planet.Pluto
         };
     }

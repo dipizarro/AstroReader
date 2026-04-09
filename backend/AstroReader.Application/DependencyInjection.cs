@@ -15,7 +15,6 @@ public static class DependencyInjection
         services.AddScoped<IGetSavedChartByIdUseCase, GetSavedChartByIdUseCase>();
         services.AddScoped<IGetSavedChartsUseCase, GetSavedChartsUseCase>();
         services.AddScoped<AstroReader.Application.Interpretations.IInterpretationEngine, AstroReader.Application.Interpretations.BasicInterpretationEngine>();
-        services.AddSingleton<AstroReader.AstroEngine.Contracts.IAstroCalculationEngine, AstroReader.AstroEngine.Implementations.MockAstroCalculationEngine>();
         
         return services;
     }
