@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AstroReader.AstroEngine.Exceptions;
 using AstroReader.Application.SavedCharts.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -56,6 +57,28 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
                 Title = "Error de integridad del guardado",
                 Detail = integrityException.Message
             };
+
+            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+            return true;
+        }
+
+        if (exception is AstroCalculationException astroCalculationException)
+        {
+            var statusCode = astroCalculationException.Code is AstroCalculationErrorCode.Configuration
+                or AstroCalculationErrorCode.Wrapper
+                ? StatusCodes.Status500InternalServerError
+                : StatusCodes.Status503ServiceUnavailable;
+
+            httpContext.Response.StatusCode = statusCode;
+
+            var problemDetails = new ProblemDetails
+            {
+                Status = statusCode,
+                Title = "Error del motor astral",
+                Detail = astroCalculationException.PublicMessage
+            };
+
+            problemDetails.Extensions["code"] = astroCalculationException.Code.ToString();
 
             await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
             return true;

@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using AstroReader.AstroEngine.Exceptions;
 
 namespace AstroReader.AstroEngine.Internal;
 
@@ -16,17 +17,30 @@ internal sealed class SwissEphClient : ISwissEphClient
     public SwissEphClient(string? ephemerisPath, string? houseSystem)
     {
         _swissEphType = Type.GetType(SwissEphTypeName, throwOnError: false)
-            ?? throw new InvalidOperationException(
-                "SwissEphNet no pudo cargarse. Verifica que el paquete esté restaurado en AstroReader.AstroEngine.");
+            ?? throw new AstroCalculationException(
+                AstroCalculationErrorCode.Wrapper,
+                publicMessage: "El motor astral real no se encuentra disponible en este momento.",
+                diagnosticMessage: "SwissEphNet no pudo cargarse. Verifica que el paquete esté restaurado en AstroReader.AstroEngine.");
 
         _swissEphInstance = Activator.CreateInstance(_swissEphType)
-            ?? throw new InvalidOperationException("No se pudo crear una instancia de SwissEphNet.SwissEph.");
+            ?? throw new AstroCalculationException(
+                AstroCalculationErrorCode.Wrapper,
+                publicMessage: "El motor astral real no pudo inicializarse correctamente.",
+                diagnosticMessage: "No se pudo crear una instancia de SwissEphNet.SwissEph.");
 
         EphemerisPath = string.IsNullOrWhiteSpace(ephemerisPath) ? null : ephemerisPath.Trim();
         _houseSystem = NormalizeHouseSystem(houseSystem);
 
         if (EphemerisPath is not null)
         {
+            if (!Directory.Exists(EphemerisPath))
+            {
+                throw new AstroCalculationException(
+                    AstroCalculationErrorCode.Ephemerides,
+                    publicMessage: "Los archivos de efemerides del motor astral no estan disponibles.",
+                    diagnosticMessage: $"El directorio de efemérides configurado no existe: '{EphemerisPath}'.");
+            }
+
             var method = FindInstanceMethod("swe_set_ephe_path", parameterCount: 1);
             method.Invoke(_swissEphInstance, [EphemerisPath]);
         }
@@ -102,7 +116,11 @@ internal sealed class SwissEphClient : ISwissEphClient
 
         if (returnCode < 0)
         {
-            throw new InvalidOperationException("Swiss Ephemeris no pudo calcular casas para las coordenadas dadas.");
+            throw new AstroCalculationException(
+                AstroCalculationErrorCode.Calculation,
+                publicMessage: "No fue posible calcular las casas astrales para la carta solicitada.",
+                diagnosticMessage:
+                $"Swiss Ephemeris devolvió un error al calcular casas. lat={latitude}, lon={longitude}, jdUt={julianDayUt}, hsys={_houseSystem}.");
         }
 
         var houseCusps = new Dictionary<int, double>(HouseCount);
@@ -130,7 +148,10 @@ internal sealed class SwissEphClient : ISwissEphClient
     private int GetConstant(string name)
     {
         var field = _swissEphType.GetField(name, BindingFlags.Public | BindingFlags.Static)
-            ?? throw new InvalidOperationException($"SwissEphNet no expone la constante '{name}'.");
+            ?? throw new AstroCalculationException(
+                AstroCalculationErrorCode.Wrapper,
+                publicMessage: "El wrapper del motor astral no expone un contrato compatible.",
+                diagnosticMessage: $"SwissEphNet no expone la constante '{name}'.");
 
         return Convert.ToInt32(field.GetValue(null));
     }
@@ -140,7 +161,10 @@ internal sealed class SwissEphClient : ISwissEphClient
         return _swissEphType
             .GetMethods(BindingFlags.Instance | BindingFlags.Public)
             .FirstOrDefault(method => method.Name == name && method.GetParameters().Length == parameterCount)
-            ?? throw new InvalidOperationException($"SwissEphNet no expone el método requerido '{name}'.");
+            ?? throw new AstroCalculationException(
+                AstroCalculationErrorCode.Wrapper,
+                publicMessage: "El wrapper del motor astral no expone un contrato compatible.",
+                diagnosticMessage: $"SwissEphNet no expone el método requerido '{name}' con {parameterCount} parámetros.");
     }
 
     private static object CreateErrorArgument(Type parameterType)
@@ -159,8 +183,10 @@ internal sealed class SwissEphClient : ISwissEphClient
             return string.Empty;
         }
 
-        throw new InvalidOperationException(
-            $"No se reconoce el tipo del parámetro de error de SwissEphNet: '{parameterType.FullName}'.");
+        throw new AstroCalculationException(
+            AstroCalculationErrorCode.Wrapper,
+            publicMessage: "El wrapper del motor astral devolvió un formato inesperado.",
+            diagnosticMessage: $"No se reconoce el tipo del parámetro de error de SwissEphNet: '{parameterType.FullName}'.");
     }
 
     private static object CreateHouseSystemArgument(Type parameterType, char houseSystem)
@@ -179,8 +205,10 @@ internal sealed class SwissEphClient : ISwissEphClient
             return (int)houseSystem;
         }
 
-        throw new InvalidOperationException(
-            $"No se reconoce el tipo del parámetro hsys de SwissEphNet: '{parameterType.FullName}'.");
+        throw new AstroCalculationException(
+            AstroCalculationErrorCode.Wrapper,
+            publicMessage: "El wrapper del motor astral devolvió un formato inesperado.",
+            diagnosticMessage: $"No se reconoce el tipo del parámetro hsys de SwissEphNet: '{parameterType.FullName}'.");
     }
 
     private static string ExtractErrorText(object argument)

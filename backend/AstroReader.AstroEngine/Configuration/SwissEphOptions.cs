@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AstroReader.AstroEngine.Exceptions;
 
 namespace AstroReader.AstroEngine.Configuration;
 
@@ -54,7 +55,10 @@ public sealed record SwissEphOptions
             return EnableSwissEphForNatalCharts;
         }
 
-        throw new InvalidOperationException(
+        throw new AstroCalculationException(
+            AstroCalculationErrorCode.Configuration,
+            publicMessage: "La configuracion del motor astral no es valida.",
+            diagnosticMessage:
             $"AstroEngine:SwissEph:CalculationEngine='{CalculationEngine}' no es válido. Usa '{MockEngineMode}' o '{SwissEphEngineMode}'.");
     }
 }

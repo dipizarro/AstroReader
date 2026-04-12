@@ -1,4 +1,5 @@
 using AstroReader.AstroEngine.Contracts;
+using AstroReader.AstroEngine.Exceptions;
 using AstroReader.AstroEngine.Internal;
 
 namespace AstroReader.AstroEngine.Implementations;
@@ -22,10 +23,12 @@ internal sealed class AstroLongitudeProbe : IAstroLongitudeProbe
 
         if (calculation.ReturnFlag < 0)
         {
-            throw new InvalidOperationException(
-                string.IsNullOrWhiteSpace(calculation.ErrorText)
-                    ? "No fue posible calcular la longitud eclíptica del planeta solicitado."
-                    : "No fue posible calcular la longitud eclíptica del planeta solicitado.");
+            throw new AstroCalculationException(
+                AstroCalculationErrorCode.Calculation,
+                publicMessage: "No fue posible calcular la posicion astral solicitada.",
+                diagnosticMessage: string.IsNullOrWhiteSpace(calculation.ErrorText)
+                    ? $"Swiss Ephemeris devolvió un error sin detalle al calcular longitud eclíptica. planetId={planetId}, jdUt={julianDayUt}, flags={flags}."
+                    : $"Swiss Ephemeris devolvió un error al calcular longitud eclíptica. planetId={planetId}, jdUt={julianDayUt}, flags={flags}, detail='{calculation.ErrorText}'.");
         }
 
         return new PlanetLongitudeResult
