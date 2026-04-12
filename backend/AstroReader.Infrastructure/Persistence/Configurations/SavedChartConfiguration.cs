@@ -54,6 +54,13 @@ public class SavedChartConfiguration : IEntityTypeConfiguration<SavedChart>
             .HasMaxLength(20)
             .IsRequired();
 
+        builder.Property(x => x.CalculationEngine)
+            .HasMaxLength(50)
+            .IsRequired();
+
+        builder.Property(x => x.HouseSystemCode)
+            .HasMaxLength(16);
+
         builder.Property(x => x.SnapshotVersion)
             .IsRequired();
 

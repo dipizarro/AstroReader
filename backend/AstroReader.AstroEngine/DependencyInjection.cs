@@ -19,6 +19,7 @@ public static class DependencyInjection
 
         services.AddSingleton<ISwissEphClientFactory, SwissEphClientFactory>();
         services.AddSingleton<IAstroLongitudeProbe, AstroLongitudeProbe>();
+        services.AddSingleton<IAstroEngineTechnicalMetadataProvider, AstroEngineTechnicalMetadataProvider>();
         services.AddSingleton<MockAstroCalculationEngine>();
         services.AddSingleton<SwissEphAstroCalculationEngine>();
         services.AddSingleton<IAstroEngineSmokeCheck, AstroEngineSmokeCheck>();

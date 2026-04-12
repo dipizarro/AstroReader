@@ -67,6 +67,7 @@ public class SwissEphExternalReferenceTests
             .Build();
 
         var services = new ServiceCollection();
+        services.AddLogging();
         services.AddAstroEngineServices(configuration);
 
         return services.BuildServiceProvider();

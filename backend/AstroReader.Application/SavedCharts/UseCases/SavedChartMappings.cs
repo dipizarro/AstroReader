@@ -32,6 +32,8 @@ internal static class SavedChartMappings
             SunSign = savedChart.SunSign,
             MoonSign = savedChart.MoonSign,
             AscendantSign = savedChart.AscendantSign,
+            CalculationEngine = savedChart.CalculationEngine,
+            HouseSystemCode = savedChart.HouseSystemCode,
             SnapshotVersion = savedChart.SnapshotVersion,
             CreatedAtUtc = savedChart.CreatedAtUtc,
             UpdatedAtUtc = savedChart.UpdatedAtUtc,

@@ -37,6 +37,11 @@ namespace AstroReader.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CalculationEngine")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<DateOnly>("BirthDate")
                         .HasColumnType("date");
 
@@ -48,6 +53,10 @@ namespace AstroReader.Infrastructure.Persistence.Migrations
 
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("HouseSystemCode")
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<decimal>("Latitude")
                         .HasPrecision(9, 6)

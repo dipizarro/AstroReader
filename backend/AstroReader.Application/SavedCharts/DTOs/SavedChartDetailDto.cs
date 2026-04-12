@@ -18,6 +18,8 @@ public record SavedChartDetailDto
     public string SunSign { get; init; } = string.Empty;
     public string MoonSign { get; init; } = string.Empty;
     public string AscendantSign { get; init; } = string.Empty;
+    public string CalculationEngine { get; init; } = string.Empty;
+    public string? HouseSystemCode { get; init; }
     public int SnapshotVersion { get; init; }
     public DateTime CreatedAtUtc { get; init; }
     public DateTime UpdatedAtUtc { get; init; }

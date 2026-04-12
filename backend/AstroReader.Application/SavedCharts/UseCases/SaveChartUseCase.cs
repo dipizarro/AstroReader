@@ -3,6 +3,7 @@ using AstroReader.Application.Charts.Interfaces;
 using AstroReader.Application.SavedCharts.DTOs;
 using AstroReader.Application.SavedCharts.Exceptions;
 using AstroReader.Application.SavedCharts.Interfaces;
+using AstroReader.AstroEngine.Contracts;
 using AstroReader.Domain.Entities;
 
 namespace AstroReader.Application.SavedCharts.UseCases;
@@ -10,13 +11,16 @@ namespace AstroReader.Application.SavedCharts.UseCases;
 public class SaveChartUseCase : ISaveChartUseCase
 {
     private readonly ICalculateNatalChartUseCase _calculateNatalChartUseCase;
+    private readonly IAstroEngineTechnicalMetadataProvider _astroEngineTechnicalMetadataProvider;
     private readonly ISavedChartRepository _savedChartRepository;
 
     public SaveChartUseCase(
         ICalculateNatalChartUseCase calculateNatalChartUseCase,
+        IAstroEngineTechnicalMetadataProvider astroEngineTechnicalMetadataProvider,
         ISavedChartRepository savedChartRepository)
     {
         _calculateNatalChartUseCase = calculateNatalChartUseCase;
+        _astroEngineTechnicalMetadataProvider = astroEngineTechnicalMetadataProvider;
         _savedChartRepository = savedChartRepository;
     }
 
@@ -32,6 +36,7 @@ public class SaveChartUseCase : ISaveChartUseCase
 
         var birthInstantUtc = BuildBirthInstantUtc(birthDate, birthTime, request.TimezoneOffsetMinutes);
         var snapshotJson = SavedChartMappings.SerializeSnapshot(calculatedChart);
+        var technicalMetadata = _astroEngineTechnicalMetadataProvider.GetCurrent();
 
         var savedChart = new SavedChart(
             request.ProfileName,
@@ -46,6 +51,8 @@ public class SaveChartUseCase : ISaveChartUseCase
             calculatedChart.Summary.Sun,
             calculatedChart.Summary.Moon,
             calculatedChart.Summary.Ascendant,
+            technicalMetadata.CalculationEngine,
+            technicalMetadata.HouseSystemCode,
             SavedChart.CurrentSnapshotVersion,
             snapshotJson,
             request.UserId);

@@ -32,6 +32,8 @@ public class SavedChart
     public string AscendantSign { get; private set; } = string.Empty;
 
     // Versioned serialized chart payload produced by the backend.
+    public string CalculationEngine { get; private set; } = string.Empty;
+    public string? HouseSystemCode { get; private set; }
     public int SnapshotVersion { get; private set; }
     public string CalculatedChartJson { get; private set; } = string.Empty;
 
@@ -51,6 +53,8 @@ public class SavedChart
         string sunSign,
         string moonSign,
         string ascendantSign,
+        string calculationEngine,
+        string? houseSystemCode,
         int snapshotVersion,
         string calculatedChartJson,
         Guid? userId = null)
@@ -73,6 +77,8 @@ public class SavedChart
         SunSign = RequireValue(sunSign, nameof(sunSign));
         MoonSign = RequireValue(moonSign, nameof(moonSign));
         AscendantSign = RequireValue(ascendantSign, nameof(ascendantSign));
+        CalculationEngine = RequireValue(calculationEngine, nameof(calculationEngine));
+        HouseSystemCode = NormalizeOptional(houseSystemCode);
         SnapshotVersion = snapshotVersion > 0
             ? snapshotVersion
             : throw new ArgumentOutOfRangeException(nameof(snapshotVersion), "snapshotVersion must be greater than zero.");
@@ -104,12 +110,16 @@ public class SavedChart
         string sunSign,
         string moonSign,
         string ascendantSign,
+        string calculationEngine,
+        string? houseSystemCode,
         int snapshotVersion,
         string calculatedChartJson)
     {
         SunSign = RequireValue(sunSign, nameof(sunSign));
         MoonSign = RequireValue(moonSign, nameof(moonSign));
         AscendantSign = RequireValue(ascendantSign, nameof(ascendantSign));
+        CalculationEngine = RequireValue(calculationEngine, nameof(calculationEngine));
+        HouseSystemCode = NormalizeOptional(houseSystemCode);
         SnapshotVersion = snapshotVersion > 0
             ? snapshotVersion
             : throw new ArgumentOutOfRangeException(nameof(snapshotVersion), "snapshotVersion must be greater than zero.");
