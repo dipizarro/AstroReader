@@ -1,6 +1,8 @@
 using AstroReader.AstroEngine;
+using AstroReader.AstroEngine.Configuration;
 using AstroReader.Application;
 using AstroReader.Infrastructure;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,19 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+var startupLogger = app.Services
+    .GetRequiredService<ILoggerFactory>()
+    .CreateLogger("AstroReader.Startup");
+var astroEngineOptions = app.Services.GetRequiredService<IOptions<SwissEphOptions>>().Value;
+
+startupLogger.LogInformation(
+    "Astro engine configured. ActiveEngine={ActiveEngine}, CalculationEngineSetting={CalculationEngineSetting}, HouseSystem={HouseSystem}, EphemerisPath={EphemerisPath}, SwissEnabled={SwissEnabled}",
+    astroEngineOptions.GetConfiguredEngineName(),
+    astroEngineOptions.CalculationEngine,
+    astroEngineOptions.HouseSystem,
+    astroEngineOptions.GetEphemerisPathForLogs(),
+    astroEngineOptions.ShouldUseSwissEph());
 
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();

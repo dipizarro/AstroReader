@@ -61,4 +61,18 @@ public sealed record SwissEphOptions
             diagnosticMessage:
             $"AstroEngine:SwissEph:CalculationEngine='{CalculationEngine}' no es válido. Usa '{MockEngineMode}' o '{SwissEphEngineMode}'.");
     }
+
+    public string GetConfiguredEngineName()
+    {
+        return ShouldUseSwissEph()
+            ? SwissEphEngineMode
+            : MockEngineMode;
+    }
+
+    public string GetEphemerisPathForLogs()
+    {
+        return string.IsNullOrWhiteSpace(EphemerisPath)
+            ? "(default wrapper fallback)"
+            : EphemerisPath.Trim();
+    }
 }

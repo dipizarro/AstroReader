@@ -1,6 +1,9 @@
 using AstroReader.AstroEngine.Constants;
+using AstroReader.AstroEngine.Configuration;
 using AstroReader.AstroEngine.Contracts;
 using AstroReader.AstroEngine.Internal;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace AstroReader.AstroEngine.Implementations;
 
@@ -13,13 +16,19 @@ internal sealed class SwissEphAstroCalculationEngine : IAstroCalculationEngine
 {
     private readonly IAstroLongitudeProbe _longitudeProbe;
     private readonly ISwissEphClientFactory _swissEphClientFactory;
+    private readonly SwissEphOptions _options;
+    private readonly ILogger<SwissEphAstroCalculationEngine> _logger;
 
     public SwissEphAstroCalculationEngine(
         IAstroLongitudeProbe longitudeProbe,
-        ISwissEphClientFactory swissEphClientFactory)
+        ISwissEphClientFactory swissEphClientFactory,
+        IOptions<SwissEphOptions> options,
+        ILogger<SwissEphAstroCalculationEngine> logger)
     {
         _longitudeProbe = longitudeProbe;
         _swissEphClientFactory = swissEphClientFactory;
+        _options = options.Value;
+        _logger = logger;
     }
 
     public AstroCalculationResult Calculate(AstroCalculationRequest request)
@@ -39,6 +48,13 @@ internal sealed class SwissEphAstroCalculationEngine : IAstroCalculationEngine
         using var swiss = _swissEphClientFactory.CreateClient();
         var julianDayUt = swiss.CalculateJulianDayUt(request.UtcDateTime);
         var housesCalculation = swiss.CalculateHouses(julianDayUt, request.Latitude, request.Longitude);
+
+        _logger.LogDebug(
+            "SwissEph calculation completed. PlanetCount={PlanetCount}, HouseCount={HouseCount}, HouseSystem={HouseSystem}, EphemerisPath={EphemerisPath}",
+            planetaryPositions.Count,
+            housesCalculation.HouseCusps.Count,
+            _options.HouseSystem,
+            _options.GetEphemerisPathForLogs());
 
         return new AstroCalculationResult
         {
