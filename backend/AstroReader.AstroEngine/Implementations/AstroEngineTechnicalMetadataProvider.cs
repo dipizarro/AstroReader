@@ -16,9 +16,15 @@ internal sealed class AstroEngineTechnicalMetadataProvider : IAstroEngineTechnic
     public AstroEngineTechnicalMetadata GetCurrent()
     {
         var usesSwissEph = _options.ShouldUseSwissEph();
+        var wrapperVersion = usesSwissEph
+            ? Type.GetType("SwissEphNet.SwissEph, SwissEphNet", throwOnError: false)?.Assembly.GetName().Version?.ToString()
+            : null;
 
         return new AstroEngineTechnicalMetadata(
             CalculationEngine: _options.GetConfiguredEngineName(),
-            HouseSystemCode: usesSwissEph ? _options.HouseSystem : null);
+            HouseSystemCode: usesSwissEph ? _options.HouseSystem : null,
+            UsesRealEngine: usesSwissEph,
+            UsesCustomEphemerisPath: !string.IsNullOrWhiteSpace(_options.EphemerisPath),
+            WrapperVersion: wrapperVersion);
     }
 }
