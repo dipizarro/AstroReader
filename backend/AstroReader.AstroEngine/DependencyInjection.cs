@@ -21,6 +21,7 @@ public static class DependencyInjection
         services.AddSingleton<IAstroLongitudeProbe, AstroLongitudeProbe>();
         services.AddSingleton<MockAstroCalculationEngine>();
         services.AddSingleton<SwissEphAstroCalculationEngine>();
+        services.AddSingleton<IAstroEngineSmokeCheck, AstroEngineSmokeCheck>();
 
         services.AddSingleton<IAstroCalculationEngine>(serviceProvider =>
         {

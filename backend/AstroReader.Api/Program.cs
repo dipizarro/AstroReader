@@ -1,3 +1,4 @@
+using AstroReader.AstroEngine.Contracts;
 using AstroReader.AstroEngine;
 using AstroReader.AstroEngine.Configuration;
 using AstroReader.Application;
@@ -55,6 +56,29 @@ startupLogger.LogInformation(
     astroEngineOptions.HouseSystem,
     astroEngineOptions.GetEphemerisPathForLogs(),
     astroEngineOptions.ShouldUseSwissEph());
+
+var astroEngineSmokeCheck = app.Services.GetRequiredService<IAstroEngineSmokeCheck>().Run();
+
+if (astroEngineSmokeCheck.IsHealthy)
+{
+    startupLogger.LogInformation(
+        "Astro engine smoke check status: healthy. ActiveEngine={ActiveEngine}, HouseSystem={HouseSystem}, EphemerisPath={EphemerisPath}, Skipped={Skipped}, Message={Message}",
+        astroEngineSmokeCheck.ActiveEngine,
+        astroEngineSmokeCheck.HouseSystem,
+        astroEngineSmokeCheck.EphemerisPath,
+        astroEngineSmokeCheck.Skipped,
+        astroEngineSmokeCheck.Message);
+}
+else
+{
+    startupLogger.LogError(
+        "Astro engine smoke check status: degraded. ActiveEngine={ActiveEngine}, HouseSystem={HouseSystem}, EphemerisPath={EphemerisPath}, Code={Code}, Message={Message}",
+        astroEngineSmokeCheck.ActiveEngine,
+        astroEngineSmokeCheck.HouseSystem,
+        astroEngineSmokeCheck.EphemerisPath,
+        astroEngineSmokeCheck.ErrorCode,
+        astroEngineSmokeCheck.Message);
+}
 
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();
