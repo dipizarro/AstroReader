@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 namespace AstroReader.Application.Charts.DTOs;
 
 public record CalculateChartResponse
@@ -45,6 +44,7 @@ public record HousePositionDto
 
 public record ChartInterpretation
 {
+    public InterpretationCoverage Coverage { get; init; } = new();
     public string Hook { get; init; } = string.Empty;
     public InterpretationContentBlock EnergyCore { get; init; } = new();
     public InterpretationContentBlock Core { get; init; } = new();
@@ -54,6 +54,14 @@ public record ChartInterpretation
     public List<InterpretationContentBlock> LifeAreas { get; init; } = [];
     public List<InterpretationProfileDto> Profiles { get; init; } = [];
     public string Closing { get; init; } = string.Empty;
+}
+
+public record InterpretationCoverage
+{
+    public string CoverageStatus { get; init; } = "fallback";
+    public List<string> CoveredEntries { get; init; } = [];
+    public List<string> MissingEntries { get; init; } = [];
+    public List<string> ComposedBlocks { get; init; } = [];
 }
 
 public record InterpretationContentBlock

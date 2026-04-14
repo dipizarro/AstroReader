@@ -43,6 +43,26 @@ public sealed class ZodiacInterpretationSet<TEntry> where TEntry : Interpretatio
     [JsonPropertyName("pisces")]
     public TEntry? Pisces { get; init; }
 
+    public bool HasEntry(ZodiacSign sign)
+    {
+        return sign switch
+        {
+            ZodiacSign.Aries => Aries is not null,
+            ZodiacSign.Taurus => Taurus is not null,
+            ZodiacSign.Gemini => Gemini is not null,
+            ZodiacSign.Cancer => Cancer is not null,
+            ZodiacSign.Leo => Leo is not null,
+            ZodiacSign.Virgo => Virgo is not null,
+            ZodiacSign.Libra => Libra is not null,
+            ZodiacSign.Scorpio => Scorpio is not null,
+            ZodiacSign.Sagittarius => Sagittarius is not null,
+            ZodiacSign.Capricorn => Capricorn is not null,
+            ZodiacSign.Aquarius => Aquarius is not null,
+            ZodiacSign.Pisces => Pisces is not null,
+            _ => throw new ArgumentOutOfRangeException(nameof(sign), sign, "Unsupported zodiac sign.")
+        };
+    }
+
     public TEntry GetBySign(ZodiacSign sign)
     {
         var entry = sign switch

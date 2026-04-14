@@ -13,15 +13,18 @@ namespace AstroReader.Application.Charts.UseCases;
 public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
 {
     private readonly IAstroCalculationEngine _engine;
+    private readonly IPremiumInterpretationCatalogProvider _premiumInterpretationCatalogProvider;
     private readonly IInterpretationAnalyzer _interpretationAnalyzer;
     private readonly IInterpretationComposer _interpretationComposer;
 
     public CalculateNatalChartUseCase(
         IAstroCalculationEngine engine,
+        IPremiumInterpretationCatalogProvider premiumInterpretationCatalogProvider,
         IInterpretationAnalyzer interpretationAnalyzer,
         IInterpretationComposer interpretationComposer)
     {
         _engine = engine;
+        _premiumInterpretationCatalogProvider = premiumInterpretationCatalogProvider;
         _interpretationAnalyzer = interpretationAnalyzer;
         _interpretationComposer = interpretationComposer;
     }
@@ -124,64 +127,58 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         ZodiacSign moonSign,
         ZodiacSign ascendantSign)
     {
+        var mercurySign = natalChart.Planets.FirstOrDefault(p => p.Planet == Planet.Mercury)?.Sign ?? ZodiacSign.Aries;
+        var venusSign = natalChart.Planets.FirstOrDefault(p => p.Planet == Planet.Venus)?.Sign ?? ZodiacSign.Aries;
+        var marsSign = natalChart.Planets.FirstOrDefault(p => p.Planet == Planet.Mars)?.Sign ?? ZodiacSign.Aries;
+
+        var coverageAssessment = PremiumInterpretationCoverageEvaluator.Evaluate(
+            _premiumInterpretationCatalogProvider.GetCatalog(),
+            sunSign,
+            moonSign,
+            ascendantSign,
+            mercurySign,
+            venusSign,
+            marsSign);
+
+        if (!coverageAssessment.IsComplete)
+        {
+            var status = coverageAssessment.HasAnyCoverage
+                ? InterpretationCoverageStatus.Partial
+                : InterpretationCoverageStatus.Fallback;
+
+            return PremiumInterpretationFallbackFactory.Create(
+                sunSign,
+                moonSign,
+                ascendantSign,
+                coverageAssessment.ToDto(status));
+        }
+
         try
         {
             var analysis = _interpretationAnalyzer.Analyze(natalChart);
             var composition = _interpretationComposer.Compose(natalChart, analysis);
-            return PremiumInterpretationResponseMapper.MapComposition(composition);
+            return PremiumInterpretationResponseMapper.MapComposition(
+                composition,
+                coverageAssessment.ToDto(
+                    InterpretationCoverageStatus.Complete,
+                    PremiumInterpretationResponseMapper.PrimaryComposedBlocks));
         }
         catch (PremiumInterpretationCatalogException)
         {
-            return BuildUnavailablePremiumInterpretation(sunSign, moonSign, ascendantSign);
+            return PremiumInterpretationFallbackFactory.Create(
+                sunSign,
+                moonSign,
+                ascendantSign,
+                coverageAssessment.ToDto(InterpretationCoverageStatus.Fallback));
         }
         catch (PremiumInterpretationAnalysisException)
         {
-            return BuildUnavailablePremiumInterpretation(sunSign, moonSign, ascendantSign);
+            return PremiumInterpretationFallbackFactory.Create(
+                sunSign,
+                moonSign,
+                ascendantSign,
+                coverageAssessment.ToDto(InterpretationCoverageStatus.Fallback));
         }
-    }
-
-    private static ChartInterpretation BuildUnavailablePremiumInterpretation(
-        ZodiacSign sunSign,
-        ZodiacSign moonSign,
-        ZodiacSign ascendantSign)
-    {
-        var hook =
-            $"Tu carta ya muestra una combinación clara entre Sol en {sunSign}, Luna en {moonSign} y Ascendente en {ascendantSign}.";
-        var fallbackText =
-            "La lectura premium completa para esta combinación todavía está en expansión editorial, pero la base astral ya fue calculada correctamente.";
-
-        return new ChartInterpretation
-        {
-            Hook = hook,
-            EnergyCore = new InterpretationContentBlock
-            {
-                Key = "energyCore",
-                Title = "Tu energía central",
-                MainText = $"{hook} {fallbackText}"
-            },
-            Core = new InterpretationContentBlock
-            {
-                Key = "core",
-                Title = "Tu núcleo",
-                MainText = "Ya podemos identificar tu tríada central, aunque esta versión premium todavía no desarrolla todos sus matices."
-            },
-            PersonalDynamics = new InterpretationContentBlock
-            {
-                Key = "personalDynamics",
-                Title = "Tu forma de pensar, vincularte y actuar",
-                MainText = "La estructura premium para Mercurio, Venus y Marte se irá ampliando a medida que crezca el catálogo editorial."
-            },
-            EssentialSummary = new InterpretationContentBlock
-            {
-                Key = "essentialSummary",
-                Title = "Lo esencial de tu carta",
-                MainText = "La carta está calculada con motor real y lista para recibir una lectura premium más rica en próximas iteraciones."
-            },
-            TensionsAndPotential = [],
-            LifeAreas = [],
-            Profiles = [],
-            Closing = "Esta carta ya tiene una base astral sólida; lo que sigue es expandir su lectura editorial con mayor profundidad."
-        };
     }
 
     private Planet MapPlanetIdToEnum(int id)

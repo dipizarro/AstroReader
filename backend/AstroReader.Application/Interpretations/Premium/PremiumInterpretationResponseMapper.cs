@@ -4,10 +4,21 @@ namespace AstroReader.Application.Interpretations.Premium;
 
 internal static class PremiumInterpretationResponseMapper
 {
-    public static ChartInterpretation MapComposition(PremiumInterpretationCompositionResult composition)
+    public static readonly IReadOnlyList<string> PrimaryComposedBlocks =
+    [
+        "energyCore",
+        "core",
+        "personalDynamics",
+        "essentialSummary"
+    ];
+
+    public static ChartInterpretation MapComposition(
+        PremiumInterpretationCompositionResult composition,
+        InterpretationCoverage coverage)
     {
         return new ChartInterpretation
         {
+            Coverage = coverage,
             Hook = composition.Hook,
             EnergyCore = MapBlock(composition.CentralEnergy),
             Core = MapBlock(composition.Core),

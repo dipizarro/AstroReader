@@ -35,6 +35,7 @@ export interface HouseCusp {
 }
 
 export interface ChartInterpretation {
+  coverage: InterpretationCoverage;
   hook: string;
   energyCore: InterpretationContentBlock;
   core: InterpretationContentBlock;
@@ -44,6 +45,15 @@ export interface ChartInterpretation {
   lifeAreas: InterpretationContentBlock[];
   profiles: InterpretationProfile[];
   closing: string;
+}
+
+export type InterpretationCoverageStatus = 'complete' | 'partial' | 'fallback';
+
+export interface InterpretationCoverage {
+  coverageStatus: InterpretationCoverageStatus;
+  coveredEntries: string[];
+  missingEntries: string[];
+  composedBlocks: string[];
 }
 
 export interface InterpretationContentBlock {

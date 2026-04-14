@@ -8,13 +8,16 @@ public sealed class PremiumInterpretationPreviewUseCase : IPremiumInterpretation
 {
     private const double DefaultSignDegree = 15d;
 
+    private readonly IPremiumInterpretationCatalogProvider _catalogProvider;
     private readonly IInterpretationAnalyzer _interpretationAnalyzer;
     private readonly IInterpretationComposer _interpretationComposer;
 
     public PremiumInterpretationPreviewUseCase(
+        IPremiumInterpretationCatalogProvider catalogProvider,
         IInterpretationAnalyzer interpretationAnalyzer,
         IInterpretationComposer interpretationComposer)
     {
+        _catalogProvider = catalogProvider;
         _interpretationAnalyzer = interpretationAnalyzer;
         _interpretationComposer = interpretationComposer;
     }
@@ -29,24 +32,76 @@ public sealed class PremiumInterpretationPreviewUseCase : IPremiumInterpretation
             Venus: ParseSign(request.Venus, nameof(request.Venus)),
             Mars: ParseSign(request.Mars, nameof(request.Mars)));
 
-        var chart = BuildPreviewChart(selection);
-        var analysis = _interpretationAnalyzer.Analyze(chart);
-        var composition = _interpretationComposer.Compose(chart, analysis);
+        var coverageAssessment = PremiumInterpretationCoverageEvaluator.Evaluate(
+            _catalogProvider.GetCatalog(),
+            selection.Sun,
+            selection.Moon,
+            selection.Ascendant,
+            selection.Mercury,
+            selection.Venus,
+            selection.Mars);
 
-        return new PremiumInterpretationPreviewResponse
+        if (!coverageAssessment.IsComplete)
         {
-            Selection = new PremiumInterpretationPreviewSelection
+            var status = coverageAssessment.HasAnyCoverage
+                ? InterpretationCoverageStatus.Partial
+                : InterpretationCoverageStatus.Fallback;
+
+            return new PremiumInterpretationPreviewResponse
             {
-                Sun = selection.Sun.ToString(),
-                Moon = selection.Moon.ToString(),
-                Ascendant = selection.Ascendant.ToString(),
-                Mercury = selection.Mercury.ToString(),
-                Venus = selection.Venus.ToString(),
-                Mars = selection.Mars.ToString()
-            },
-            Analysis = analysis,
-            Interpretation = PremiumInterpretationResponseMapper.MapComposition(composition)
-        };
+                Selection = ToSelectionDto(selection),
+                Analysis = new InterpretationAnalysisResult(),
+                Interpretation = PremiumInterpretationFallbackFactory.Create(
+                    selection.Sun,
+                    selection.Moon,
+                    selection.Ascendant,
+                    coverageAssessment.ToDto(status))
+            };
+        }
+
+        var chart = BuildPreviewChart(selection);
+        try
+        {
+            var analysis = _interpretationAnalyzer.Analyze(chart);
+            var composition = _interpretationComposer.Compose(chart, analysis);
+
+            return new PremiumInterpretationPreviewResponse
+            {
+                Selection = ToSelectionDto(selection),
+                Analysis = analysis,
+                Interpretation = PremiumInterpretationResponseMapper.MapComposition(
+                    composition,
+                    coverageAssessment.ToDto(
+                        InterpretationCoverageStatus.Complete,
+                        PremiumInterpretationResponseMapper.PrimaryComposedBlocks))
+            };
+        }
+        catch (PremiumInterpretationCatalogException)
+        {
+            return new PremiumInterpretationPreviewResponse
+            {
+                Selection = ToSelectionDto(selection),
+                Analysis = new InterpretationAnalysisResult(),
+                Interpretation = PremiumInterpretationFallbackFactory.Create(
+                    selection.Sun,
+                    selection.Moon,
+                    selection.Ascendant,
+                    coverageAssessment.ToDto(InterpretationCoverageStatus.Fallback))
+            };
+        }
+        catch (PremiumInterpretationAnalysisException)
+        {
+            return new PremiumInterpretationPreviewResponse
+            {
+                Selection = ToSelectionDto(selection),
+                Analysis = new InterpretationAnalysisResult(),
+                Interpretation = PremiumInterpretationFallbackFactory.Create(
+                    selection.Sun,
+                    selection.Moon,
+                    selection.Ascendant,
+                    coverageAssessment.ToDto(InterpretationCoverageStatus.Fallback))
+            };
+        }
     }
 
     private static NatalChart BuildPreviewChart(ResolvedSignSelection selection)
@@ -116,6 +171,19 @@ public sealed class PremiumInterpretationPreviewUseCase : IPremiumInterpretation
     private static double GetAbsoluteDegree(ZodiacSign sign)
     {
         return ((int)sign * 30d) + DefaultSignDegree;
+    }
+
+    private static PremiumInterpretationPreviewSelection ToSelectionDto(ResolvedSignSelection selection)
+    {
+        return new PremiumInterpretationPreviewSelection
+        {
+            Sun = selection.Sun.ToString(),
+            Moon = selection.Moon.ToString(),
+            Ascendant = selection.Ascendant.ToString(),
+            Mercury = selection.Mercury.ToString(),
+            Venus = selection.Venus.ToString(),
+            Mars = selection.Mars.ToString()
+        };
     }
 
     private sealed record ResolvedSignSelection(

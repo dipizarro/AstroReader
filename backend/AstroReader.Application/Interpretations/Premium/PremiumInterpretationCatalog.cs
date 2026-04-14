@@ -11,6 +11,20 @@ public sealed class PremiumInterpretationCatalog
     [JsonPropertyName("planets")]
     public PremiumInterpretationPlanetCatalog Planets { get; init; } = new();
 
+    public bool HasEntry(PremiumInterpretationPosition position, ZodiacSign sign)
+    {
+        return position switch
+        {
+            PremiumInterpretationPosition.Sun => Planets.Sun.HasEntry(sign),
+            PremiumInterpretationPosition.Moon => Planets.Moon.HasEntry(sign),
+            PremiumInterpretationPosition.Ascendant => Planets.Ascendant.HasEntry(sign),
+            PremiumInterpretationPosition.Mercury => Planets.Mercury.HasEntry(sign),
+            PremiumInterpretationPosition.Venus => Planets.Venus.HasEntry(sign),
+            PremiumInterpretationPosition.Mars => Planets.Mars.HasEntry(sign),
+            _ => throw new ArgumentOutOfRangeException(nameof(position), position, "Unsupported premium interpretation position.")
+        };
+    }
+
     public InterpretationEntry GetEntry(PremiumInterpretationPosition position, ZodiacSign sign)
     {
         return position switch
