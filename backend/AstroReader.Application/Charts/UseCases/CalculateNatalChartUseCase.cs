@@ -1,26 +1,29 @@
 using System;
 using System.Linq;
-using System.Text.Json;
 using AstroReader.Application.Charts.DTOs;
 using AstroReader.Application.Charts.Interfaces;
+using AstroReader.Application.Interpretations.Premium;
 using AstroReader.AstroEngine.Contracts;
 using AstroReader.Domain.Entities;
 using AstroReader.Domain.Enums;
 using AstroReader.Domain.ValueObjects;
-
-using AstroReader.Application.Interpretations;
 
 namespace AstroReader.Application.Charts.UseCases;
 
 public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
 {
     private readonly IAstroCalculationEngine _engine;
-    private readonly IInterpretationEngine _interpretationEngine;
+    private readonly IInterpretationAnalyzer _interpretationAnalyzer;
+    private readonly IInterpretationComposer _interpretationComposer;
 
-    public CalculateNatalChartUseCase(IAstroCalculationEngine engine, IInterpretationEngine interpretationEngine)
+    public CalculateNatalChartUseCase(
+        IAstroCalculationEngine engine,
+        IInterpretationAnalyzer interpretationAnalyzer,
+        IInterpretationComposer interpretationComposer)
     {
         _engine = engine;
-        _interpretationEngine = interpretationEngine;
+        _interpretationAnalyzer = interpretationAnalyzer;
+        _interpretationComposer = interpretationComposer;
     }
 
     public CalculateChartResponse Execute(CalculateChartRequest request)
@@ -79,6 +82,8 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         var sunSign = natalChart.Planets.FirstOrDefault(p => p.Planet == Planet.Sun)?.Sign ?? ZodiacSign.Aries;
         var moonSign = natalChart.Planets.FirstOrDefault(p => p.Planet == Planet.Moon)?.Sign ?? ZodiacSign.Aries;
 
+        var interpretation = BuildPremiumInterpretation(natalChart, sunSign, moonSign, ascendantSign);
+
         // 4. Mapear Entidades de Dominio -> API Response DTO
         return new CalculateChartResponse
         {
@@ -109,7 +114,103 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
                 Sign = h.Sign.ToString(),
                 AbsoluteDegree = Math.Round(h.AbsoluteDegree, 2)
             }).ToList(),
-            Interpretation = _interpretationEngine.GenerateBaseInterpretation(natalChart)
+            Interpretation = interpretation
+        };
+    }
+
+    private ChartInterpretation BuildPremiumInterpretation(
+        NatalChart natalChart,
+        ZodiacSign sunSign,
+        ZodiacSign moonSign,
+        ZodiacSign ascendantSign)
+    {
+        try
+        {
+            var analysis = _interpretationAnalyzer.Analyze(natalChart);
+            var composition = _interpretationComposer.Compose(natalChart, analysis);
+
+            return new ChartInterpretation
+            {
+                Hook = composition.Hook,
+                EnergyCore = MapBlock(composition.CentralEnergy),
+                Core = MapBlock(composition.Core),
+                PersonalDynamics = MapBlock(composition.ThinkingRelatingActing),
+                EssentialSummary = MapBlock(composition.Essential),
+                TensionsAndPotential = [],
+                LifeAreas = [],
+                Profiles = [],
+                Closing = composition.Closing
+            };
+        }
+        catch (PremiumInterpretationCatalogException)
+        {
+            return BuildUnavailablePremiumInterpretation(sunSign, moonSign, ascendantSign);
+        }
+        catch (PremiumInterpretationAnalysisException)
+        {
+            return BuildUnavailablePremiumInterpretation(sunSign, moonSign, ascendantSign);
+        }
+    }
+
+    private static ChartInterpretation BuildUnavailablePremiumInterpretation(
+        ZodiacSign sunSign,
+        ZodiacSign moonSign,
+        ZodiacSign ascendantSign)
+    {
+        var hook =
+            $"Tu carta ya muestra una combinación clara entre Sol en {sunSign}, Luna en {moonSign} y Ascendente en {ascendantSign}.";
+        var fallbackText =
+            "La lectura premium completa para esta combinación todavía está en expansión editorial, pero la base astral ya fue calculada correctamente.";
+
+        return new ChartInterpretation
+        {
+            Hook = hook,
+            EnergyCore = new InterpretationContentBlock
+            {
+                Key = "energyCore",
+                Title = "Tu energía central",
+                MainText = $"{hook} {fallbackText}"
+            },
+            Core = new InterpretationContentBlock
+            {
+                Key = "core",
+                Title = "Tu núcleo",
+                MainText = "Ya podemos identificar tu tríada central, aunque esta versión premium todavía no desarrolla todos sus matices."
+            },
+            PersonalDynamics = new InterpretationContentBlock
+            {
+                Key = "personalDynamics",
+                Title = "Tu forma de pensar, vincularte y actuar",
+                MainText = "La estructura premium para Mercurio, Venus y Marte se irá ampliando a medida que crezca el catálogo editorial."
+            },
+            EssentialSummary = new InterpretationContentBlock
+            {
+                Key = "essentialSummary",
+                Title = "Lo esencial de tu carta",
+                MainText = "La carta está calculada con motor real y lista para recibir una lectura premium más rica en próximas iteraciones."
+            },
+            TensionsAndPotential = [],
+            LifeAreas = [],
+            Profiles = [],
+            Closing = "Esta carta ya tiene una base astral sólida; lo que sigue es expandir su lectura editorial con mayor profundidad."
+        };
+    }
+
+    private static InterpretationContentBlock MapBlock(PremiumInterpretationBlock block)
+    {
+        return new InterpretationContentBlock
+        {
+            Key = block.Key,
+            Title = block.Title,
+            MainText = block.Summary,
+            SubBlocks = block.Paragraphs
+                .Select((paragraph, index) => new InterpretationSubBlock
+                {
+                    Key = $"{block.Key}-paragraph-{index + 1}",
+                    Title = string.Empty,
+                    Text = paragraph
+                })
+                .ToList()
         };
     }
 
