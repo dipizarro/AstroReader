@@ -128,19 +128,7 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         {
             var analysis = _interpretationAnalyzer.Analyze(natalChart);
             var composition = _interpretationComposer.Compose(natalChart, analysis);
-
-            return new ChartInterpretation
-            {
-                Hook = composition.Hook,
-                EnergyCore = MapBlock(composition.CentralEnergy),
-                Core = MapBlock(composition.Core),
-                PersonalDynamics = MapBlock(composition.ThinkingRelatingActing),
-                EssentialSummary = MapBlock(composition.Essential),
-                TensionsAndPotential = [],
-                LifeAreas = [],
-                Profiles = [],
-                Closing = composition.Closing
-            };
+            return PremiumInterpretationResponseMapper.MapComposition(composition);
         }
         catch (PremiumInterpretationCatalogException)
         {
@@ -193,24 +181,6 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
             LifeAreas = [],
             Profiles = [],
             Closing = "Esta carta ya tiene una base astral sólida; lo que sigue es expandir su lectura editorial con mayor profundidad."
-        };
-    }
-
-    private static InterpretationContentBlock MapBlock(PremiumInterpretationBlock block)
-    {
-        return new InterpretationContentBlock
-        {
-            Key = block.Key,
-            Title = block.Title,
-            MainText = block.Summary,
-            SubBlocks = block.Paragraphs
-                .Select((paragraph, index) => new InterpretationSubBlock
-                {
-                    Key = $"{block.Key}-paragraph-{index + 1}",
-                    Title = string.Empty,
-                    Text = paragraph
-                })
-                .ToList()
         };
     }
 
