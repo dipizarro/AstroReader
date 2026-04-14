@@ -5,34 +5,22 @@ namespace AstroReader.Application.Interpretations.Premium;
 
 public sealed class PremiumInterpretationCatalog
 {
-    [JsonPropertyName("sun")]
-    public ZodiacInterpretationSet<SunInterpretationEntry> Sun { get; init; } = new();
+    [JsonPropertyName("version")]
+    public string Version { get; init; } = string.Empty;
 
-    [JsonPropertyName("moon")]
-    public ZodiacInterpretationSet<MoonInterpretationEntry> Moon { get; init; } = new();
-
-    [JsonPropertyName("ascendant")]
-    public ZodiacInterpretationSet<AscendantInterpretationEntry> Ascendant { get; init; } = new();
-
-    [JsonPropertyName("mercury")]
-    public ZodiacInterpretationSet<MercuryInterpretationEntry> Mercury { get; init; } = new();
-
-    [JsonPropertyName("venus")]
-    public ZodiacInterpretationSet<VenusInterpretationEntry> Venus { get; init; } = new();
-
-    [JsonPropertyName("mars")]
-    public ZodiacInterpretationSet<MarsInterpretationEntry> Mars { get; init; } = new();
+    [JsonPropertyName("planets")]
+    public PremiumInterpretationPlanetCatalog Planets { get; init; } = new();
 
     public InterpretationEntry GetEntry(PremiumInterpretationPosition position, ZodiacSign sign)
     {
         return position switch
         {
-            PremiumInterpretationPosition.Sun => Sun.GetBySign(sign),
-            PremiumInterpretationPosition.Moon => Moon.GetBySign(sign),
-            PremiumInterpretationPosition.Ascendant => Ascendant.GetBySign(sign),
-            PremiumInterpretationPosition.Mercury => Mercury.GetBySign(sign),
-            PremiumInterpretationPosition.Venus => Venus.GetBySign(sign),
-            PremiumInterpretationPosition.Mars => Mars.GetBySign(sign),
+            PremiumInterpretationPosition.Sun => Planets.Sun.GetBySign(sign),
+            PremiumInterpretationPosition.Moon => Planets.Moon.GetBySign(sign),
+            PremiumInterpretationPosition.Ascendant => Planets.Ascendant.GetBySign(sign),
+            PremiumInterpretationPosition.Mercury => Planets.Mercury.GetBySign(sign),
+            PremiumInterpretationPosition.Venus => Planets.Venus.GetBySign(sign),
+            PremiumInterpretationPosition.Mars => Planets.Mars.GetBySign(sign),
             _ => throw new ArgumentOutOfRangeException(nameof(position), position, "Unsupported premium interpretation position.")
         };
     }

@@ -1,0 +1,184 @@
+{
+  "version": "1.0.0",
+  "planets": {
+    "sun": {
+      "taurus": {
+        "summary": "Tu identidad se fortalece cuando puedes construir algo sólido, disfrutable y sostenible. No necesitas correr para sentir valor: lo tuyo es convertir intención en presencia estable y resultados tangibles.",
+        "keywords": [
+          "estabilidad",
+          "constancia",
+          "valor propio",
+          "placer consciente",
+          "realismo"
+        ],
+        "strengths": [
+          "Sostienes procesos con paciencia cuando otros se dispersan.",
+          "Transmites confiabilidad y una sensación concreta de solidez.",
+          "Sabes reconocer qué merece tiempo, energía y cuidado real."
+        ],
+        "challenges": [
+          "Puedes resistirte al cambio incluso cuando ya es necesario.",
+          "A veces confundes seguridad con permanencia excesiva.",
+          "Te cuesta soltar ritmos o vínculos que ya perdieron vitalidad."
+        ],
+        "integrationHooks": [
+          "Pregúntate si lo que sostienes hoy todavía nutre tu crecimiento.",
+          "Haz espacio para cambios graduales en lugar de esperar a que todo se rompa.",
+          "Usa tu constancia como una fuerza creativa, no como una defensa rígida."
+        ],
+        "identityStyle": "Tu identidad avanza con calma, criterio y apego a lo auténtico. Prefieres demostrar valor a través de hechos, consistencia y presencia antes que por promesas o impacto inmediato.",
+        "growthPath": "Tu evolución se acelera cuando aprendes a combinar estabilidad con flexibilidad. No se trata de abandonar tu centro, sino de permitir que también cambie contigo."
+      }
+    },
+    "moon": {
+      "leo": {
+        "summary": "Emocionalmente necesitas sentir calor, reconocimiento y espacio para expresarte con dignidad. Tu mundo interno se ordena mejor cuando puedes vivir tus sentimientos con corazón abierto, no en pequeño.",
+        "keywords": [
+          "calidez",
+          "expresión emocional",
+          "orgullo sano",
+          "generosidad",
+          "visibilidad afectiva"
+        ],
+        "strengths": [
+          "Aportas calor emocional y una presencia afectiva que levanta el ánimo.",
+          "Tienes talento para cuidar desde la generosidad y el entusiasmo.",
+          "Cuando te sientes querido, irradias confianza y nobleza emocional."
+        ],
+        "challenges": [
+          "Puedes sentirte herido cuando no recibes validación o atención suficiente.",
+          "A veces dramatizas para que tu necesidad emocional sea vista.",
+          "Te cuesta bajar la guardia cuando sientes que tu corazón no fue valorado."
+        ],
+        "integrationHooks": [
+          "Busca espacios donde puedas expresarte sin tener que sobreactuar para ser visto.",
+          "Distingue entre necesidad legítima de afecto y dependencia de aprobación.",
+          "Recuerda que tu valor emocional no disminuye cuando nadie lo aplaude."
+        ],
+        "emotionalStyle": "Sientes con intensidad, orgullo y calidez. Tus emociones necesitan circular con vitalidad y suelen mostrarse con claridad cuando el entorno te permite estar presente de verdad.",
+        "emotionalNeeds": "Necesitas reconocimiento afectivo, lealtad emocional y vínculos donde tu corazón pueda sentirse celebrado en lugar de apenas tolerado.",
+        "securityNeeds": "Te da seguridad sentir que importas, que tu presencia deja huella y que tu entrega emocional recibe respuesta genuina."
+      }
+    },
+    "ascendant": {
+      "libra": {
+        "summary": "Tu forma de entrar al mundo privilegia la armonía, la lectura del otro y una presentación cuidada. Sueles abrir puertas a través del equilibrio, el tono y la capacidad de generar una atmósfera amable.",
+        "keywords": [
+          "armonía",
+          "diplomacia",
+          "estilo social",
+          "equilibrio",
+          "vinculación"
+        ],
+        "strengths": [
+          "Lees rápidamente las dinámicas interpersonales.",
+          "Generas confianza a través del tacto y la cortesía.",
+          "Tienes facilidad para mediar, conectar y suavizar tensiones."
+        ],
+        "challenges": [
+          "Puedes postergar decisiones para evitar incomodar.",
+          "A veces adaptas demasiado tu forma de estar para sostener armonía.",
+          "Te cuesta tolerar escenarios donde no hay reciprocidad ni buen tono."
+        ],
+        "integrationHooks": [
+          "Usa tu diplomacia sin renunciar a tu punto de vista.",
+          "Practica decisiones pequeñas y firmes cuando notes exceso de vacilación.",
+          "Recuerda que armonía no significa siempre agradar."
+        ],
+        "outerStyle": "Te muestras con elegancia relacional, sensibilidad estética y una tendencia natural a considerar el impacto de tu presencia en el entorno.",
+        "socialStyle": "Socialmente sueles vincularte desde el diálogo, el equilibrio y la búsqueda de acuerdos. Tienes talento para abrir conversación sin imponerte.",
+        "firstImpression": "Sueles dar una primera impresión agradable, refinada y atenta a los matices. Los demás pueden percibirte como alguien amable, medido y fácil de tratar."
+      }
+    },
+    "mercury": {
+      "aries": {
+        "summary": "Tu mente funciona con rapidez, foco y una necesidad fuerte de ir al punto. Piensas mejor cuando puedes avanzar, nombrar lo esencial y evitar rodeos innecesarios.",
+        "keywords": [
+          "agilidad mental",
+          "franqueza",
+          "decisión",
+          "iniciativa intelectual",
+          "claridad"
+        ],
+        "strengths": [
+          "Captas rápido el núcleo de un problema.",
+          "Te animas a decir lo que otros dudan en formular.",
+          "Piensas con iniciativa y sueles abrir conversaciones o ideas nuevas."
+        ],
+        "challenges": [
+          "Puedes responder antes de haber desarrollado completamente una idea.",
+          "A veces tu tono resulta más brusco de lo que pretendes.",
+          "Te impacienta la lentitud mental, la ambigüedad o la sobreexplicación."
+        ],
+        "integrationHooks": [
+          "Antes de responder, pregúntate si claridad y velocidad están yendo juntas.",
+          "Practica sostener una idea unos segundos más antes de lanzarla.",
+          "Usa tu franqueza como herramienta de precisión, no como descarga."
+        ],
+        "thinkingStyle": "Piensas de forma directa, rápida y orientada a la acción. Tu mente detecta antes el impulso y la solución inicial que la complejidad total del proceso.",
+        "communicationStyle": "Te comunicas con franqueza, energía y poco rodeo. Cuando estás alineado, tu palabra abre camino; cuando no, puede sonar impaciente o cortante.",
+        "learningStyle": "Aprendes mejor con desafío, movimiento y margen para probar por ti mismo. La experiencia activa te enseña más que la teoría demasiado demorada."
+      }
+    },
+    "venus": {
+      "taurus": {
+        "summary": "En lo afectivo valoras la estabilidad, la coherencia y el placer compartido sin estridencias. Tiendes a amar con profundidad tranquila, cuidando lo que eliges y buscando vínculos que realmente se sostengan.",
+        "keywords": [
+          "lealtad",
+          "placer",
+          "estabilidad afectiva",
+          "sensualidad",
+          "constancia vincular"
+        ],
+        "strengths": [
+          "Ofreces presencia afectiva estable y confiable.",
+          "Sabes construir intimidad a través del tiempo y los gestos concretos.",
+          "Tu forma de amar transmite calma, fidelidad y disfrute real."
+        ],
+        "challenges": [
+          "Puedes apegarte a vínculos cómodos incluso cuando ya no crecen.",
+          "A veces te cuesta mostrar cambio emocional o flexibilizar expectativas.",
+          "Tu necesidad de estabilidad puede volver más lenta la apertura a lo nuevo."
+        ],
+        "integrationHooks": [
+          "Revisa si tu apego nace del amor o del miedo a perder seguridad.",
+          "Permite pequeñas novedades dentro de tus vínculos para que no se rigidicen.",
+          "Haz del placer compartido una práctica consciente, no una rutina automática."
+        ],
+        "relationalStyle": "Te vinculas buscando seguridad, presencia y continuidad. Prefieres relaciones donde la confianza se construye en actos repetidos y no solo en intensidad emocional.",
+        "attractionStyle": "Te atrae lo genuino, lo sensorial, lo estable y lo que transmite valor real sin necesidad de exageración.",
+        "affectiveNeeds": "Necesitas lealtad, constancia, contacto afectivo confiable y una sensación clara de que el vínculo tiene base y dirección."
+      }
+    },
+    "mars": {
+      "scorpio": {
+        "summary": "Tu energía de acción es intensa, estratégica y profundamente enfocada. No sueles gastar fuerza en superficie: avanzas mejor cuando hay profundidad, propósito y una razón real para comprometerte.",
+        "keywords": [
+          "intensidad",
+          "estrategia",
+          "determinación",
+          "autocontrol",
+          "profundidad"
+        ],
+        "strengths": [
+          "Tienes una gran capacidad para sostener presión y concentrarte.",
+          "Actúas con potencia cuando algo te importa de verdad.",
+          "Lees tensiones ocultas y sabes mover energía con estrategia."
+        ],
+        "challenges": [
+          "Puedes acumular tensión o enojo antes de expresarlo.",
+          "A veces te rigidizas en dinámicas de control o defensa.",
+          "Tu intensidad puede volverse excesiva si sientes amenaza o traición."
+        ],
+        "integrationHooks": [
+          "Canaliza tu intensidad en objetivos concretos antes de que se vuelva fricción interna.",
+          "Practica expresar malestar antes de llegar al punto de saturación.",
+          "Usa tu poder para transformar, no para quedarte atrapado en la vigilancia."
+        ],
+        "actionStyle": "Actúas con concentración, reserva y gran profundidad. Cuando decides moverte, lo haces con todo tu sistema comprometido y con poca dispersión.",
+        "desireStyle": "Deseas con intensidad y fuerte carga emocional. No te moviliza lo tibio: necesitas sentir implicación, potencia y verdad en lo que persigues.",
+        "conflictStyle": "En conflicto puedes ser silencioso pero muy contundente. Prefieres medir, observar y responder con precisión antes que reaccionar de forma superficial."
+      }
+    }
+  }
+}
