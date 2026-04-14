@@ -13,6 +13,7 @@ public static class DependencyInjection
     {
         services.AddSingleton<IPremiumInterpretationCatalogProvider, JsonPremiumInterpretationCatalogProvider>();
         services.AddScoped<IInterpretationAnalyzer, PremiumInterpretationAnalyzer>();
+        services.AddScoped<IInterpretationComposer, PremiumInterpretationComposer>();
         services.AddScoped<ICalculateNatalChartUseCase, CalculateNatalChartUseCase>();
         services.AddScoped<ISaveChartUseCase, SaveChartUseCase>();
         services.AddScoped<IGetSavedChartByIdUseCase, GetSavedChartByIdUseCase>();
