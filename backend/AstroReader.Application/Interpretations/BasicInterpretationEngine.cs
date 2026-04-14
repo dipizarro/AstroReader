@@ -19,18 +19,6 @@ public class BasicInterpretationEngine : IInterpretationEngine
         var mars = GetPlanet(chart, Planet.Mars);
         var ascendantHouse = GetHouse(chart, 1);
 
-        var relevantHouses = chart.Houses
-            .Where(h => InterpretationCatalog.HouseThemes.ContainsKey(h.HouseNumber))
-            .OrderBy(h => h.HouseNumber)
-            .Select(h => new HouseInterpretationDto
-            {
-                HouseNumber = h.HouseNumber,
-                Sign = h.Sign.ToString(),
-                Title = GetHouseTitle(h.HouseNumber),
-                Meaning = BuildHouseInterpretation(h.HouseNumber, h.Sign)
-            })
-            .ToList();
-
         var sunInterpretation = BuildPlanetInterpretation(sun, InterpretationCatalog.SunBySign, "Posicion solar no disponible.");
         var moonInterpretation = BuildPlanetInterpretation(moon, InterpretationCatalog.MoonBySign, "Posicion lunar no disponible.");
         var ascendantInterpretation = BuildHouseInterpretation(
@@ -44,22 +32,55 @@ public class BasicInterpretationEngine : IInterpretationEngine
 
         return new ChartInterpretation
         {
-            Headline = BuildHeadline(sun, moon, ascendantHouse),
-            Summary = summary,
-            Core = new CoreInterpretation
+            Hook = BuildHeadline(sun, moon, ascendantHouse),
+            EnergyCore = new InterpretationContentBlock
             {
-                Sun = sunInterpretation,
-                Moon = moonInterpretation,
-                Ascendant = ascendantInterpretation
+                Key = "energyCore",
+                Title = "Tu energía central",
+                MainText = summary,
+                SubBlocks =
+                [
+                    CreateSubBlock("sun", $"Tu Sol en {sun?.Sign}", sunInterpretation)
+                ]
             },
-            PersonalPlanets = new PersonalPlanetsInterpretation
+            Core = new InterpretationContentBlock
             {
-                Mercury = mercuryInterpretation,
-                Venus = venusInterpretation,
-                Mars = marsInterpretation
+                Key = "core",
+                Title = "Tu núcleo",
+                MainText = BuildCoreMainText(moonInterpretation, ascendantInterpretation),
+                SubBlocks =
+                [
+                    CreateSubBlock("moon", $"Tu Luna en {moon?.Sign}", moonInterpretation),
+                    CreateSubBlock("ascendant", $"Tu Ascendente en {ascendantHouse?.Sign}", ascendantInterpretation)
+                ]
             },
-            Houses = relevantHouses,
-            Profiles = []
+            PersonalDynamics = new InterpretationContentBlock
+            {
+                Key = "personalDynamics",
+                Title = "Tu forma de pensar, vincularte y actuar",
+                MainText = BuildPersonalDynamicsMainText(mercuryInterpretation, venusInterpretation, marsInterpretation),
+                SubBlocks =
+                [
+                    CreateSubBlock("mercury", $"Mercurio en {mercury?.Sign}", mercuryInterpretation),
+                    CreateSubBlock("venus", $"Venus en {venus?.Sign}", venusInterpretation),
+                    CreateSubBlock("mars", $"Marte en {mars?.Sign}", marsInterpretation)
+                ]
+            },
+            EssentialSummary = new InterpretationContentBlock
+            {
+                Key = "essentialSummary",
+                Title = "Lo esencial de tu carta",
+                MainText = summary,
+                SubBlocks =
+                [
+                    CreateSubBlock("identity", "Identidad", sunInterpretation),
+                    CreateSubBlock("emotion", "Emocionalidad", moonInterpretation),
+                    CreateSubBlock("presence", "Presencia", ascendantInterpretation)
+                ]
+            },
+            LifeAreas = BuildLifeAreas(chart),
+            Profiles = [],
+            Closing = BuildClosing(summary)
         };
     }
 
@@ -118,6 +139,48 @@ public class BasicInterpretationEngine : IInterpretationEngine
         }
 
         return $"Tu carta combina un Sol en {sun.Sign}, una Luna en {moon.Sign} y un Ascendente en {ascendantHouse.Sign}, formando una personalidad con identidad, sensibilidad y presencia bien diferenciadas.";
+    }
+
+    private static string BuildClosing(string summary)
+    {
+        return $"{summary} La integración de estas fuerzas es la clave para leer tu carta como un sistema vivo y no como piezas aisladas.";
+    }
+
+    private static string BuildCoreMainText(string moonInterpretation, string ascendantInterpretation)
+    {
+        return $"{moonInterpretation} {ascendantInterpretation}";
+    }
+
+    private static string BuildPersonalDynamicsMainText(
+        string mercuryInterpretation,
+        string venusInterpretation,
+        string marsInterpretation)
+    {
+        return $"{mercuryInterpretation} {venusInterpretation} {marsInterpretation}";
+    }
+
+    private static List<InterpretationContentBlock> BuildLifeAreas(NatalChart chart)
+    {
+        return chart.Houses
+            .Where(h => InterpretationCatalog.HouseThemes.ContainsKey(h.HouseNumber))
+            .OrderBy(h => h.HouseNumber)
+            .Select(h => new InterpretationContentBlock
+            {
+                Key = $"house-{h.HouseNumber}",
+                Title = GetHouseTitle(h.HouseNumber),
+                MainText = BuildHouseInterpretation(h.HouseNumber, h.Sign)
+            })
+            .ToList();
+    }
+
+    private static InterpretationSubBlock CreateSubBlock(string key, string title, string text)
+    {
+        return new InterpretationSubBlock
+        {
+            Key = key,
+            Title = title,
+            Text = text
+        };
     }
 
     private static string BuildGeneralSummary(

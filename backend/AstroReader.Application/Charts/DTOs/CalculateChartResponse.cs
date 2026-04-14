@@ -45,34 +45,30 @@ public record HousePositionDto
 
 public record ChartInterpretation
 {
-    public string Headline { get; init; } = string.Empty;
-    public string Summary { get; init; } = string.Empty;
-    public CoreInterpretation Core { get; init; } = new();
-    public PersonalPlanetsInterpretation PersonalPlanets { get; init; } = new();
-    public List<HouseInterpretationDto> Houses { get; init; } = [];
+    public string Hook { get; init; } = string.Empty;
+    public InterpretationContentBlock EnergyCore { get; init; } = new();
+    public InterpretationContentBlock Core { get; init; } = new();
+    public InterpretationContentBlock PersonalDynamics { get; init; } = new();
+    public InterpretationContentBlock EssentialSummary { get; init; } = new();
+    public List<InterpretationContentBlock> TensionsAndPotential { get; init; } = [];
+    public List<InterpretationContentBlock> LifeAreas { get; init; } = [];
     public List<InterpretationProfileDto> Profiles { get; init; } = [];
+    public string Closing { get; init; } = string.Empty;
 }
 
-public record CoreInterpretation
+public record InterpretationContentBlock
 {
-    public string Sun { get; init; } = string.Empty;
-    public string Moon { get; init; } = string.Empty;
-    public string Ascendant { get; init; } = string.Empty;
-}
-
-public record PersonalPlanetsInterpretation
-{
-    public string Mercury { get; init; } = string.Empty;
-    public string Venus { get; init; } = string.Empty;
-    public string Mars { get; init; } = string.Empty;
-}
-
-public record HouseInterpretationDto
-{
-    public int HouseNumber { get; init; }
-    public string Sign { get; init; } = string.Empty;
+    public string Key { get; init; } = string.Empty;
     public string Title { get; init; } = string.Empty;
-    public string Meaning { get; init; } = string.Empty;
+    public string MainText { get; init; } = string.Empty;
+    public List<InterpretationSubBlock> SubBlocks { get; init; } = [];
+}
+
+public record InterpretationSubBlock
+{
+    public string Key { get; init; } = string.Empty;
+    public string Title { get; init; } = string.Empty;
+    public string Text { get; init; } = string.Empty;
 }
 
 public record InterpretationProfileDto
