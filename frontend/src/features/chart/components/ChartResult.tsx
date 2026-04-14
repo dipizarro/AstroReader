@@ -171,21 +171,31 @@ export const ChartResult = ({ data, request, showSavePanel = true }: ChartResult
 
       {/* --- DETAILED DATA (PLANETS & HOUSES) --- */}
       {(planets.length > 0 || houses.length > 0) && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto pt-8 border-t border-white/5">
+        <section className="mx-auto max-w-5xl space-y-6 border-t border-white/6 pt-10">
+          <div className="text-center space-y-2">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-text-muted">
+              Datos Técnicos
+            </h3>
+            <p className="mx-auto max-w-3xl text-sm leading-7 text-text-muted/80">
+              Las posiciones y casas quedan disponibles como referencia de soporte, pero la lectura principal ya sintetiza lo más importante de tu carta.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-10 rounded-[28px] border border-white/8 bg-white/[0.02] p-6 lg:grid-cols-2 lg:p-8">
           
           {/* Planets List */}
           {planets.length > 0 && (
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-1 h-4 bg-primary rounded-full" />
-                <h3 className="text-lg font-display text-white tracking-wide">Posiciones Planetarias</h3>
+                <div className="w-1 h-4 bg-primary/70 rounded-full" />
+                <h3 className="text-base font-display text-white/92 tracking-wide">Posiciones Planetarias</h3>
               </div>
               
               <div className="flex flex-col">
                 {planets.map((pt, idx) => (
                   <div 
                     key={idx} 
-                    className={`flex items-center justify-between py-4 ${idx !== planets.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/[0.02] transition-colors rounded-lg px-2 -mx-2`}
+                    className={`flex items-center justify-between py-4 ${idx !== planets.length - 1 ? 'border-b border-white/5' : ''} rounded-lg px-2 -mx-2 transition-colors hover:bg-white/[0.025]`}
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-6 h-6 flex items-center justify-center opacity-80">
@@ -209,15 +219,15 @@ export const ChartResult = ({ data, request, showSavePanel = true }: ChartResult
           {houses.length > 0 && (
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-1 h-4 bg-slate-500 rounded-full" />
-                <h3 className="text-lg font-display text-white tracking-wide">Las Doce Casas</h3>
+                <div className="w-1 h-4 bg-slate-500/80 rounded-full" />
+                <h3 className="text-base font-display text-white/92 tracking-wide">Las Doce Casas</h3>
               </div>
               
               <div className="grid grid-cols-2 gap-4">
                 {houses.map((house, idx) => (
                   <div 
                     key={idx} 
-                    className="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-[#121216]/50 hover:border-white/10 transition-colors"
+                    className="flex items-center justify-between rounded-xl border border-white/6 bg-[#121216]/50 p-3 transition-colors hover:border-white/10"
                   >
                     <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">
                       <span className="opacity-50 mr-1">H</span>
@@ -230,7 +240,8 @@ export const ChartResult = ({ data, request, showSavePanel = true }: ChartResult
             </div>
           )}
 
-        </div>
+          </div>
+        </section>
       )}
 
     </div>

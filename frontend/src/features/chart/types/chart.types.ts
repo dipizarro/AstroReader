@@ -35,31 +35,28 @@ export interface HouseCusp {
 }
 
 export interface ChartInterpretation {
-  headline: string;
-  summary: string;
-  core: CoreInterpretation;
-  personalPlanets: PersonalPlanetsInterpretation;
-  houses: HouseInterpretation[];
+  hook: string;
+  energyCore: InterpretationContentBlock;
+  core: InterpretationContentBlock;
+  personalDynamics: InterpretationContentBlock;
+  essentialSummary: InterpretationContentBlock;
+  tensionsAndPotential: InterpretationContentBlock[];
+  lifeAreas: InterpretationContentBlock[];
   profiles: InterpretationProfile[];
+  closing: string;
 }
 
-export interface CoreInterpretation {
-  sun: string;
-  moon: string;
-  ascendant: string;
-}
-
-export interface PersonalPlanetsInterpretation {
-  mercury: string;
-  venus: string;
-  mars: string;
-}
-
-export interface HouseInterpretation {
-  houseNumber: number;
-  sign: string;
+export interface InterpretationContentBlock {
+  key: string;
   title: string;
-  meaning: string;
+  mainText: string;
+  subBlocks: InterpretationSubBlock[];
+}
+
+export interface InterpretationSubBlock {
+  key: string;
+  title: string;
+  text: string;
 }
 
 export interface InterpretationProfile {
