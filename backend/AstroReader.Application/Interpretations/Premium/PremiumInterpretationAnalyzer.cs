@@ -1,20 +1,16 @@
-using AstroReader.Domain.Entities;
-using AstroReader.Domain.Enums;
-
 namespace AstroReader.Application.Interpretations.Premium;
 
 public sealed class PremiumInterpretationAnalyzer : IInterpretationAnalyzer
 {
-    private readonly IPremiumInterpretationCatalogProvider _catalogProvider;
-
-    public PremiumInterpretationAnalyzer(IPremiumInterpretationCatalogProvider catalogProvider)
+    public InterpretationAnalysisResult Analyze(PremiumInterpretationContext context)
     {
-        _catalogProvider = catalogProvider;
-    }
-
-    public InterpretationAnalysisResult Analyze(NatalChart chart)
-    {
-        var entries = ResolveEntries(chart);
+        var entries = new ChartSemanticEntries(
+            Sun: context.RequireSun(),
+            Moon: context.RequireMoon(),
+            Ascendant: context.RequireAscendant(),
+            Mercury: context.RequireMercury(),
+            Venus: context.RequireVenus(),
+            Mars: context.RequireMars());
 
         return new InterpretationAnalysisResult
         {
@@ -25,24 +21,6 @@ public sealed class PremiumInterpretationAnalyzer : IInterpretationAnalyzer
             CentralTension = BuildCentralTension(entries),
             GrowthDirection = BuildGrowthDirection(entries)
         };
-    }
-
-    private ChartSemanticEntries ResolveEntries(NatalChart chart)
-    {
-        var sun = RequirePlanet(chart, Planet.Sun);
-        var moon = RequirePlanet(chart, Planet.Moon);
-        var mercury = RequirePlanet(chart, Planet.Mercury);
-        var venus = RequirePlanet(chart, Planet.Venus);
-        var mars = RequirePlanet(chart, Planet.Mars);
-        var ascendant = RequireHouse(chart, 1);
-
-        return new ChartSemanticEntries(
-            Sun: _catalogProvider.GetEntry<SunInterpretationEntry>(PremiumInterpretationPosition.Sun, sun.Sign),
-            Moon: _catalogProvider.GetEntry<MoonInterpretationEntry>(PremiumInterpretationPosition.Moon, moon.Sign),
-            Ascendant: _catalogProvider.GetEntry<AscendantInterpretationEntry>(PremiumInterpretationPosition.Ascendant, ascendant.Sign),
-            Mercury: _catalogProvider.GetEntry<MercuryInterpretationEntry>(PremiumInterpretationPosition.Mercury, mercury.Sign),
-            Venus: _catalogProvider.GetEntry<VenusInterpretationEntry>(PremiumInterpretationPosition.Venus, venus.Sign),
-            Mars: _catalogProvider.GetEntry<MarsInterpretationEntry>(PremiumInterpretationPosition.Mars, mars.Sign));
     }
 
     private static AnalysisInsight BuildDominantCoreTrait(ChartSemanticEntries entries)
@@ -62,12 +40,7 @@ public sealed class PremiumInterpretationAnalyzer : IInterpretationAnalyzer
                 entries.Moon.EmotionalStyle,
                 entries.Ascendant.OuterStyle
             ],
-            SourcePositions =
-            [
-                PremiumInterpretationPosition.Sun,
-                PremiumInterpretationPosition.Moon,
-                PremiumInterpretationPosition.Ascendant
-            ]
+            SourcePositions = [PremiumInterpretationPosition.Sun, PremiumInterpretationPosition.Moon, PremiumInterpretationPosition.Ascendant]
         };
     }
 
@@ -86,10 +59,7 @@ public sealed class PremiumInterpretationAnalyzer : IInterpretationAnalyzer
                 entries.Moon.EmotionalNeeds,
                 entries.Moon.SecurityNeeds
             ],
-            SourcePositions =
-            [
-                PremiumInterpretationPosition.Moon
-            ]
+            SourcePositions = [PremiumInterpretationPosition.Moon]
         };
     }
 
@@ -109,12 +79,7 @@ public sealed class PremiumInterpretationAnalyzer : IInterpretationAnalyzer
                 entries.Ascendant.SocialStyle,
                 entries.Mercury.CommunicationStyle
             ],
-            SourcePositions =
-            [
-                PremiumInterpretationPosition.Venus,
-                PremiumInterpretationPosition.Ascendant,
-                PremiumInterpretationPosition.Mercury
-            ]
+            SourcePositions = [PremiumInterpretationPosition.Venus, PremiumInterpretationPosition.Ascendant, PremiumInterpretationPosition.Mercury]
         };
     }
 
@@ -133,11 +98,7 @@ public sealed class PremiumInterpretationAnalyzer : IInterpretationAnalyzer
                 entries.Mars.DesireStyle,
                 entries.Mercury.ThinkingStyle
             ],
-            SourcePositions =
-            [
-                PremiumInterpretationPosition.Mars,
-                PremiumInterpretationPosition.Mercury
-            ]
+            SourcePositions = [PremiumInterpretationPosition.Mars, PremiumInterpretationPosition.Mercury]
         };
     }
 
@@ -205,12 +166,7 @@ public sealed class PremiumInterpretationAnalyzer : IInterpretationAnalyzer
                 entries.Moon.IntegrationHooks[0],
                 entries.Mars.IntegrationHooks[0]
             ],
-            SourcePositions =
-            [
-                PremiumInterpretationPosition.Sun,
-                PremiumInterpretationPosition.Moon,
-                PremiumInterpretationPosition.Mars
-            ]
+            SourcePositions = [PremiumInterpretationPosition.Sun, PremiumInterpretationPosition.Moon, PremiumInterpretationPosition.Mars]
         };
     }
 
@@ -278,20 +234,6 @@ public sealed class PremiumInterpretationAnalyzer : IInterpretationAnalyzer
         }
 
         return char.ToUpperInvariant(keyword[0]) + keyword[1..];
-    }
-
-    private static PlanetPosition RequirePlanet(NatalChart chart, Planet planet)
-    {
-        return chart.Planets.FirstOrDefault(x => x.Planet == planet)
-            ?? throw new PremiumInterpretationAnalysisException(
-                $"La carta no contiene la posición requerida de '{planet}' para el análisis premium.");
-    }
-
-    private static HousePosition RequireHouse(NatalChart chart, int houseNumber)
-    {
-        return chart.Houses.FirstOrDefault(x => x.HouseNumber == houseNumber)
-            ?? throw new PremiumInterpretationAnalysisException(
-                $"La carta no contiene la casa requerida '{houseNumber}' para el análisis premium.");
     }
 
     private sealed record ChartSemanticEntries(

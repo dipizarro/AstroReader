@@ -1,20 +1,16 @@
-using AstroReader.Domain.Entities;
-using AstroReader.Domain.Enums;
-
 namespace AstroReader.Application.Interpretations.Premium;
 
 public sealed class PremiumInterpretationComposer : IInterpretationComposer
 {
-    private readonly IPremiumInterpretationCatalogProvider _catalogProvider;
-
-    public PremiumInterpretationComposer(IPremiumInterpretationCatalogProvider catalogProvider)
+    public PremiumInterpretationCompositionResult Compose(PremiumInterpretationContext context, InterpretationAnalysisResult analysis)
     {
-        _catalogProvider = catalogProvider;
-    }
-
-    public PremiumInterpretationCompositionResult Compose(NatalChart chart, InterpretationAnalysisResult analysis)
-    {
-        var entries = ResolveEntries(chart);
+        var entries = new ChartSemanticEntries(
+            Sun: context.RequireSun(),
+            Moon: context.RequireMoon(),
+            Ascendant: context.RequireAscendant(),
+            Mercury: context.RequireMercury(),
+            Venus: context.RequireVenus(),
+            Mars: context.RequireMars());
 
         return new PremiumInterpretationCompositionResult
         {
@@ -165,24 +161,6 @@ public sealed class PremiumInterpretationComposer : IInterpretationComposer
             FirstOrEmpty(entries.Sun.IntegrationHooks));
     }
 
-    private ChartSemanticEntries ResolveEntries(NatalChart chart)
-    {
-        var sun = RequirePlanet(chart, Planet.Sun);
-        var moon = RequirePlanet(chart, Planet.Moon);
-        var mercury = RequirePlanet(chart, Planet.Mercury);
-        var venus = RequirePlanet(chart, Planet.Venus);
-        var mars = RequirePlanet(chart, Planet.Mars);
-        var ascendant = RequireHouse(chart, 1);
-
-        return new ChartSemanticEntries(
-            Sun: _catalogProvider.GetEntry<SunInterpretationEntry>(PremiumInterpretationPosition.Sun, sun.Sign),
-            Moon: _catalogProvider.GetEntry<MoonInterpretationEntry>(PremiumInterpretationPosition.Moon, moon.Sign),
-            Ascendant: _catalogProvider.GetEntry<AscendantInterpretationEntry>(PremiumInterpretationPosition.Ascendant, ascendant.Sign),
-            Mercury: _catalogProvider.GetEntry<MercuryInterpretationEntry>(PremiumInterpretationPosition.Mercury, mercury.Sign),
-            Venus: _catalogProvider.GetEntry<VenusInterpretationEntry>(PremiumInterpretationPosition.Venus, venus.Sign),
-            Mars: _catalogProvider.GetEntry<MarsInterpretationEntry>(PremiumInterpretationPosition.Mars, mars.Sign));
-    }
-
     private static string ComposeParagraph(params string[] fragments)
     {
         var normalized = fragments
@@ -214,20 +192,6 @@ public sealed class PremiumInterpretationComposer : IInterpretationComposer
         return string.IsNullOrWhiteSpace(value)
             ? string.Empty
             : value.Trim();
-    }
-
-    private static PlanetPosition RequirePlanet(NatalChart chart, Planet planet)
-    {
-        return chart.Planets.FirstOrDefault(x => x.Planet == planet)
-            ?? throw new PremiumInterpretationAnalysisException(
-                $"La carta no contiene la posición requerida de '{planet}' para la composición premium.");
-    }
-
-    private static HousePosition RequireHouse(NatalChart chart, int houseNumber)
-    {
-        return chart.Houses.FirstOrDefault(x => x.HouseNumber == houseNumber)
-            ?? throw new PremiumInterpretationAnalysisException(
-                $"La carta no contiene la casa requerida '{houseNumber}' para la composición premium.");
     }
 
     private sealed record ChartSemanticEntries(

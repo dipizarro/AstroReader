@@ -13,18 +13,18 @@ namespace AstroReader.Application.Charts.UseCases;
 public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
 {
     private readonly IAstroCalculationEngine _engine;
-    private readonly IPremiumInterpretationCatalogProvider _premiumInterpretationCatalogProvider;
+    private readonly IPremiumInterpretationContextResolver _premiumInterpretationContextResolver;
     private readonly IInterpretationAnalyzer _interpretationAnalyzer;
     private readonly IInterpretationComposer _interpretationComposer;
 
     public CalculateNatalChartUseCase(
         IAstroCalculationEngine engine,
-        IPremiumInterpretationCatalogProvider premiumInterpretationCatalogProvider,
+        IPremiumInterpretationContextResolver premiumInterpretationContextResolver,
         IInterpretationAnalyzer interpretationAnalyzer,
         IInterpretationComposer interpretationComposer)
     {
         _engine = engine;
-        _premiumInterpretationCatalogProvider = premiumInterpretationCatalogProvider;
+        _premiumInterpretationContextResolver = premiumInterpretationContextResolver;
         _interpretationAnalyzer = interpretationAnalyzer;
         _interpretationComposer = interpretationComposer;
     }
@@ -127,18 +127,8 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         ZodiacSign moonSign,
         ZodiacSign ascendantSign)
     {
-        var mercurySign = natalChart.Planets.FirstOrDefault(p => p.Planet == Planet.Mercury)?.Sign ?? ZodiacSign.Aries;
-        var venusSign = natalChart.Planets.FirstOrDefault(p => p.Planet == Planet.Venus)?.Sign ?? ZodiacSign.Aries;
-        var marsSign = natalChart.Planets.FirstOrDefault(p => p.Planet == Planet.Mars)?.Sign ?? ZodiacSign.Aries;
-
-        var coverageAssessment = PremiumInterpretationCoverageEvaluator.Evaluate(
-            _premiumInterpretationCatalogProvider.GetCatalog(),
-            sunSign,
-            moonSign,
-            ascendantSign,
-            mercurySign,
-            venusSign,
-            marsSign);
+        var context = _premiumInterpretationContextResolver.Resolve(natalChart);
+        var coverageAssessment = context.Coverage;
 
         if (!coverageAssessment.IsComplete)
         {
@@ -155,8 +145,8 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
 
         try
         {
-            var analysis = _interpretationAnalyzer.Analyze(natalChart);
-            var composition = _interpretationComposer.Compose(natalChart, analysis);
+            var analysis = _interpretationAnalyzer.Analyze(context);
+            var composition = _interpretationComposer.Compose(context, analysis);
             return PremiumInterpretationResponseMapper.MapComposition(
                 composition,
                 coverageAssessment.ToDto(

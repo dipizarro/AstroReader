@@ -2,7 +2,7 @@ using AstroReader.Application.Charts.DTOs;
 
 namespace AstroReader.Application.Interpretations.Premium;
 
-internal sealed record PremiumInterpretationCoverageAssessment(
+public sealed record PremiumInterpretationCoverageAssessment(
     IReadOnlyList<string> CoveredEntries,
     IReadOnlyList<string> MissingEntries)
 {
@@ -10,7 +10,7 @@ internal sealed record PremiumInterpretationCoverageAssessment(
 
     public bool HasAnyCoverage => CoveredEntries.Count > 0;
 
-    public InterpretationCoverage ToDto(
+    internal InterpretationCoverage ToDto(
         InterpretationCoverageStatus status,
         IEnumerable<string>? composedBlocks = null)
     {

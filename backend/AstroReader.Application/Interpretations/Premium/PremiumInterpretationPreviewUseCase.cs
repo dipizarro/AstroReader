@@ -8,16 +8,16 @@ public sealed class PremiumInterpretationPreviewUseCase : IPremiumInterpretation
 {
     private const double DefaultSignDegree = 15d;
 
-    private readonly IPremiumInterpretationCatalogProvider _catalogProvider;
+    private readonly IPremiumInterpretationContextResolver _premiumInterpretationContextResolver;
     private readonly IInterpretationAnalyzer _interpretationAnalyzer;
     private readonly IInterpretationComposer _interpretationComposer;
 
     public PremiumInterpretationPreviewUseCase(
-        IPremiumInterpretationCatalogProvider catalogProvider,
+        IPremiumInterpretationContextResolver premiumInterpretationContextResolver,
         IInterpretationAnalyzer interpretationAnalyzer,
         IInterpretationComposer interpretationComposer)
     {
-        _catalogProvider = catalogProvider;
+        _premiumInterpretationContextResolver = premiumInterpretationContextResolver;
         _interpretationAnalyzer = interpretationAnalyzer;
         _interpretationComposer = interpretationComposer;
     }
@@ -32,14 +32,9 @@ public sealed class PremiumInterpretationPreviewUseCase : IPremiumInterpretation
             Venus: ParseSign(request.Venus, nameof(request.Venus)),
             Mars: ParseSign(request.Mars, nameof(request.Mars)));
 
-        var coverageAssessment = PremiumInterpretationCoverageEvaluator.Evaluate(
-            _catalogProvider.GetCatalog(),
-            selection.Sun,
-            selection.Moon,
-            selection.Ascendant,
-            selection.Mercury,
-            selection.Venus,
-            selection.Mars);
+        var chart = BuildPreviewChart(selection);
+        var context = _premiumInterpretationContextResolver.Resolve(chart);
+        var coverageAssessment = context.Coverage;
 
         if (!coverageAssessment.IsComplete)
         {
@@ -59,11 +54,10 @@ public sealed class PremiumInterpretationPreviewUseCase : IPremiumInterpretation
             };
         }
 
-        var chart = BuildPreviewChart(selection);
         try
         {
-            var analysis = _interpretationAnalyzer.Analyze(chart);
-            var composition = _interpretationComposer.Compose(chart, analysis);
+            var analysis = _interpretationAnalyzer.Analyze(context);
+            var composition = _interpretationComposer.Compose(context, analysis);
 
             return new PremiumInterpretationPreviewResponse
             {
