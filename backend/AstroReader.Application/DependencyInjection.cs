@@ -12,6 +12,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddSingleton<IPremiumInterpretationCatalogProvider, JsonPremiumInterpretationCatalogProvider>();
+        services.AddScoped<IInterpretationAnalyzer, PremiumInterpretationAnalyzer>();
         services.AddScoped<ICalculateNatalChartUseCase, CalculateNatalChartUseCase>();
         services.AddScoped<ISaveChartUseCase, SaveChartUseCase>();
         services.AddScoped<IGetSavedChartByIdUseCase, GetSavedChartByIdUseCase>();
