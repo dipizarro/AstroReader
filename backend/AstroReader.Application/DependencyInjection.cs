@@ -1,5 +1,6 @@
 using AstroReader.Application.Charts.Interfaces;
 using AstroReader.Application.Charts.UseCases;
+using AstroReader.Application.Interpretations.Premium;
 using AstroReader.Application.SavedCharts.Interfaces;
 using AstroReader.Application.SavedCharts.UseCases;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        services.AddSingleton<IPremiumInterpretationCatalogProvider, JsonPremiumInterpretationCatalogProvider>();
         services.AddScoped<ICalculateNatalChartUseCase, CalculateNatalChartUseCase>();
         services.AddScoped<ISaveChartUseCase, SaveChartUseCase>();
         services.AddScoped<IGetSavedChartByIdUseCase, GetSavedChartByIdUseCase>();

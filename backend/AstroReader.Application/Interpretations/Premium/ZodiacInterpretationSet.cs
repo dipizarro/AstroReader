@@ -8,44 +8,44 @@ namespace AstroReader.Application.Interpretations.Premium;
 public sealed class ZodiacInterpretationSet<TEntry> where TEntry : InterpretationEntry
 {
     [JsonPropertyName("aries")]
-    public TEntry Aries { get; init; } = default!;
+    public TEntry? Aries { get; init; }
 
     [JsonPropertyName("taurus")]
-    public TEntry Taurus { get; init; } = default!;
+    public TEntry? Taurus { get; init; }
 
     [JsonPropertyName("gemini")]
-    public TEntry Gemini { get; init; } = default!;
+    public TEntry? Gemini { get; init; }
 
     [JsonPropertyName("cancer")]
-    public TEntry Cancer { get; init; } = default!;
+    public TEntry? Cancer { get; init; }
 
     [JsonPropertyName("leo")]
-    public TEntry Leo { get; init; } = default!;
+    public TEntry? Leo { get; init; }
 
     [JsonPropertyName("virgo")]
-    public TEntry Virgo { get; init; } = default!;
+    public TEntry? Virgo { get; init; }
 
     [JsonPropertyName("libra")]
-    public TEntry Libra { get; init; } = default!;
+    public TEntry? Libra { get; init; }
 
     [JsonPropertyName("scorpio")]
-    public TEntry Scorpio { get; init; } = default!;
+    public TEntry? Scorpio { get; init; }
 
     [JsonPropertyName("sagittarius")]
-    public TEntry Sagittarius { get; init; } = default!;
+    public TEntry? Sagittarius { get; init; }
 
     [JsonPropertyName("capricorn")]
-    public TEntry Capricorn { get; init; } = default!;
+    public TEntry? Capricorn { get; init; }
 
     [JsonPropertyName("aquarius")]
-    public TEntry Aquarius { get; init; } = default!;
+    public TEntry? Aquarius { get; init; }
 
     [JsonPropertyName("pisces")]
-    public TEntry Pisces { get; init; } = default!;
+    public TEntry? Pisces { get; init; }
 
     public TEntry GetBySign(ZodiacSign sign)
     {
-        return sign switch
+        var entry = sign switch
         {
             ZodiacSign.Aries => Aries,
             ZodiacSign.Taurus => Taurus,
@@ -61,5 +61,25 @@ public sealed class ZodiacInterpretationSet<TEntry> where TEntry : Interpretatio
             ZodiacSign.Pisces => Pisces,
             _ => throw new ArgumentOutOfRangeException(nameof(sign), sign, "Unsupported zodiac sign.")
         };
+
+        return entry
+            ?? throw new PremiumInterpretationCatalogException(
+                $"El catálogo premium todavía no contiene una entrada para el signo '{sign.ToString().ToLowerInvariant()}'.");
+    }
+
+    public IEnumerable<KeyValuePair<ZodiacSign, TEntry>> EnumerateAvailableEntries()
+    {
+        if (Aries is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Aries, Aries);
+        if (Taurus is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Taurus, Taurus);
+        if (Gemini is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Gemini, Gemini);
+        if (Cancer is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Cancer, Cancer);
+        if (Leo is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Leo, Leo);
+        if (Virgo is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Virgo, Virgo);
+        if (Libra is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Libra, Libra);
+        if (Scorpio is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Scorpio, Scorpio);
+        if (Sagittarius is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Sagittarius, Sagittarius);
+        if (Capricorn is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Capricorn, Capricorn);
+        if (Aquarius is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Aquarius, Aquarius);
+        if (Pisces is not null) yield return new KeyValuePair<ZodiacSign, TEntry>(ZodiacSign.Pisces, Pisces);
     }
 }
