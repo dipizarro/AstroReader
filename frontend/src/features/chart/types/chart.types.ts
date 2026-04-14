@@ -51,6 +51,8 @@ export type InterpretationCoverageStatus = 'complete' | 'partial' | 'fallback';
 
 export interface InterpretationCoverage {
   coverageStatus: InterpretationCoverageStatus;
+  isPremiumResult: boolean;
+  isFallback: boolean;
   coveredEntries: string[];
   missingEntries: string[];
   composedBlocks: string[];

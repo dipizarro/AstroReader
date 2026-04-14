@@ -59,6 +59,8 @@ public record ChartInterpretation
 public record InterpretationCoverage
 {
     public string CoverageStatus { get; init; } = "fallback";
+    public bool IsPremiumResult { get; init; }
+    public bool IsFallback { get; init; } = true;
     public List<string> CoveredEntries { get; init; } = [];
     public List<string> MissingEntries { get; init; } = [];
     public List<string> ComposedBlocks { get; init; } = [];

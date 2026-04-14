@@ -17,6 +17,8 @@ public sealed record PremiumInterpretationCoverageAssessment(
         return new InterpretationCoverage
         {
             CoverageStatus = status.ToApiValue(),
+            IsPremiumResult = status != InterpretationCoverageStatus.Fallback,
+            IsFallback = status == InterpretationCoverageStatus.Fallback,
             CoveredEntries = CoveredEntries.ToList(),
             MissingEntries = MissingEntries.ToList(),
             ComposedBlocks = composedBlocks?.ToList() ?? []
