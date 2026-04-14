@@ -4,136 +4,205 @@ public sealed class PremiumInterpretationAnalyzer : IInterpretationAnalyzer
 {
     public InterpretationAnalysisResult Analyze(PremiumInterpretationContext context)
     {
-        var entries = new ChartSemanticEntries(
-            Sun: context.RequireSun(),
-            Moon: context.RequireMoon(),
-            Ascendant: context.RequireAscendant(),
-            Mercury: context.RequireMercury(),
-            Venus: context.RequireVenus(),
-            Mars: context.RequireMars());
-
         return new InterpretationAnalysisResult
         {
-            DominantCoreTrait = BuildDominantCoreTrait(entries),
-            EmotionalTone = BuildEmotionalTone(entries),
-            RelationalStyle = BuildRelationalStyle(entries),
-            ActionStyle = BuildActionStyle(entries),
-            CentralTension = BuildCentralTension(entries),
-            GrowthDirection = BuildGrowthDirection(entries)
+            DominantCoreTrait = BuildDominantCoreTrait(context),
+            EmotionalTone = BuildEmotionalTone(context),
+            RelationalStyle = BuildRelationalStyle(context),
+            ActionStyle = BuildActionStyle(context),
+            CentralTension = BuildCentralTension(context),
+            GrowthDirection = BuildGrowthDirection(context)
         };
     }
 
-    private static AnalysisInsight BuildDominantCoreTrait(ChartSemanticEntries entries)
+    private static AnalysisInsight BuildDominantCoreTrait(PremiumInterpretationContext context)
     {
-        var dominantKeyword = SelectDominantKeyword(entries.Sun.Keywords, entries.Moon.Keywords, entries.Ascendant.Keywords);
+        if (context.Sun is null || context.Moon is null || context.Ascendant is null)
+        {
+            return AnalysisInsight.Empty("dominantCoreTrait");
+        }
+
+        var dominantKeyword = SelectDominantKeyword(context.Sun.Keywords, context.Moon.Keywords, context.Ascendant.Keywords);
 
         return new AnalysisInsight
         {
             Key = "dominantCoreTrait",
             Headline = $"Núcleo dominante: {ToDisplayLabel(dominantKeyword)}",
             Summary =
-                $"{entries.Sun.IdentityStyle} {entries.Moon.EmotionalStyle} {entries.Ascendant.OuterStyle}",
-            Keywords = TakeDistinctKeywords(entries.Sun.Keywords, entries.Moon.Keywords, entries.Ascendant.Keywords),
+                $"{context.Sun.IdentityStyle} {context.Moon.EmotionalStyle} {context.Ascendant.OuterStyle}",
+            Keywords = TakeDistinctKeywords(context.Sun.Keywords, context.Moon.Keywords, context.Ascendant.Keywords),
             Signals =
             [
-                entries.Sun.IdentityStyle,
-                entries.Moon.EmotionalStyle,
-                entries.Ascendant.OuterStyle
+                context.Sun.IdentityStyle,
+                context.Moon.EmotionalStyle,
+                context.Ascendant.OuterStyle
             ],
             SourcePositions = [PremiumInterpretationPosition.Sun, PremiumInterpretationPosition.Moon, PremiumInterpretationPosition.Ascendant]
         };
     }
 
-    private static AnalysisInsight BuildEmotionalTone(ChartSemanticEntries entries)
+    private static AnalysisInsight BuildEmotionalTone(PremiumInterpretationContext context)
     {
+        if (context.Moon is null)
+        {
+            return AnalysisInsight.Empty("emotionalTone");
+        }
+
         return new AnalysisInsight
         {
             Key = "emotionalTone",
             Headline = "Tono emocional principal",
             Summary =
-                $"{entries.Moon.EmotionalStyle} {entries.Moon.EmotionalNeeds} {entries.Moon.SecurityNeeds}",
-            Keywords = TakeDistinctKeywords(entries.Moon.Keywords),
+                $"{context.Moon.EmotionalStyle} {context.Moon.EmotionalNeeds} {context.Moon.SecurityNeeds}",
+            Keywords = TakeDistinctKeywords(context.Moon.Keywords),
             Signals =
             [
-                entries.Moon.EmotionalStyle,
-                entries.Moon.EmotionalNeeds,
-                entries.Moon.SecurityNeeds
+                context.Moon.EmotionalStyle,
+                context.Moon.EmotionalNeeds,
+                context.Moon.SecurityNeeds
             ],
             SourcePositions = [PremiumInterpretationPosition.Moon]
         };
     }
 
-    private static AnalysisInsight BuildRelationalStyle(ChartSemanticEntries entries)
+    private static AnalysisInsight BuildRelationalStyle(PremiumInterpretationContext context)
     {
+        var signals = new List<string>();
+        var keywordSets = new List<IReadOnlyList<string>>();
+        var sourcePositions = new List<PremiumInterpretationPosition>();
+
+        if (context.Venus is not null)
+        {
+            signals.Add(context.Venus.RelationalStyle);
+            signals.Add(context.Venus.AffectiveNeeds);
+            keywordSets.Add(context.Venus.Keywords);
+            sourcePositions.Add(PremiumInterpretationPosition.Venus);
+        }
+
+        if (context.Ascendant is not null)
+        {
+            signals.Add(context.Ascendant.SocialStyle);
+            keywordSets.Add(context.Ascendant.Keywords);
+            sourcePositions.Add(PremiumInterpretationPosition.Ascendant);
+        }
+
+        if (context.Mercury is not null)
+        {
+            signals.Add(context.Mercury.CommunicationStyle);
+            keywordSets.Add(context.Mercury.Keywords);
+            sourcePositions.Add(PremiumInterpretationPosition.Mercury);
+        }
+
+        var filteredSignals = signals
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        if (filteredSignals.Count == 0)
+        {
+            return AnalysisInsight.Empty("relationalStyle");
+        }
+
         return new AnalysisInsight
         {
             Key = "relationalStyle",
             Headline = "Forma general de vincularse",
-            Summary =
-                $"{entries.Venus.RelationalStyle} {entries.Venus.AffectiveNeeds} {entries.Ascendant.SocialStyle} {entries.Mercury.CommunicationStyle}",
-            Keywords = TakeDistinctKeywords(entries.Venus.Keywords, entries.Ascendant.Keywords, entries.Mercury.Keywords),
-            Signals =
-            [
-                entries.Venus.RelationalStyle,
-                entries.Venus.AffectiveNeeds,
-                entries.Ascendant.SocialStyle,
-                entries.Mercury.CommunicationStyle
-            ],
-            SourcePositions = [PremiumInterpretationPosition.Venus, PremiumInterpretationPosition.Ascendant, PremiumInterpretationPosition.Mercury]
+            Summary = string.Join(" ", filteredSignals),
+            Keywords = TakeDistinctKeywords(keywordSets.ToArray()),
+            Signals = filteredSignals,
+            SourcePositions = sourcePositions.Distinct().ToList()
         };
     }
 
-    private static AnalysisInsight BuildActionStyle(ChartSemanticEntries entries)
+    private static AnalysisInsight BuildActionStyle(PremiumInterpretationContext context)
     {
+        var signals = new List<string>();
+        var keywordSets = new List<IReadOnlyList<string>>();
+        var sourcePositions = new List<PremiumInterpretationPosition>();
+
+        if (context.Mars is not null)
+        {
+            signals.Add(context.Mars.ActionStyle);
+            signals.Add(context.Mars.DesireStyle);
+            keywordSets.Add(context.Mars.Keywords);
+            sourcePositions.Add(PremiumInterpretationPosition.Mars);
+        }
+
+        if (context.Mercury is not null)
+        {
+            signals.Add(context.Mercury.ThinkingStyle);
+            keywordSets.Add(context.Mercury.Keywords);
+            sourcePositions.Add(PremiumInterpretationPosition.Mercury);
+        }
+
+        var filteredSignals = signals
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        if (filteredSignals.Count == 0)
+        {
+            return AnalysisInsight.Empty("actionStyle");
+        }
+
         return new AnalysisInsight
         {
             Key = "actionStyle",
             Headline = "Forma general de actuar",
-            Summary =
-                $"{entries.Mars.ActionStyle} {entries.Mars.DesireStyle} {entries.Mercury.ThinkingStyle}",
-            Keywords = TakeDistinctKeywords(entries.Mars.Keywords, entries.Mercury.Keywords),
-            Signals =
-            [
-                entries.Mars.ActionStyle,
-                entries.Mars.DesireStyle,
-                entries.Mercury.ThinkingStyle
-            ],
-            SourcePositions = [PremiumInterpretationPosition.Mars, PremiumInterpretationPosition.Mercury]
+            Summary = string.Join(" ", filteredSignals),
+            Keywords = TakeDistinctKeywords(keywordSets.ToArray()),
+            Signals = filteredSignals,
+            SourcePositions = sourcePositions.Distinct().ToList()
         };
     }
 
-    private static AnalysisInsight BuildCentralTension(ChartSemanticEntries entries)
+    private static AnalysisInsight BuildCentralTension(PremiumInterpretationContext context)
     {
-        var candidates = new[]
+        var candidates = new List<ContrastCandidate>();
+
+        if (context.Sun is not null && context.Moon is not null)
         {
-            CreateContrastCandidate(
+            candidates.Add(CreateContrastCandidate(
                 "identityEmotion",
                 "Tensión entre identidad y necesidad emocional",
-                entries.Sun.IdentityStyle,
-                entries.Moon.EmotionalNeeds,
-                entries.Sun.Keywords,
-                entries.Moon.Keywords,
+                context.Sun.IdentityStyle,
+                context.Moon.EmotionalNeeds,
+                context.Sun.Keywords,
+                context.Moon.Keywords,
                 PremiumInterpretationPosition.Sun,
-                PremiumInterpretationPosition.Moon),
-            CreateContrastCandidate(
+                PremiumInterpretationPosition.Moon));
+        }
+
+        if (context.Venus is not null && context.Mars is not null)
+        {
+            candidates.Add(CreateContrastCandidate(
                 "bondDesire",
                 "Tensión entre vínculo y deseo",
-                entries.Venus.RelationalStyle,
-                entries.Mars.DesireStyle,
-                entries.Venus.Keywords,
-                entries.Mars.Keywords,
+                context.Venus.RelationalStyle,
+                context.Mars.DesireStyle,
+                context.Venus.Keywords,
+                context.Mars.Keywords,
                 PremiumInterpretationPosition.Venus,
-                PremiumInterpretationPosition.Mars),
-            CreateContrastCandidate(
+                PremiumInterpretationPosition.Mars));
+        }
+
+        if (context.Mercury is not null && context.Moon is not null)
+        {
+            candidates.Add(CreateContrastCandidate(
                 "mindEmotion",
                 "Tensión entre mente y emoción",
-                entries.Mercury.ThinkingStyle,
-                entries.Moon.EmotionalStyle,
-                entries.Mercury.Keywords,
-                entries.Moon.Keywords,
+                context.Mercury.ThinkingStyle,
+                context.Moon.EmotionalStyle,
+                context.Mercury.Keywords,
+                context.Moon.Keywords,
                 PremiumInterpretationPosition.Mercury,
-                PremiumInterpretationPosition.Moon)
-        };
+                PremiumInterpretationPosition.Moon));
+        }
+
+        if (candidates.Count == 0)
+        {
+            return AnalysisInsight.Empty("centralTension");
+        }
 
         var selected = candidates
             .OrderByDescending(x => x.ContrastScore)
@@ -151,22 +220,41 @@ public sealed class PremiumInterpretationAnalyzer : IInterpretationAnalyzer
         };
     }
 
-    private static AnalysisInsight BuildGrowthDirection(ChartSemanticEntries entries)
+    private static AnalysisInsight BuildGrowthDirection(PremiumInterpretationContext context)
     {
+        if (context.Sun is null)
+        {
+            return AnalysisInsight.Empty("growthDirection");
+        }
+
+        var signals = new List<string> { context.Sun.GrowthPath };
+        var keywordSets = new List<IReadOnlyList<string>> { context.Sun.Keywords };
+        var sourcePositions = new List<PremiumInterpretationPosition> { PremiumInterpretationPosition.Sun };
+
+        var moonHook = context.Moon?.IntegrationHooks.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x));
+        if (!string.IsNullOrWhiteSpace(moonHook))
+        {
+            signals.Add(moonHook);
+            keywordSets.Add(context.Moon!.Keywords);
+            sourcePositions.Add(PremiumInterpretationPosition.Moon);
+        }
+
+        var marsHook = context.Mars?.IntegrationHooks.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x));
+        if (!string.IsNullOrWhiteSpace(marsHook))
+        {
+            signals.Add(marsHook);
+            keywordSets.Add(context.Mars!.Keywords);
+            sourcePositions.Add(PremiumInterpretationPosition.Mars);
+        }
+
         return new AnalysisInsight
         {
             Key = "growthDirection",
             Headline = "Posible dirección de crecimiento",
-            Summary =
-                $"{entries.Sun.GrowthPath} {entries.Moon.IntegrationHooks[0]} {entries.Mars.IntegrationHooks[0]}",
-            Keywords = TakeDistinctKeywords(entries.Sun.Keywords, entries.Moon.Keywords, entries.Mars.Keywords),
-            Signals =
-            [
-                entries.Sun.GrowthPath,
-                entries.Moon.IntegrationHooks[0],
-                entries.Mars.IntegrationHooks[0]
-            ],
-            SourcePositions = [PremiumInterpretationPosition.Sun, PremiumInterpretationPosition.Moon, PremiumInterpretationPosition.Mars]
+            Summary = string.Join(" ", signals.Where(x => !string.IsNullOrWhiteSpace(x)).Distinct(StringComparer.OrdinalIgnoreCase)),
+            Keywords = TakeDistinctKeywords(keywordSets.ToArray()),
+            Signals = signals.Where(x => !string.IsNullOrWhiteSpace(x)).Distinct(StringComparer.OrdinalIgnoreCase).ToList(),
+            SourcePositions = sourcePositions.Distinct().ToList()
         };
     }
 
@@ -235,14 +323,6 @@ public sealed class PremiumInterpretationAnalyzer : IInterpretationAnalyzer
 
         return char.ToUpperInvariant(keyword[0]) + keyword[1..];
     }
-
-    private sealed record ChartSemanticEntries(
-        SunInterpretationEntry Sun,
-        MoonInterpretationEntry Moon,
-        AscendantInterpretationEntry Ascendant,
-        MercuryInterpretationEntry Mercury,
-        VenusInterpretationEntry Venus,
-        MarsInterpretationEntry Mars);
 
     private sealed record ContrastCandidate(
         int ContrastScore,

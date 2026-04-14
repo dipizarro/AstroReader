@@ -130,28 +130,27 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         var context = _premiumInterpretationContextResolver.Resolve(natalChart);
         var coverageAssessment = context.Coverage;
 
-        if (!coverageAssessment.IsComplete)
-        {
-            var status = coverageAssessment.HasAnyCoverage
-                ? InterpretationCoverageStatus.Partial
-                : InterpretationCoverageStatus.Fallback;
-
-            return PremiumInterpretationFallbackFactory.Create(
-                sunSign,
-                moonSign,
-                ascendantSign,
-                coverageAssessment.ToDto(status));
-        }
-
         try
         {
             var analysis = _interpretationAnalyzer.Analyze(context);
             var composition = _interpretationComposer.Compose(context, analysis);
+            var composedBlocks = PremiumInterpretationCompositionEvaluator.GetComposedBlocks(composition);
+            var status = PremiumInterpretationCompositionEvaluator.DetermineStatus(context, composedBlocks);
+
+            if (status == InterpretationCoverageStatus.Fallback)
+            {
+                return PremiumInterpretationFallbackFactory.Create(
+                    sunSign,
+                    moonSign,
+                    ascendantSign,
+                    coverageAssessment.ToDto(status));
+            }
+
             return PremiumInterpretationResponseMapper.MapComposition(
                 composition,
                 coverageAssessment.ToDto(
-                    InterpretationCoverageStatus.Complete,
-                    PremiumInterpretationResponseMapper.PrimaryComposedBlocks));
+                    status,
+                    composedBlocks));
         }
         catch (PremiumInterpretationCatalogException)
         {

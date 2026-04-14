@@ -36,28 +36,26 @@ public sealed class PremiumInterpretationPreviewUseCase : IPremiumInterpretation
         var context = _premiumInterpretationContextResolver.Resolve(chart);
         var coverageAssessment = context.Coverage;
 
-        if (!coverageAssessment.IsComplete)
-        {
-            var status = coverageAssessment.HasAnyCoverage
-                ? InterpretationCoverageStatus.Partial
-                : InterpretationCoverageStatus.Fallback;
-
-            return new PremiumInterpretationPreviewResponse
-            {
-                Selection = ToSelectionDto(selection),
-                Analysis = new InterpretationAnalysisResult(),
-                Interpretation = PremiumInterpretationFallbackFactory.Create(
-                    selection.Sun,
-                    selection.Moon,
-                    selection.Ascendant,
-                    coverageAssessment.ToDto(status))
-            };
-        }
-
         try
         {
             var analysis = _interpretationAnalyzer.Analyze(context);
             var composition = _interpretationComposer.Compose(context, analysis);
+            var composedBlocks = PremiumInterpretationCompositionEvaluator.GetComposedBlocks(composition);
+            var status = PremiumInterpretationCompositionEvaluator.DetermineStatus(context, composedBlocks);
+
+            if (status == InterpretationCoverageStatus.Fallback)
+            {
+                return new PremiumInterpretationPreviewResponse
+                {
+                    Selection = ToSelectionDto(selection),
+                    Analysis = analysis,
+                    Interpretation = PremiumInterpretationFallbackFactory.Create(
+                        selection.Sun,
+                        selection.Moon,
+                        selection.Ascendant,
+                        coverageAssessment.ToDto(status))
+                };
+            }
 
             return new PremiumInterpretationPreviewResponse
             {
@@ -66,8 +64,8 @@ public sealed class PremiumInterpretationPreviewUseCase : IPremiumInterpretation
                 Interpretation = PremiumInterpretationResponseMapper.MapComposition(
                     composition,
                     coverageAssessment.ToDto(
-                        InterpretationCoverageStatus.Complete,
-                        PremiumInterpretationResponseMapper.PrimaryComposedBlocks))
+                        status,
+                        composedBlocks))
             };
         }
         catch (PremiumInterpretationCatalogException)
