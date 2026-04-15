@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AstroReader.Application\AstroReader.Application.csproj" />
+    <ProjectReference Include="..\AstroReader.AstroEngine\AstroReader.AstroEngine.csproj" />
   </ItemGroup>
 
 </Project>
