@@ -1,7 +1,8 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+const BASE_URL = resolveApiBaseUrl();
 
 class ApiError extends Error {
   status: number;
+
   constructor(status: number, message: string) {
     super(message);
     this.status = status;
@@ -41,14 +42,14 @@ export const apiClient = {
       if (error instanceof ApiError) {
         throw error;
       }
+
       throw new Error(error instanceof Error ? error.message : 'Error desconocido de conexión');
     }
   },
 
   async post<T, U = unknown>(endpoint: string, body: U): Promise<T> {
     const url = `${BASE_URL}${endpoint}`;
-    
-    // Configuración por defecto de los headers
+
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -62,16 +63,14 @@ export const apiClient = {
       });
 
       if (!response.ok) {
-        // Tratar de obtener el mensaje de error del backend
         const errorData = await response.json().catch(() => ({}));
         const validationDetails = extractValidationDetails(errorData);
         throw new ApiError(
-          response.status, 
+          response.status,
           validationDetails || errorData.message || errorData.detail || errorData.title || `Error ${response.status}: Ha ocurrido un problema al comunicar con el servidor.`
         );
       }
 
-      // Si la respuesta no tiene body (ej. 204), retornamos as T vacío
       if (response.status === 204) {
         return {} as T;
       }
@@ -81,10 +80,11 @@ export const apiClient = {
       if (error instanceof ApiError) {
         throw error;
       }
+
       throw new Error(error instanceof Error ? error.message : 'Error desconocido de conexión');
     }
   }
-  
+
   // get<T>... put<T>... delete<T>... pueden añadirse aquí luego.
 };
 
@@ -104,4 +104,18 @@ function extractValidationDetails(errorData: unknown): string | null {
     .filter((value): value is string => typeof value === 'string' && value.trim().length > 0);
 
   return messages.length > 0 ? messages.join(' ') : null;
+}
+
+function resolveApiBaseUrl(): string {
+  const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim();
+
+  if (configuredBaseUrl) {
+    return configuredBaseUrl.replace(/\/+$/, '');
+  }
+
+  if (import.meta.env.DEV) {
+    return 'http://localhost:5000';
+  }
+
+  throw new Error('Falta VITE_API_BASE_URL para conectar el frontend con la API publicada.');
 }

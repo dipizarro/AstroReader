@@ -75,6 +75,18 @@ App Settings requeridos en Azure App Service
 - `AstroEngine__SwissEph__HouseSystem=P`
 - `AstroEngine__SwissEph__EphemerisPath=` si se usa el fallback del wrapper, o una ruta Linux existente si se suben efemérides propias.
 
+Variables requeridas en Azure Static Web Apps
+
+- `VITE_API_BASE_URL=https://<backend-app-service>.azurewebsites.net`
+- `VITE_MAPBOX_TOKEN=<token>` si se quiere geocoding real en producción.
+
+Comunicación frontend/backend
+
+- El backend solo acepta orígenes declarados en `Cors__AllowedOrigins`.
+- El frontend en desarrollo usa `http://localhost:5000` si falta `VITE_API_BASE_URL`.
+- El frontend en producción exige `VITE_API_BASE_URL`; no debe caer silenciosamente a localhost.
+- La URL de `VITE_API_BASE_URL` no debe terminar en `/`.
+
 Checklist Azure SQL
 
 - Crear Azure SQL Database.
