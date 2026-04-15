@@ -666,6 +666,174 @@
       }
     },
     "ascendant": {
+      "aries": {
+        "summary": "Tu forma de entrar al mundo es directa, activa y difícil de ignorar. Sueles abrir espacio con decisión, presencia física y una energía que transmite iniciativa antes incluso de explicar tus intenciones.",
+        "keywords": [
+          "presencia directa",
+          "iniciativa",
+          "franqueza",
+          "movimiento",
+          "autonomía"
+        ],
+        "strengths": [
+          "Generas impulso rápidamente y puedes activar ambientes quietos o indecisos.",
+          "Transmites seguridad cuando hay que tomar una decisión o empezar algo.",
+          "Tu presencia suele sentirse honesta, vital y poco calculada."
+        ],
+        "challenges": [
+          "Puedes parecer impaciente o confrontacional aunque solo estés siendo directo.",
+          "A veces entras en situaciones sin leer del todo el ritmo del entorno.",
+          "Te cuesta suavizar tu forma de avanzar cuando otros necesitan más tiempo."
+        ],
+        "integrationHooks": [
+          "Antes de actuar, observa si el contexto necesita impulso o escucha.",
+          "Usa tu claridad para abrir caminos, no para pasar por encima de otros ritmos.",
+          "Recuerda que firmeza y sensibilidad pueden convivir en tu manera de presentarte."
+        ],
+        "outerStyle": "Te muestras con energía, espontaneidad y una disposición inmediata a actuar. Tu presencia tiende a sentirse frontal, física y orientada al movimiento.",
+        "socialStyle": "Socialmente sueles tomar la iniciativa, ir al punto y preferir interacciones claras. Te vinculas mejor cuando no tienes que fingir calma o rodeos innecesarios.",
+        "firstImpression": "Los demás pueden percibirte como alguien decidido, dinámico, valiente y algo impaciente. Sueles dejar la sensación de que sabes moverte sin esperar permiso."
+      },
+      "taurus": {
+        "summary": "Tu forma de entrar al mundo transmite calma, presencia corporal y una sensación de estabilidad. No necesitas imponerte rápido: sueles generar confianza a través de consistencia, buen gusto y una energía serena.",
+        "keywords": [
+          "calma",
+          "presencia estable",
+          "sensualidad",
+          "confiabilidad",
+          "naturalidad"
+        ],
+        "strengths": [
+          "Transmites tranquilidad y una sensación concreta de seguridad.",
+          "Tu presencia suele ayudar a bajar la velocidad del entorno.",
+          "Tienes una forma natural de hacer que lo simple se sienta valioso y cuidado."
+        ],
+        "challenges": [
+          "Puedes parecer más cerrado o inmóvil de lo que realmente estás.",
+          "A veces tardas en responder a cambios externos aunque ya los hayas registrado.",
+          "Te cuesta entrar en ambientes caóticos o demasiado demandantes sin protegerte."
+        ],
+        "integrationHooks": [
+          "Permite que tu calma no se convierta en resistencia automática.",
+          "Usa tu presencia estable para crear confianza, pero mantente disponible al cambio.",
+          "Recuerda que moverte con lentitud no significa quedarte detenido."
+        ],
+        "outerStyle": "Te muestras con sobriedad, tacto y una presencia que suele sentirse física, firme y agradable. Hay algo en tu manera de estar que busca comodidad, calidad y continuidad.",
+        "socialStyle": "Socialmente prefieres construir confianza poco a poco. Te vinculas desde la constancia, el buen trato y una actitud que valora lo concreto por encima de la exageración.",
+        "firstImpression": "Los demás pueden percibirte como alguien tranquilo, confiable, reservado y sensorialmente presente. Sueles dar una impresión de estabilidad y criterio."
+      },
+      "gemini": {
+        "summary": "Tu forma de entrar al mundo es curiosa, ágil y conectiva. Sueles abrir puertas a través de la palabra, la observación rápida y una capacidad natural para leer señales, hacer preguntas y generar intercambio.",
+        "keywords": [
+          "curiosidad",
+          "comunicación",
+          "agilidad social",
+          "adaptabilidad",
+          "observación"
+        ],
+        "strengths": [
+          "Inicias conversaciones con facilidad y haces que el ambiente se vuelva más liviano.",
+          "Te adaptas rápido a personas, tonos y contextos diferentes.",
+          "Tienes talento para conectar información, ideas y personas."
+        ],
+        "challenges": [
+          "Puedes parecer disperso si cambias de foco demasiado rápido.",
+          "A veces mantienes todo en tono mental para no mostrar vulnerabilidad.",
+          "Te cuesta permanecer en interacciones demasiado rígidas, lentas o silenciosas."
+        ],
+        "integrationHooks": [
+          "Usa tu agilidad para escuchar mejor, no solo para responder más rápido.",
+          "Permite pausas en la conversación sin sentir que debes llenarlas.",
+          "Elige profundidad cuando notes que la curiosidad se está volviendo evasión."
+        ],
+        "outerStyle": "Te muestras despierto, expresivo y atento a lo que cambia en el entorno. Tu presencia suele sentirse móvil, juvenil y mentalmente disponible.",
+        "socialStyle": "Socialmente te acercas desde la conversación, el humor, la pregunta y la flexibilidad. Te resulta natural circular entre grupos o temas distintos.",
+        "firstImpression": "Los demás pueden percibirte como alguien inteligente, inquieto, conversador y adaptable. Sueles dejar la sensación de que siempre estás captando algo más."
+      },
+      "cancer": {
+        "summary": "Tu forma de entrar al mundo es sensible, protectora y atenta al clima emocional. Puedes parecer reservado al inicio, pero tu presencia suele transmitir cuidado, receptividad y una lectura fina de lo que el entorno necesita.",
+        "keywords": [
+          "sensibilidad",
+          "protección",
+          "receptividad",
+          "cuidado",
+          "intimidad"
+        ],
+        "strengths": [
+          "Lees rápidamente el tono emocional de personas y espacios.",
+          "Generas confianza cuando el entorno necesita cuidado, escucha o contención.",
+          "Tienes una presencia que puede hacer que otros se sientan recibidos."
+        ],
+        "challenges": [
+          "Puedes retraerte si el ambiente se siente frío, invasivo o poco seguro.",
+          "A veces proteges tanto tu sensibilidad que pareces inaccesible.",
+          "Te cuesta exponerte en contextos donde todavía no sientes confianza."
+        ],
+        "integrationHooks": [
+          "Permite que tu cautela te cuide sin aislarte de nuevas experiencias.",
+          "No asumas que debes contener emocionalmente a todos para pertenecer.",
+          "Muestra tu sensibilidad de forma gradual, sin convertirla en armadura."
+        ],
+        "outerStyle": "Te muestras receptivo, cuidadoso y emocionalmente atento. Tu presencia puede alternar entre suavidad visible y una reserva protectora.",
+        "socialStyle": "Socialmente tiendes a observar primero y acercarte cuando sientes confianza. Prefieres vínculos con calidez, memoria y señales claras de cuidado.",
+        "firstImpression": "Los demás pueden percibirte como alguien sensible, protector, amable y algo reservado. Sueles dar una impresión de profundidad emocional contenida."
+      },
+      "leo": {
+        "summary": "Tu forma de entrar al mundo tiene calidez, presencia y una necesidad natural de expresarse con dignidad. Sueles llamar la atención no solo por mostrarse, sino por aportar vitalidad y una energía que invita a mirar hacia el corazón de la escena.",
+        "keywords": [
+          "presencia",
+          "calidez",
+          "expresión",
+          "confianza",
+          "carisma"
+        ],
+        "strengths": [
+          "Generas entusiasmo y puedes elevar el ánimo del entorno.",
+          "Tu presencia suele transmitir seguridad, creatividad y generosidad.",
+          "Tienes talento para ocupar espacio de una manera inspiradora."
+        ],
+        "challenges": [
+          "Puedes sentirte herido si tu presencia no recibe respuesta o reconocimiento.",
+          "A veces proteges tu orgullo con una imagen más fuerte de lo que sientes.",
+          "Te cuesta pasar desapercibido cuando necesitas sentir que tu aporte importa."
+        ],
+        "integrationHooks": [
+          "Permite que tu presencia brille sin depender siempre de ser validada.",
+          "Usa tu carisma para incluir, no solo para destacarte.",
+          "Recuerda que la autenticidad conmueve más que una imagen impecable."
+        ],
+        "outerStyle": "Te muestras cálido, expresivo y con una presencia naturalmente visible. Hay algo en tu manera de estar que busca dignidad, creatividad y brillo personal.",
+        "socialStyle": "Socialmente sueles conectar desde la generosidad, el humor y el entusiasmo. Te resulta natural aportar color, gesto y dramatismo a la interacción.",
+        "firstImpression": "Los demás pueden percibirte como alguien carismático, orgulloso, luminoso y seguro. Sueles dejar una impresión fuerte incluso cuando no intentas dominar el espacio."
+      },
+      "virgo": {
+        "summary": "Tu forma de entrar al mundo es observadora, precisa y orientada a entender cómo mejorar lo que ocurre. Sueles presentarte con discreción inteligente, atención al detalle y una disposición práctica para ser útil.",
+        "keywords": [
+          "observación",
+          "precisión",
+          "discreción",
+          "utilidad",
+          "criterio"
+        ],
+        "strengths": [
+          "Detectas rápidamente detalles que otros no notan.",
+          "Tu presencia puede aportar orden, claridad y sentido práctico.",
+          "Generas confianza cuando el entorno necesita cuidado, método o mejora."
+        ],
+        "challenges": [
+          "Puedes parecer crítico o distante cuando en realidad estás observando.",
+          "A veces te cuesta entrar con soltura si no sientes que tienes todo bajo control.",
+          "Puedes exigirte una presentación demasiado correcta antes de permitirte participar."
+        ],
+        "integrationHooks": [
+          "Permite que tu presencia no tenga que ser perfecta para ser valiosa.",
+          "Usa tu capacidad de observar sin convertir cada detalle en corrección.",
+          "Practica mostrarte mientras aprendes, no solo cuando ya ordenaste todo."
+        ],
+        "outerStyle": "Te muestras cuidadoso, atento y con una presencia sobria. Tu forma externa suele transmitir inteligencia práctica, limpieza de intención y sensibilidad al detalle.",
+        "socialStyle": "Socialmente prefieres leer el ambiente antes de intervenir. Te vinculas desde la ayuda concreta, la observación fina y una comunicación que busca ser precisa.",
+        "firstImpression": "Los demás pueden percibirte como alguien reservado, competente, atento y algo exigente. Sueles dar la impresión de notar más de lo que dices."
+      },
       "libra": {
         "summary": "Tu forma de entrar al mundo privilegia la armonía, la lectura del otro y una presentación cuidada. Sueles abrir puertas a través del equilibrio, el tono y la capacidad de generar una atmósfera amable.",
         "keywords": [
@@ -693,6 +861,146 @@
         "outerStyle": "Te muestras con elegancia relacional, sensibilidad estética y una tendencia natural a considerar el impacto de tu presencia en el entorno.",
         "socialStyle": "Socialmente sueles vincularte desde el diálogo, el equilibrio y la búsqueda de acuerdos. Tienes talento para abrir conversación sin imponerte.",
         "firstImpression": "Sueles dar una primera impresión agradable, refinada y atenta a los matices. Los demás pueden percibirte como alguien amable, medido y fácil de tratar."
+      },
+      "scorpio": {
+        "summary": "Tu forma de entrar al mundo es intensa, reservada y perceptiva. No sueles mostrarlo todo de inmediato: tu presencia tiende a observar, medir profundidad y generar una sensación de fuerza contenida.",
+        "keywords": [
+          "intensidad",
+          "reserva",
+          "magnetismo",
+          "percepción",
+          "profundidad"
+        ],
+        "strengths": [
+          "Lees tensiones, motivaciones y señales ocultas con gran precisión.",
+          "Tu presencia puede transmitir poder, concentración y profundidad emocional.",
+          "Generas vínculos fuertes cuando existe confianza real."
+        ],
+        "challenges": [
+          "Puedes parecer inaccesible o desconfiado antes de que otros te conozcan.",
+          "A veces observas tanto que retrasas la apertura o el intercambio.",
+          "Te cuesta entrar en ambientes superficiales sin protegerte o tomar distancia."
+        ],
+        "integrationHooks": [
+          "Permite que tu reserva sea una elección, no una defensa automática.",
+          "Usa tu percepción para conectar con más verdad, no solo para detectar riesgos.",
+          "Practica mostrar pequeñas señales de apertura cuando el entorno sí es seguro."
+        ],
+        "outerStyle": "Te muestras con intensidad, control y una presencia que suele sentirse magnética. Tu estilo externo puede ser sobrio, profundo y difícil de leer por completo.",
+        "socialStyle": "Socialmente prefieres interacciones significativas antes que exposición casual. Sueles observar primero y acercarte cuando percibes autenticidad.",
+        "firstImpression": "Los demás pueden percibirte como alguien intenso, reservado, penetrante y poderoso. Sueles dejar una sensación de misterio o profundidad incluso en encuentros breves."
+      },
+      "sagittarius": {
+        "summary": "Tu forma de entrar al mundo es amplia, franca y orientada a explorar. Sueles presentarte con una energía abierta, directa y vital, como si cada situación pudiera convertirse en experiencia, aprendizaje o aventura.",
+        "keywords": [
+          "apertura",
+          "franqueza",
+          "expansión",
+          "entusiasmo",
+          "libertad"
+        ],
+        "strengths": [
+          "Aportas perspectiva, humor y confianza en contextos cerrados o tensos.",
+          "Tu presencia puede hacer que otros miren más allá del problema inmediato.",
+          "Tienes facilidad para iniciar experiencias, conversaciones y movimientos nuevos."
+        ],
+        "challenges": [
+          "Puedes parecer demasiado directo cuando otros esperan más tacto.",
+          "A veces pasas por alto detalles importantes por mirar el panorama amplio.",
+          "Te cuesta permanecer en ambientes que se sienten estrechos, solemnes o repetitivos."
+        ],
+        "integrationHooks": [
+          "Aterriza tu entusiasmo para que también considere tiempos, detalles y límites.",
+          "Usa tu franqueza con generosidad, no solo con velocidad.",
+          "Recuerda que la libertad también puede expresarse en presencia y compromiso."
+        ],
+        "outerStyle": "Te muestras abierto, expresivo y con una presencia que busca movimiento. Tu estilo externo suele transmitir amplitud, confianza y deseo de ir más allá.",
+        "socialStyle": "Socialmente conectas desde la honestidad, el humor, las historias y la búsqueda de sentido. Te atraen interacciones donde haya aprendizaje o expansión.",
+        "firstImpression": "Los demás pueden percibirte como alguien espontáneo, optimista, franco y aventurero. Sueles dar la sensación de abrir ventanas en el ambiente."
+      },
+      "capricorn": {
+        "summary": "Tu forma de entrar al mundo es sobria, contenida y orientada a transmitir solidez. Sueles presentarte con una energía responsable, capaz y medida, como si primero observaras qué requiere la situación antes de ocupar lugar.",
+        "keywords": [
+          "sobriedad",
+          "responsabilidad",
+          "autoridad",
+          "estructura",
+          "madurez"
+        ],
+        "strengths": [
+          "Transmites confiabilidad y capacidad para sostener responsabilidades.",
+          "Tu presencia puede ordenar situaciones dispersas o poco claras.",
+          "Tienes facilidad para proyectar seriedad, criterio y dirección."
+        ],
+        "challenges": [
+          "Puedes parecer distante o demasiado serio antes de mostrar calidez.",
+          "A veces te exiges control incluso en contextos donde podrías relajarte.",
+          "Te cuesta entrar con espontaneidad si sientes que aún debes demostrar competencia."
+        ],
+        "integrationHooks": [
+          "Permite que tu autoridad incluya cercanía, no solo autocontrol.",
+          "No conviertas cada primer encuentro en una prueba de suficiencia.",
+          "Recuerda que mostrar humanidad también puede fortalecer tu presencia."
+        ],
+        "outerStyle": "Te muestras reservado, estructurado y con una presencia que busca ser confiable. Tu estilo externo tiende a ser sobrio, funcional y orientado a calidad o permanencia.",
+        "socialStyle": "Socialmente sueles acercarte con cautela, respeto y sentido de responsabilidad. Prefieres vínculos que se construyen con tiempo, coherencia y hechos.",
+        "firstImpression": "Los demás pueden percibirte como alguien serio, competente, prudente y con autoridad natural. Sueles dejar una impresión de madurez y autocontrol."
+      },
+      "aquarius": {
+        "summary": "Tu forma de entrar al mundo es independiente, observadora y ligeramente distinta al tono dominante del entorno. Sueles presentarte con una mezcla de distancia, originalidad y mirada amplia que invita a pensar diferente.",
+        "keywords": [
+          "originalidad",
+          "independencia",
+          "distancia",
+          "visión",
+          "singularidad"
+        ],
+        "strengths": [
+          "Aportas perspectiva fresca y soluciones no convencionales.",
+          "Tu presencia puede liberar al entorno de expectativas demasiado rígidas.",
+          "Tienes facilidad para vincularte desde ideas, causas o intereses compartidos."
+        ],
+        "challenges": [
+          "Puedes parecer distante cuando en realidad estás observando o tomando perspectiva.",
+          "A veces marcas diferencia antes de permitir cercanía.",
+          "Te cuesta adaptarte a ambientes donde se espera conformidad social automática."
+        ],
+        "integrationHooks": [
+          "Usa tu diferencia para abrir posibilidades, no solo para proteger distancia.",
+          "Permite que la cercanía no amenace tu independencia.",
+          "Recuerda que pertenecer no exige borrar lo singular de tu presencia."
+        ],
+        "outerStyle": "Te muestras original, mentalmente libre y con una presencia que no siempre sigue códigos esperados. Tu estilo externo puede sentirse moderno, particular o difícil de clasificar.",
+        "socialStyle": "Socialmente conectas mejor desde ideas, afinidades y espacios donde hay libertad. Prefieres vínculos que respeten autonomía y autenticidad.",
+        "firstImpression": "Los demás pueden percibirte como alguien distinto, inteligente, independiente y algo impredecible. Sueles dejar la sensación de tener una mirada propia."
+      },
+      "pisces": {
+        "summary": "Tu forma de entrar al mundo es sensible, permeable y difícil de reducir a una sola impresión. Sueles captar el clima del entorno antes de actuar, y tu presencia puede sentirse suave, imaginativa o profundamente empática.",
+        "keywords": [
+          "sensibilidad",
+          "empatía",
+          "suavidad",
+          "intuición",
+          "permeabilidad"
+        ],
+        "strengths": [
+          "Lees matices emocionales y atmosféricos con gran sutileza.",
+          "Tu presencia puede suavizar tensiones y abrir espacios de comprensión.",
+          "Tienes una forma natural de adaptarte a personas y ambientes diversos."
+        ],
+        "challenges": [
+          "Puedes absorber demasiado del entorno y perder claridad sobre tu propia posición.",
+          "A veces pareces indefinido porque estás sintiendo muchas capas a la vez.",
+          "Te cuesta sostener límites externos cuando quieres cuidar la sensibilidad del ambiente."
+        ],
+        "integrationHooks": [
+          "Antes de adaptarte, pregúntate qué necesitas tú en ese espacio.",
+          "Usa tu empatía sin abandonar tus límites.",
+          "Permite que tu presencia sea suave sin volverse invisible."
+        ],
+        "outerStyle": "Te muestras receptivo, sutil y emocionalmente poroso. Tu estilo externo puede cambiar según el ambiente, pero suele transmitir sensibilidad e imaginación.",
+        "socialStyle": "Socialmente te vinculas desde la empatía, la intuición y una capacidad de acompañar sin imponer. Prefieres ambientes donde haya humanidad, suavidad y aceptación.",
+        "firstImpression": "Los demás pueden percibirte como alguien sensible, amable, soñador o enigmático. Sueles dejar una impresión de apertura emocional y profundidad sutil."
       }
     },
     "mercury": {
