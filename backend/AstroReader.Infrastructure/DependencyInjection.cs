@@ -8,11 +8,16 @@ namespace AstroReader.Infrastructure;
 
 public static class DependencyInjection
 {
+    private const string AstroReaderConnectionStringName = "AstroReaderDb";
+    private const string AzureSqlConnectionStringEnvironmentVariable = "SQLCONNSTR_AstroReaderDb";
+
     public static IServiceCollection AddInfrastructureServices(
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("AstroReaderDb");
+        var connectionString =
+            configuration.GetConnectionString(AstroReaderConnectionStringName) ??
+            Environment.GetEnvironmentVariable(AzureSqlConnectionStringEnvironmentVariable);
 
         if (string.IsNullOrWhiteSpace(connectionString))
         {

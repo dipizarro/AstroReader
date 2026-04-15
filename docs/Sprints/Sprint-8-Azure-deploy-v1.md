@@ -68,6 +68,7 @@ App Settings requeridos en Azure App Service
 
 - `ASPNETCORE_ENVIRONMENT=Production`
 - `ConnectionStrings__AstroReaderDb=<connection-string-de-Azure-SQL>`
+- Alternativa si usas la sección "Connection strings" de App Service: `SQLCONNSTR_AstroReaderDb=<connection-string-de-Azure-SQL>`
 - `Cors__AllowedOrigins__0=https://<frontend>.azurestaticapps.net`
 - `AstroEngine__SwissEph__CalculationEngine=SwissEph`
 - `AstroEngine__SwissEph__EnableSwissEphForNatalCharts=true`
@@ -80,6 +81,7 @@ Checklist Azure SQL
 - Permitir acceso desde Azure Services o configurar red privada si se endurece más adelante.
 - Ejecutar migraciones contra Azure SQL antes de usar producción.
 - Usar connection string con `Encrypt=True`.
+- Recomendado para App Service: `Server=tcp:<server>.database.windows.net,1433;Initial Catalog=<db>;Persist Security Info=False;User ID=<user>;Password=<password>;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;`
 - No guardar connection strings reales en el repo.
 
 Riesgos pendientes

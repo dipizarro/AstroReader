@@ -6,13 +6,16 @@ namespace AstroReader.Infrastructure.Persistence;
 public class AstroReaderDbContextFactory : IDesignTimeDbContextFactory<AstroReaderDbContext>
 {
     private const string ConnectionStringEnvironmentVariable = "ConnectionStrings__AstroReaderDb";
+    private const string AzureSqlConnectionStringEnvironmentVariable = "SQLCONNSTR_AstroReaderDb";
     private const string DefaultConnectionString =
         "Server=(localdb)\\MSSQLLocalDB;Database=AstroReaderDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
 
     public AstroReaderDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<AstroReaderDbContext>();
-        var connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
+        var connectionString =
+            Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable) ??
+            Environment.GetEnvironmentVariable(AzureSqlConnectionStringEnvironmentVariable);
 
         if (string.IsNullOrWhiteSpace(connectionString))
         {
