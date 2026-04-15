@@ -79,6 +79,10 @@ export const ChartInterpretationSection = ({
           ? 'border-white/10 bg-gradient-to-br from-white/[0.04] via-white/[0.02] to-transparent'
           : 'border-slate-500/15 bg-gradient-to-br from-slate-500/[0.08] via-white/[0.03] to-transparent';
 
+    const subBlockGridClassName = block.key === 'essential'
+      ? 'grid gap-4'
+      : 'grid gap-4 md:grid-cols-2';
+
     return (
       <section
         key={block.key}
@@ -95,7 +99,7 @@ export const ChartInterpretationSection = ({
           </div>
 
           {block.subBlocks?.length > 0 && (
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className={subBlockGridClassName}>
               {block.subBlocks.map((subBlock) => (
                 <article
                   key={subBlock.key}
@@ -119,7 +123,7 @@ export const ChartInterpretationSection = ({
   };
 
   return (
-    <section className="mx-auto max-w-5xl space-y-8">
+    <section className="mx-auto max-w-5xl space-y-10">
       <div className={`overflow-hidden rounded-[32px] border px-7 py-10 text-center shadow-[0_0_48px_rgba(0,0,0,0.28)] md:px-10 ${coverageToneClassName}`}>
         <div className="mx-auto max-w-4xl space-y-5">
           <div className="flex flex-col items-center gap-3">
@@ -131,12 +135,12 @@ export const ChartInterpretationSection = ({
             </span>
           </div>
           {interpretation.hook && (
-            <p className="text-2xl font-display leading-tight text-white/95 md:text-4xl">
+            <p className="mx-auto max-w-3xl text-2xl font-display leading-tight text-white/95 md:text-4xl">
               {interpretation.hook}
             </p>
           )}
-          <p className="mx-auto max-w-3xl text-sm leading-7 text-text-muted md:text-[0.97rem]">
-            Sol en {summary.sun}, Luna en {summary.moon} y Ascendente en {summary.ascendant} marcan la arquitectura visible de tu carta. Lo que sigue traduce esa base en una lectura más integrada y útil.
+          <p className="mx-auto max-w-2xl text-xs uppercase tracking-[0.22em] text-text-muted/90">
+            Sol en {summary.sun} · Luna en {summary.moon} · Ascendente en {summary.ascendant}
           </p>
           <div className="mx-auto max-w-3xl rounded-2xl border border-white/8 bg-white/[0.035] px-5 py-4 text-left">
             <p className="text-sm leading-7 text-white/84">
@@ -151,7 +155,7 @@ export const ChartInterpretationSection = ({
         </div>
       </div>
 
-      <div className="grid gap-6">
+      <div className="grid gap-7">
         {renderBlock(interpretation.energyCore, 'gold')}
         {renderBlock(interpretation.core, 'silver')}
         {renderBlock(interpretation.personalDynamics, 'ink')}
@@ -159,8 +163,8 @@ export const ChartInterpretationSection = ({
       </div>
 
       {interpretation.closing && (
-        <div className="mx-auto max-w-4xl rounded-[28px] border border-white/10 bg-white/[0.03] px-6 py-7 text-center">
-          <p className="text-sm leading-7 text-white/82 md:text-base">
+        <div className="mx-auto max-w-3xl rounded-[28px] border border-primary/15 bg-[linear-gradient(135deg,rgba(212,175,55,0.08),rgba(255,255,255,0.025))] px-7 py-8 text-center shadow-[0_0_34px_rgba(0,0,0,0.18)]">
+          <p className="text-base font-display leading-8 text-white/88 md:text-lg">
             {interpretation.closing}
           </p>
         </div>
