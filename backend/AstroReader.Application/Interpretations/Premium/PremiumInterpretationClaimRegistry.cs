@@ -31,6 +31,14 @@ internal sealed class PremiumInterpretationClaimRegistry
             : Use($"{claimKey}.fallback", fallback);
     }
 
+    public void MarkUsed(params string[] claimKeys)
+    {
+        foreach (var claimKey in claimKeys.Where(x => !string.IsNullOrWhiteSpace(x)))
+        {
+            _usedClaimKeys.Add(claimKey);
+        }
+    }
+
     public IReadOnlyList<string> UseMany(params (string ClaimKey, string Value)[] claims)
     {
         return claims

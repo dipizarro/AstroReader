@@ -5,7 +5,7 @@ internal sealed class PremiumInterpretationContentSelectionPlan
     public string Hook { get; init; } = string.Empty;
 
     public PremiumInterpretationBlockSelection EnergyCore { get; init; } =
-        PremiumInterpretationBlockSelection.Empty("centralEnergy", "Tu energía central");
+        PremiumInterpretationBlockSelection.Empty("energyCore", "Tu energía central");
 
     public PremiumInterpretationBlockSelection Core { get; init; } =
         PremiumInterpretationBlockSelection.Empty("core", "Tu núcleo");

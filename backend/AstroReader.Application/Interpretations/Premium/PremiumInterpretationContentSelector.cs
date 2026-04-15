@@ -24,11 +24,29 @@ internal static class PremiumInterpretationContentSelector
         InterpretationAnalysisResult analysis,
         PremiumInterpretationClaimRegistry registry)
     {
-        if (!string.IsNullOrWhiteSpace(analysis.DominantCoreTrait.Headline))
+        var dominantAxis = !string.IsNullOrWhiteSpace(analysis.DominantCoreTrait.Headline)
+            ? analysis.DominantCoreTrait.Headline
+            : BuildAvailableCoreLabel(context);
+        var centralTension = !string.IsNullOrWhiteSpace(analysis.CentralTension.Headline)
+            ? analysis.CentralTension.Headline.ToLowerInvariant()
+            : string.Empty;
+
+        if (string.IsNullOrWhiteSpace(dominantAxis))
         {
-            return registry.Use("dominant-core", analysis.DominantCoreTrait.Headline);
+            return string.Empty;
         }
 
+        registry.MarkUsed("dominant-core");
+
+        var hook = !string.IsNullOrWhiteSpace(centralTension)
+            ? $"{dominantAxis}, con un matiz importante: {centralTension.ToLowerInvariant()}."
+            : dominantAxis;
+
+        return registry.Use("hook.frame", LimitWords(hook, 28));
+    }
+
+    private static string BuildAvailableCoreLabel(PremiumInterpretationContext context)
+    {
         var availableSigns = new List<string>();
 
         if (context.Sun is not null)
@@ -51,9 +69,7 @@ internal static class PremiumInterpretationContentSelector
             return string.Empty;
         }
 
-        return registry.Use(
-            "available-core",
-            $"Esta lectura integra {string.Join(", ", availableSigns)} como base principal de la carta.");
+        return $"La lectura parte de {string.Join(", ", availableSigns)}";
     }
 
     private static PremiumInterpretationBlockSelection SelectEnergyCore(
@@ -63,15 +79,18 @@ internal static class PremiumInterpretationContentSelector
     {
         if (context.Sun is null)
         {
-            return PremiumInterpretationBlockSelection.Empty("centralEnergy", "Tu energía central");
+            return PremiumInterpretationBlockSelection.Empty("energyCore", "Tu energía central");
         }
 
         return new PremiumInterpretationBlockSelection
         {
-            Key = "centralEnergy",
+            Key = "energyCore",
             Title = "Tu energía central",
-            MainClaim = registry.Use("solar-identity.summary", context.Sun.Summary),
+            MainClaim = registry.Use(
+                "energy-core.integrated-claim",
+                BuildEnergyCoreClaim(context, analysis)),
             SupportingClaims = registry.UseMany(
+                ("solar-identity.summary", context.Sun.Summary),
                 ("solar-identity.style", context.Sun.IdentityStyle)),
             Highlights = analysis.DominantCoreTrait.Keywords.Count > 0
                 ? analysis.DominantCoreTrait.Keywords
@@ -90,10 +109,8 @@ internal static class PremiumInterpretationContentSelector
         }
 
         var mainClaim = registry.Use(
-            "emotional-presence.summary",
-            ComposeParagraph(
-                context.Moon?.Summary ?? string.Empty,
-                context.Ascendant?.Summary ?? string.Empty));
+            "core.development-frame",
+            BuildCoreFrame(context));
 
         var supportingClaims = new List<string>();
 
@@ -117,7 +134,7 @@ internal static class PremiumInterpretationContentSelector
         {
             supportingClaims.Add(registry.Use(
                 "central-tension",
-                analysis.CentralTension.Headline));
+                BuildTensionDevelopmentClaim(analysis)));
         }
 
         return new PremiumInterpretationBlockSelection
@@ -153,30 +170,36 @@ internal static class PremiumInterpretationContentSelector
         {
             supportingClaims.Add(registry.Use(
                 "mental-style",
-                ComposeParagraph(
-                    context.Mercury.ThinkingStyle,
-                    context.Mercury.CommunicationStyle,
-                    context.Mercury.LearningStyle)));
+                LimitWords(
+                    ComposeParagraph(
+                        context.Mercury.ThinkingStyle,
+                        context.Mercury.CommunicationStyle,
+                        context.Mercury.LearningStyle),
+                    58)));
         }
 
         if (context.Venus is not null)
         {
             supportingClaims.Add(registry.Use(
                 "relational-style",
-                ComposeParagraph(
-                    context.Venus.RelationalStyle,
-                    context.Venus.AttractionStyle,
-                    context.Venus.AffectiveNeeds)));
+                LimitWords(
+                    ComposeParagraph(
+                        context.Venus.RelationalStyle,
+                        context.Venus.AttractionStyle,
+                        context.Venus.AffectiveNeeds),
+                    58)));
         }
 
         if (context.Mars is not null)
         {
             supportingClaims.Add(registry.Use(
                 "action-style",
-                ComposeParagraph(
-                    context.Mars.ActionStyle,
-                    context.Mars.DesireStyle,
-                    context.Mars.ConflictStyle)));
+                LimitWords(
+                    ComposeParagraph(
+                        context.Mars.ActionStyle,
+                        context.Mars.DesireStyle,
+                        context.Mars.ConflictStyle),
+                    58)));
         }
 
         return new PremiumInterpretationBlockSelection
@@ -199,16 +222,16 @@ internal static class PremiumInterpretationContentSelector
     {
         var supportingClaims = new List<string>();
 
-        var centralPattern = BuildCentralPatternClaim(analysis);
+        var centralPattern = BuildEssentialCentralClaim(context, analysis);
         if (!string.IsNullOrWhiteSpace(centralPattern))
         {
-            supportingClaims.Add(registry.Use("dominant-core", centralPattern));
+            supportingClaims.Add(registry.Use("essential.central-pattern", centralPattern));
         }
 
-        var tensionClaim = BuildTensionClaim(analysis);
+        var tensionClaim = BuildEssentialTensionClaim(analysis);
         if (!string.IsNullOrWhiteSpace(tensionClaim))
         {
-            supportingClaims.Add(registry.Use("central-tension", tensionClaim));
+            supportingClaims.Add(registry.Use("essential.tension", tensionClaim));
         }
 
         var dynamicsClaim = BuildDynamicsClaim(analysis);
@@ -238,7 +261,7 @@ internal static class PremiumInterpretationContentSelector
             Title = "Lo esencial de tu carta",
             MainClaim = registry.Use(
                 "essential.frame",
-                "La lectura se ordena mejor cuando miras estas piezas como un sistema y no como rasgos aislados."),
+                BuildEssentialFrame(analysis)),
             SupportingClaims = filteredClaims,
             Highlights = TakeHighlights(
                 analysis.DominantCoreTrait.Keywords,
@@ -298,30 +321,94 @@ internal static class PremiumInterpretationContentSelector
         return availableParts.Count switch
         {
             0 => string.Empty,
-            1 => $"Esta sección muestra principalmente tu dinámica de {availableParts[0]}.",
-            2 => $"Esta sección integra tu dinámica de {availableParts[0]} y {availableParts[1]}.",
+            1 => $"Esta sección desarrolla principalmente tu dinámica de {availableParts[0]}, sin mezclarla con el resto del núcleo.",
+            2 => $"Esta sección une tu dinámica de {availableParts[0]} y {availableParts[1]} para mostrar cómo se mueve tu vida práctica.",
             _ => "Esta sección integra cómo piensas, cómo te vinculas y cómo movilizas deseo y acción."
         };
     }
 
-    private static string BuildCentralPatternClaim(InterpretationAnalysisResult analysis)
+    private static string BuildEnergyCoreClaim(
+        PremiumInterpretationContext context,
+        InterpretationAnalysisResult analysis)
     {
-        if (string.IsNullOrWhiteSpace(analysis.DominantCoreTrait.Headline))
+        var parts = new List<string>();
+
+        if (context.Sun is not null)
+        {
+            parts.Add($"tu identidad se organiza desde {context.SunSign}");
+        }
+
+        if (context.Moon is not null)
+        {
+            parts.Add($"tu mundo emocional responde desde {context.MoonSign}");
+        }
+
+        if (context.Ascendant is not null)
+        {
+            parts.Add($"tu presencia entra al mundo desde {context.AscendantSign}");
+        }
+
+        if (parts.Count == 0)
         {
             return string.Empty;
         }
 
-        return $"El patrón dominante aparece como {analysis.DominantCoreTrait.Headline.ToLowerInvariant()}.";
+        var frame = $"Tu energía central combina {JoinNatural(parts)}.";
+
+        return !string.IsNullOrWhiteSpace(analysis.DominantCoreTrait.Headline)
+            ? $"{frame} Esa mezcla define el tono de base sin agotar toda la lectura."
+            : frame;
     }
 
-    private static string BuildTensionClaim(InterpretationAnalysisResult analysis)
+    private static string BuildCoreFrame(PremiumInterpretationContext context)
+    {
+        if (context.Moon is not null && context.Ascendant is not null)
+        {
+            return "Este bloque baja del eje general al modo en que sientes, te regulas y eres percibido al entrar en contacto.";
+        }
+
+        if (context.Moon is not null)
+        {
+            return "Este bloque desarrolla tu mundo emocional y la forma en que buscas seguridad interna.";
+        }
+
+        return "Este bloque desarrolla tu presencia externa y la forma en que otros suelen recibir tu energía inicial.";
+    }
+
+    private static string BuildTensionDevelopmentClaim(InterpretationAnalysisResult analysis)
     {
         if (string.IsNullOrWhiteSpace(analysis.CentralTension.Headline))
         {
             return string.Empty;
         }
 
-        return $"El punto de contraste a observar es la {analysis.CentralTension.Headline.ToLowerInvariant()}.";
+        return $"La tensión a observar no es un defecto, sino un punto de ajuste: {analysis.CentralTension.Headline.ToLowerInvariant()}.";
+    }
+
+    private static string BuildEssentialCentralClaim(
+        PremiumInterpretationContext context,
+        InterpretationAnalysisResult analysis)
+    {
+        if (string.IsNullOrWhiteSpace(analysis.DominantCoreTrait.Headline))
+        {
+            var availableCore = BuildAvailableCoreLabel(context);
+
+            return !string.IsNullOrWhiteSpace(availableCore)
+                ? "La idea central es leer las piezas disponibles como un sistema, no como rasgos aislados."
+                : string.Empty;
+        }
+
+        return "La idea central no está en acumular rasgos, sino en reconocer el patrón que organiza tu identidad, tu emoción y tu forma de presentarte.";
+    }
+
+    private static string BuildEssentialTensionClaim(InterpretationAnalysisResult analysis)
+    {
+        if (string.IsNullOrWhiteSpace(analysis.CentralTension.Headline))
+        {
+            return string.Empty;
+        }
+
+        return "La tensión principal funciona como un punto de afinación: no invalida tu carta, pero muestra dónde conviene ganar conciencia y elección.";
     }
 
     private static string BuildDynamicsClaim(InterpretationAnalysisResult analysis)
@@ -341,9 +428,19 @@ internal static class PremiumInterpretationContentSelector
         return headlines.Count switch
         {
             0 => string.Empty,
-            1 => $"La dinámica práctica más visible está en tu {headlines[0]}.",
-            _ => $"La dinámica práctica de la carta se expresa en tu {headlines[0]} y en tu {headlines[1]}."
+            1 => $"En lo cotidiano, la dinámica más visible aparece en tu {headlines[0]}.",
+            _ => $"En lo cotidiano, tu carta se mueve especialmente entre tu {headlines[0]} y tu {headlines[1]}."
         };
+    }
+
+    private static string BuildEssentialFrame(InterpretationAnalysisResult analysis)
+    {
+        if (!string.IsNullOrWhiteSpace(analysis.CentralTension.Headline))
+        {
+            return "Lo esencial es mirar el patrón central, la tensión que lo afina y una dirección concreta de integración.";
+        }
+
+        return "Lo esencial es mirar el patrón central y convertirlo en una dirección concreta de integración.";
     }
 
     private static string BuildGrowthClaim(
@@ -369,6 +466,33 @@ internal static class PremiumInterpretationContentSelector
             .ToList();
 
         return string.Join(" ", normalized);
+    }
+
+    private static string JoinNatural(IReadOnlyList<string> parts)
+    {
+        return parts.Count switch
+        {
+            0 => string.Empty,
+            1 => parts[0],
+            2 => $"{parts[0]} y {parts[1]}",
+            _ => $"{string.Join(", ", parts.Take(parts.Count - 1))} y {parts[^1]}"
+        };
+    }
+
+    private static string LimitWords(string value, int maxWords)
+    {
+        var normalized = NormalizeText(value);
+
+        if (string.IsNullOrWhiteSpace(normalized))
+        {
+            return string.Empty;
+        }
+
+        var words = normalized.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        return words.Length <= maxWords
+            ? normalized
+            : $"{string.Join(" ", words.Take(maxWords))}.";
     }
 
     private static IReadOnlyList<string> TakeHighlights(params IReadOnlyList<string>[] keywordSets)

@@ -4,7 +4,7 @@ public sealed class PremiumInterpretationCompositionResult
 {
     public string Hook { get; init; } = string.Empty;
 
-    public PremiumInterpretationBlock CentralEnergy { get; init; } = PremiumInterpretationBlock.Empty("centralEnergy", "Tu energía central");
+    public PremiumInterpretationBlock CentralEnergy { get; init; } = PremiumInterpretationBlock.Empty("energyCore", "Tu energía central");
 
     public PremiumInterpretationBlock Core { get; init; } = PremiumInterpretationBlock.Empty("core", "Tu núcleo");
 
