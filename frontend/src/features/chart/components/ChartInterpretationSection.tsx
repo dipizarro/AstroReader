@@ -39,6 +39,18 @@ export const ChartInterpretationSection = ({
       ? 'Cobertura Premium Parcial'
       : 'Lectura Base Disponible';
 
+  const heroTitle = coverage.coverageStatus === 'complete'
+    ? 'Lectura Premium'
+    : coverage.coverageStatus === 'partial'
+      ? 'Lectura en Desarrollo'
+      : 'Primera Lectura';
+
+  const heroTitleClassName = coverage.coverageStatus === 'complete'
+    ? 'text-primary'
+    : coverage.coverageStatus === 'partial'
+      ? 'text-amber-200'
+      : 'text-slate-200';
+
   const coverageMessage = coverage.coverageStatus === 'complete'
     ? 'Esta lectura ya integra una composición premium completa para los bloques centrales de tu carta.'
     : coverage.coverageStatus === 'partial'
@@ -111,7 +123,9 @@ export const ChartInterpretationSection = ({
       <div className={`overflow-hidden rounded-[32px] border px-7 py-10 text-center shadow-[0_0_48px_rgba(0,0,0,0.28)] md:px-10 ${coverageToneClassName}`}>
         <div className="mx-auto max-w-4xl space-y-5">
           <div className="flex flex-col items-center gap-3">
-            <h3 className="text-xs uppercase tracking-[0.34em] text-primary">Lectura Premium</h3>
+            <h3 className={`text-xs uppercase tracking-[0.34em] ${heroTitleClassName}`}>
+              {heroTitle}
+            </h3>
             <span className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.26em] ${coverageBadgeClassName}`}>
               {coverageLabel}
             </span>
