@@ -2,6 +2,33 @@
   "version": "1.0.0",
   "planets": {
     "sun": {
+      "aries": {
+        "summary": "Tu identidad se enciende cuando puedes iniciar, decidir y probar tu fuerza en movimiento. No necesitas tener todo resuelto para avanzar: tu vitalidad aparece cuando te das permiso para actuar con honestidad y coraje.",
+        "keywords": [
+          "iniciativa",
+          "coraje",
+          "autonomía",
+          "decisión",
+          "impulso vital"
+        ],
+        "strengths": [
+          "Abres caminos cuando otros todavía están evaluando posibilidades.",
+          "Tienes una relación directa con el deseo, la acción y la afirmación personal.",
+          "Tu presencia puede activar energía, movimiento y valentía en el entorno."
+        ],
+        "challenges": [
+          "Puedes avanzar tan rápido que no siempre registras el impacto de tus actos.",
+          "A veces confundes independencia con no necesitar colaboración.",
+          "Te cuesta sostener procesos que requieren espera, matiz o negociación."
+        ],
+        "integrationHooks": [
+          "Antes de actuar, distingue entre impulso reactivo y decisión alineada.",
+          "Practica sostener una dirección sin convertir cada diferencia en una batalla.",
+          "Usa tu valentía para iniciar con conciencia, no solo para demostrar fuerza."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la acción directa, la espontaneidad y la necesidad de sentirte dueño de tus decisiones. Te reconoces más en lo que haces que en lo que explicas.",
+        "growthPath": "Tu crecimiento aparece cuando aprendes a unir coraje con continuidad. No se trata de apagar tu impulso, sino de darle una dirección más madura y sostenible."
+      },
       "taurus": {
         "summary": "Tu identidad se fortalece cuando puedes construir algo sólido, disfrutable y sostenible. No necesitas correr para sentir valor: lo tuyo es convertir intención en presencia estable y resultados tangibles.",
         "keywords": [
@@ -28,6 +55,276 @@
         ],
         "identityStyle": "Tu identidad avanza con calma, criterio y apego a lo auténtico. Prefieres demostrar valor a través de hechos, consistencia y presencia antes que por promesas o impacto inmediato.",
         "growthPath": "Tu evolución se acelera cuando aprendes a combinar estabilidad con flexibilidad. No se trata de abandonar tu centro, sino de permitir que también cambie contigo."
+      },
+      "gemini": {
+        "summary": "Tu identidad se activa cuando puedes explorar, conversar, aprender y conectar ideas. Necesitas movimiento mental para sentirte vivo: tu fuerza aparece cuando transformas curiosidad en comprensión útil.",
+        "keywords": [
+          "curiosidad",
+          "adaptabilidad",
+          "comunicación",
+          "agilidad",
+          "conexión"
+        ],
+        "strengths": [
+          "Encuentras relaciones entre ideas, personas y contextos distintos.",
+          "Te adaptas con rapidez a escenarios cambiantes sin perder liviandad.",
+          "Tienes facilidad para nombrar, traducir y abrir conversaciones necesarias."
+        ],
+        "challenges": [
+          "Puedes dispersarte cuando todo parece interesante al mismo tiempo.",
+          "A veces usas el análisis o el humor para evitar una definición más profunda.",
+          "Te cuesta sostener una dirección si no hay estímulo, intercambio o novedad."
+        ],
+        "integrationHooks": [
+          "Elige qué conversaciones merecen convertirse en compromiso real.",
+          "Dale profundidad a tu curiosidad antes de saltar a la siguiente posibilidad.",
+          "Usa tu mente como puente, no como escape de lo que necesita presencia."
+        ],
+        "identityStyle": "Tu identidad se expresa a través de la palabra, el intercambio y la capacidad de leer varias perspectivas a la vez. Te afirmas cuando puedes pensar en voz alta y mantener vivo el diálogo.",
+        "growthPath": "Tu crecimiento aparece cuando pasas de acumular información a construir criterio. La madurez no reduce tu curiosidad: le da foco, profundidad y dirección."
+      },
+      "cancer": {
+        "summary": "Tu identidad se organiza alrededor del cuidado, la memoria emocional y la necesidad de pertenecer a algo significativo. Tu fuerza no siempre es ruidosa: muchas veces aparece en tu capacidad de proteger, nutrir y sostener vínculos con profundidad.",
+        "keywords": [
+          "cuidado",
+          "pertenencia",
+          "sensibilidad",
+          "memoria emocional",
+          "protección"
+        ],
+        "strengths": [
+          "Lees necesidades emocionales que otros pasan por alto.",
+          "Construyes confianza a través de presencia, lealtad y cuidado concreto.",
+          "Tienes una gran capacidad para crear refugio, intimidad y continuidad afectiva."
+        ],
+        "challenges": [
+          "Puedes protegerte demasiado cuando sientes exposición o inseguridad.",
+          "A veces te cuesta diferenciar cuidado de sobrecarga emocional.",
+          "Puedes quedar atado a historias pasadas que ya no explican quién eres hoy."
+        ],
+        "integrationHooks": [
+          "Pregúntate si estás cuidando desde el amor o desde el miedo a perder.",
+          "Permite que tus límites también formen parte de tu manera de amar.",
+          "Honra tu historia sin convertirla en una obligación de repetirla."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la sensibilidad, la protección y la capacidad de crear lazos con sentido. Necesitas sentir raíz emocional para mostrar tu fuerza con confianza.",
+        "growthPath": "Tu crecimiento se abre cuando aprendes a cuidarte con la misma dedicación con que cuidas a otros. La pertenencia más importante empieza por no abandonarte a ti mismo."
+      },
+      "leo": {
+        "summary": "Tu identidad se ilumina cuando puedes expresarte con autenticidad, crear desde el corazón y sentir que tu presencia tiene impacto. No buscas solo atención: necesitas vivir de una manera que tenga calor, orgullo sano y sentido personal.",
+        "keywords": [
+          "expresión",
+          "creatividad",
+          "confianza",
+          "generosidad",
+          "presencia"
+        ],
+        "strengths": [
+          "Aportas vitalidad, entusiasmo y una presencia que puede elevar a otros.",
+          "Tienes talento para liderar desde la inspiración y no solo desde la autoridad.",
+          "Cuando confías en ti, expresas calidez, nobleza y creatividad real."
+        ],
+        "challenges": [
+          "Puedes tomar la falta de reconocimiento como una herida personal.",
+          "A veces proteges tu orgullo antes de mostrar vulnerabilidad.",
+          "Te cuesta sostener espacios donde tu aporte no es visto o celebrado."
+        ],
+        "integrationHooks": [
+          "Distingue entre necesidad legítima de expresión y dependencia de aprobación.",
+          "Permite que tu brillo incluya momentos de humildad y escucha.",
+          "Crea desde lo que amas, no solo desde lo que confirma tu valor."
+        ],
+        "identityStyle": "Tu identidad se afirma cuando puedes mostrar quién eres con calidez, dignidad y presencia creativa. Necesitas sentir que tu vida tiene una firma propia.",
+        "growthPath": "Tu crecimiento aparece cuando tu confianza deja de depender del aplauso externo. Cuanto más auténtico es tu centro, menos necesitas demostrar y más puedes irradiar."
+      },
+      "virgo": {
+        "summary": "Tu identidad se fortalece cuando puedes mejorar, ordenar y volver útil lo que tocas. Tu forma de afirmarte no necesita grandilocuencia: aparece en la precisión, el servicio inteligente y la capacidad de hacer que las cosas funcionen mejor.",
+        "keywords": [
+          "discernimiento",
+          "mejora",
+          "precisión",
+          "servicio",
+          "eficiencia"
+        ],
+        "strengths": [
+          "Detectas detalles importantes que pueden cambiar la calidad de un proceso.",
+          "Tienes una ética natural hacia lo bien hecho y lo funcional.",
+          "Puedes convertir problemas complejos en pasos concretos y manejables."
+        ],
+        "challenges": [
+          "Puedes exigirte tanto que pierdes contacto con el disfrute del proceso.",
+          "A veces confundes mejora con autocrítica constante.",
+          "Te cuesta aceptar que algo puede ser valioso aunque no sea perfecto."
+        ],
+        "integrationHooks": [
+          "Pregúntate si estás corrigiendo para crecer o para calmar ansiedad.",
+          "Permite que lo suficientemente bueno también tenga lugar.",
+          "Usa tu criterio para servir a la vida, no para reducirla a rendimiento."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la observación, la mejora continua y el deseo de aportar algo útil. Te reconoces cuando puedes refinar, cuidar el detalle y elevar la calidad de lo cotidiano.",
+        "growthPath": "Tu crecimiento aparece cuando tu búsqueda de excelencia incluye compasión. La precisión se vuelve más poderosa cuando deja espacio para humanidad, error y descanso."
+      },
+      "libra": {
+        "summary": "Tu identidad se construye en relación con el otro, con la belleza de los acuerdos y con la búsqueda de equilibrio. Tu fuerza aparece cuando puedes crear armonía sin borrarte, unir perspectivas y elegir con elegancia lo que realmente valoras.",
+        "keywords": [
+          "equilibrio",
+          "vínculo",
+          "diplomacia",
+          "criterio estético",
+          "reciprocidad"
+        ],
+        "strengths": [
+          "Tienes sensibilidad para leer dinámicas, tonos y necesidades relacionales.",
+          "Puedes mediar sin perder de vista la importancia de la forma y el respeto.",
+          "Aportas criterio, armonía y una búsqueda genuina de reciprocidad."
+        ],
+        "challenges": [
+          "Puedes postergar decisiones para evitar tensión o desaprobación.",
+          "A veces adaptas demasiado tu deseo para sostener una imagen de armonía.",
+          "Te cuesta tolerar conflictos necesarios cuando rompen el tono ideal."
+        ],
+        "integrationHooks": [
+          "Practica elegir incluso cuando ninguna opción deje a todos satisfechos.",
+          "Recuerda que armonía no significa ausencia de desacuerdo.",
+          "Usa tu capacidad de considerar al otro sin abandonar tu propio centro."
+        ],
+        "identityStyle": "Tu identidad se afirma a través del vínculo, la elección consciente y la búsqueda de proporción. Necesitas que tu vida tenga belleza, diálogo y un sentido claro de reciprocidad.",
+        "growthPath": "Tu crecimiento aparece cuando dejas de confundir paz con complacencia. Cuanto más honesta es tu posición, más auténticas se vuelven tus relaciones."
+      },
+      "scorpio": {
+        "summary": "Tu identidad se fortalece cuando puedes ir al fondo de las cosas, transformar lo que duele y vivir con intensidad honesta. No te satisface lo superficial: necesitas verdad, profundidad y una relación consciente con tu propio poder.",
+        "keywords": [
+          "profundidad",
+          "transformación",
+          "intensidad",
+          "verdad emocional",
+          "poder personal"
+        ],
+        "strengths": [
+          "Tienes capacidad para sostener procesos intensos sin huir de lo complejo.",
+          "Lees motivaciones ocultas y capas emocionales con gran precisión.",
+          "Puedes transformar crisis en claridad, fuerza y madurez."
+        ],
+        "challenges": [
+          "Puedes cerrarte o controlar demasiado cuando percibes amenaza.",
+          "A veces desconfías incluso cuando el vínculo necesita apertura.",
+          "Te cuesta soltar heridas o dinámicas que ya cumplieron su función."
+        ],
+        "integrationHooks": [
+          "Pregúntate si tu reserva protege tu verdad o solo mantiene distancia.",
+          "Usa tu intensidad para transformar, no para vigilar cada posible riesgo.",
+          "Permite que la confianza se construya gradualmente sin exigir certeza total."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la profundidad, la percepción emocional y la necesidad de vivir con autenticidad. Prefieres lo verdadero a lo cómodo, incluso cuando eso exige atravesar zonas difíciles.",
+        "growthPath": "Tu crecimiento aparece cuando tu poder deja de estar al servicio de la defensa y se convierte en capacidad de entrega consciente. Transformarte no siempre implica resistir: a veces implica permitir."
+      },
+      "sagittarius": {
+        "summary": "Tu identidad se expande cuando puedes buscar sentido, explorar posibilidades y vivir con una sensación de horizonte abierto. Necesitas creer que tu vida avanza hacia algo más amplio que la rutina inmediata.",
+        "keywords": [
+          "expansión",
+          "sentido",
+          "libertad",
+          "exploración",
+          "visión"
+        ],
+        "strengths": [
+          "Aportas perspectiva cuando otros se quedan atrapados en lo pequeño.",
+          "Tienes impulso para aprender, moverte y abrir caminos de experiencia.",
+          "Tu entusiasmo puede devolver dirección y confianza al entorno."
+        ],
+        "challenges": [
+          "Puedes evitar compromisos cuando los sientes como pérdida de libertad.",
+          "A veces saltas a conclusiones amplias sin revisar detalles importantes.",
+          "Te cuesta permanecer en procesos que no muestran sentido de inmediato."
+        ],
+        "integrationHooks": [
+          "Aterriza tus grandes visiones en decisiones sostenibles.",
+          "Pregúntate si buscas libertad real o solo escape de una incomodidad.",
+          "Permite que el compromiso también sea una forma de expansión."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la búsqueda, la franqueza y el deseo de vivir con amplitud. Necesitas sentir que tus elecciones tienen sentido y que no estás encerrado en una versión pequeña de ti.",
+        "growthPath": "Tu crecimiento aparece cuando unes visión con responsabilidad. La libertad se vuelve más poderosa cuando puede sostener dirección, coherencia y presencia."
+      },
+      "capricorn": {
+        "summary": "Tu identidad se fortalece cuando puedes construir con responsabilidad, sostener metas y convertir esfuerzo en estructura real. Tu fuerza no depende del reconocimiento inmediato: aparece en tu capacidad de avanzar con madurez y dirección.",
+        "keywords": [
+          "responsabilidad",
+          "estructura",
+          "ambición madura",
+          "disciplina",
+          "solidez"
+        ],
+        "strengths": [
+          "Puedes sostener objetivos de largo plazo con seriedad y consistencia.",
+          "Tienes criterio para priorizar lo que realmente construye futuro.",
+          "Tu presencia transmite capacidad, madurez y sentido de responsabilidad."
+        ],
+        "challenges": [
+          "Puedes cargar demasiado peso sin pedir apoyo a tiempo.",
+          "A veces mides tu valor solo por logro, utilidad o rendimiento.",
+          "Te cuesta descansar sin sentir que estás perdiendo control o avance."
+        ],
+        "integrationHooks": [
+          "Revisa si tus metas expresan deseo propio o solo obligación aprendida.",
+          "Permite que la vulnerabilidad también forme parte de tu autoridad.",
+          "Construye con disciplina, pero no a costa de endurecerte emocionalmente."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la competencia, la perseverancia y la necesidad de construir algo que resista el paso del tiempo. Te reconoces cuando puedes ver progreso concreto.",
+        "growthPath": "Tu crecimiento aparece cuando tu ambición se vuelve más humana. No necesitas abandonar la excelencia; necesitas incluir descanso, apoyo y sentido emocional en lo que construyes."
+      },
+      "aquarius": {
+        "summary": "Tu identidad se activa cuando puedes pensar por cuenta propia, cuestionar lo establecido y aportar una mirada distinta. Necesitas espacio para ser fiel a tu diferencia sin quedar desconectado de lo humano.",
+        "keywords": [
+          "originalidad",
+          "independencia",
+          "visión colectiva",
+          "innovación",
+          "autenticidad"
+        ],
+        "strengths": [
+          "Ves patrones, posibilidades y soluciones que otros no consideran.",
+          "Tienes una relación natural con la independencia mental y la innovación.",
+          "Puedes aportar perspectiva social, futuro y pensamiento libre a tu entorno."
+        ],
+        "challenges": [
+          "Puedes tomar distancia emocional cuando algo se vuelve demasiado intenso.",
+          "A veces defiendes tu diferencia con rigidez, incluso cuando necesitas conexión.",
+          "Te cuesta habitar espacios donde se espera conformidad o pertenencia automática."
+        ],
+        "integrationHooks": [
+          "Pregúntate si tu distancia te da claridad o te aleja de lo que importa.",
+          "Usa tu originalidad para crear puentes, no solo para marcar diferencia.",
+          "Permite que pertenecer no signifique traicionar tu singularidad."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la libertad de pensamiento, la autenticidad y la necesidad de contribuir con una mirada propia. Te reconoces cuando puedes ser diferente sin pedir permiso.",
+        "growthPath": "Tu crecimiento aparece cuando unes independencia con presencia emocional. La visión de futuro se vuelve más potente cuando también puede tocar la realidad afectiva del presente."
+      },
+      "pisces": {
+        "summary": "Tu identidad se vuelve más clara cuando aceptas tu sensibilidad, tu imaginación y tu capacidad de percibir lo que no siempre se puede explicar. Tu fuerza aparece cuando das forma concreta a tu mundo interno sin perderte en él.",
+        "keywords": [
+          "sensibilidad",
+          "imaginación",
+          "empatía",
+          "inspiración",
+          "entrega consciente"
+        ],
+        "strengths": [
+          "Captas matices emocionales, simbólicos y humanos con gran sutileza.",
+          "Tienes una capacidad natural para acompañar, inspirar y suavizar durezas.",
+          "Puedes transformar sensibilidad en creatividad, compasión y comprensión profunda."
+        ],
+        "challenges": [
+          "Puedes absorber demasiado del entorno y perder claridad sobre tus propios límites.",
+          "A veces evitas definirte para no romper posibilidades o decepcionar a otros.",
+          "Te cuesta sostener estructura cuando tu mundo interno está saturado."
+        ],
+        "integrationHooks": [
+          "Distingue empatía de absorción emocional.",
+          "Da forma a tu intuición mediante hábitos, límites y decisiones concretas.",
+          "Recuerda que decir no también puede ser una manera de cuidar tu sensibilidad."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la sensibilidad, la imaginación y la capacidad de conectar con dimensiones sutiles de la experiencia. Necesitas vivir con sentido emocional, inspiración y espacio interno.",
+        "growthPath": "Tu crecimiento aparece cuando tu apertura encuentra contención. No se trata de volverte menos sensible, sino de aprender a darle cauce, forma y protección a lo que percibes."
       }
     },
     "moon": {
