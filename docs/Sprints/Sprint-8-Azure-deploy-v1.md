@@ -80,6 +80,13 @@ Variables requeridas en Azure Static Web Apps
 - `VITE_API_BASE_URL=https://<backend-app-service>.azurewebsites.net`
 - `VITE_MAPBOX_TOKEN=<token>` si se quiere geocoding real en producción.
 
+Configuración Azure Static Web Apps
+
+- `app_location=frontend`
+- `api_location=` vacío, porque la API vive en Azure App Service separado.
+- `output_location=dist`
+- `frontend/public/staticwebapp.config.json` se copia al build y habilita fallback SPA hacia `index.html`.
+
 Comunicación frontend/backend
 
 - El backend solo acepta orígenes declarados en `Cors__AllowedOrigins`.
