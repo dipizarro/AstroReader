@@ -6,27 +6,27 @@ internal static class PremiumInterpretationContentSelector
         PremiumInterpretationContext context,
         InterpretationAnalysisResult analysis)
     {
-        var draft = new ContentDraft();
+        var registry = new PremiumInterpretationClaimRegistry();
 
         return new PremiumInterpretationContentSelectionPlan
         {
-            Hook = SelectHook(context, analysis, draft),
-            EnergyCore = SelectEnergyCore(context, analysis, draft),
-            Core = SelectCore(context, analysis, draft),
-            PersonalDynamics = SelectPersonalDynamics(context, analysis, draft),
-            EssentialSummary = SelectEssentialSummary(context, analysis, draft),
-            Closing = SelectClosing(context, analysis, draft)
+            Hook = SelectHook(context, analysis, registry),
+            EnergyCore = SelectEnergyCore(context, analysis, registry),
+            Core = SelectCore(context, analysis, registry),
+            PersonalDynamics = SelectPersonalDynamics(context, analysis, registry),
+            EssentialSummary = SelectEssentialSummary(context, analysis, registry),
+            Closing = SelectClosing(context, analysis, registry)
         };
     }
 
     private static string SelectHook(
         PremiumInterpretationContext context,
         InterpretationAnalysisResult analysis,
-        ContentDraft draft)
+        PremiumInterpretationClaimRegistry registry)
     {
         if (!string.IsNullOrWhiteSpace(analysis.DominantCoreTrait.Headline))
         {
-            return draft.Use("hook.dominantCoreTrait", analysis.DominantCoreTrait.Headline);
+            return registry.Use("dominant-core", analysis.DominantCoreTrait.Headline);
         }
 
         var availableSigns = new List<string>();
@@ -51,15 +51,15 @@ internal static class PremiumInterpretationContentSelector
             return string.Empty;
         }
 
-        return draft.Use(
-            "hook.availableCore",
+        return registry.Use(
+            "available-core",
             $"Esta lectura integra {string.Join(", ", availableSigns)} como base principal de la carta.");
     }
 
     private static PremiumInterpretationBlockSelection SelectEnergyCore(
         PremiumInterpretationContext context,
         InterpretationAnalysisResult analysis,
-        ContentDraft draft)
+        PremiumInterpretationClaimRegistry registry)
     {
         if (context.Sun is null)
         {
@@ -70,9 +70,9 @@ internal static class PremiumInterpretationContentSelector
         {
             Key = "centralEnergy",
             Title = "Tu energía central",
-            MainClaim = draft.Use("sun.summary", context.Sun.Summary),
-            SupportingClaims = draft.UseMany(
-                ("sun.identityStyle", context.Sun.IdentityStyle)),
+            MainClaim = registry.Use("solar-identity.summary", context.Sun.Summary),
+            SupportingClaims = registry.UseMany(
+                ("solar-identity.style", context.Sun.IdentityStyle)),
             Highlights = analysis.DominantCoreTrait.Keywords.Count > 0
                 ? analysis.DominantCoreTrait.Keywords
                 : context.Sun.Keywords
@@ -82,15 +82,15 @@ internal static class PremiumInterpretationContentSelector
     private static PremiumInterpretationBlockSelection SelectCore(
         PremiumInterpretationContext context,
         InterpretationAnalysisResult analysis,
-        ContentDraft draft)
+        PremiumInterpretationClaimRegistry registry)
     {
         if (context.Moon is null && context.Ascendant is null)
         {
             return PremiumInterpretationBlockSelection.Empty("core", "Tu núcleo");
         }
 
-        var mainClaim = draft.Use(
-            "core.summary",
+        var mainClaim = registry.Use(
+            "emotional-presence.summary",
             ComposeParagraph(
                 context.Moon?.Summary ?? string.Empty,
                 context.Ascendant?.Summary ?? string.Empty));
@@ -99,24 +99,24 @@ internal static class PremiumInterpretationContentSelector
 
         if (context.Moon is not null)
         {
-            supportingClaims.AddRange(draft.UseMany(
-                ("moon.emotionalStyle", context.Moon.EmotionalStyle),
-                ("moon.emotionalNeeds", context.Moon.EmotionalNeeds),
-                ("moon.securityNeeds", context.Moon.SecurityNeeds)));
+            supportingClaims.AddRange(registry.UseMany(
+                ("emotional-style", context.Moon.EmotionalStyle),
+                ("emotional-needs", context.Moon.EmotionalNeeds),
+                ("security-needs", context.Moon.SecurityNeeds)));
         }
 
         if (context.Ascendant is not null)
         {
-            supportingClaims.AddRange(draft.UseMany(
-                ("ascendant.outerStyle", context.Ascendant.OuterStyle),
-                ("ascendant.socialStyle", context.Ascendant.SocialStyle),
-                ("ascendant.firstImpression", context.Ascendant.FirstImpression)));
+            supportingClaims.AddRange(registry.UseMany(
+                ("outer-presence", context.Ascendant.OuterStyle),
+                ("social-presence", context.Ascendant.SocialStyle),
+                ("first-impression", context.Ascendant.FirstImpression)));
         }
 
         if (!string.IsNullOrWhiteSpace(analysis.CentralTension.Headline))
         {
-            supportingClaims.Add(draft.Use(
-                "analysis.centralTension.headline",
+            supportingClaims.Add(registry.Use(
+                "central-tension",
                 analysis.CentralTension.Headline));
         }
 
@@ -136,23 +136,23 @@ internal static class PremiumInterpretationContentSelector
     private static PremiumInterpretationBlockSelection SelectPersonalDynamics(
         PremiumInterpretationContext context,
         InterpretationAnalysisResult analysis,
-        ContentDraft draft)
+        PremiumInterpretationClaimRegistry registry)
     {
         if (context.Mercury is null && context.Venus is null && context.Mars is null)
         {
             return PremiumInterpretationBlockSelection.Empty("thinkingRelatingActing", "Tu forma de pensar, vincularte y actuar");
         }
 
-        var mainClaim = draft.Use(
-            "personalDynamics.frame",
+        var mainClaim = registry.Use(
+            "personal-dynamics.frame",
             BuildPersonalDynamicsFrame(context));
 
         var supportingClaims = new List<string>();
 
         if (context.Mercury is not null)
         {
-            supportingClaims.Add(draft.Use(
-                "mercury.claim",
+            supportingClaims.Add(registry.Use(
+                "mental-style",
                 ComposeParagraph(
                     context.Mercury.ThinkingStyle,
                     context.Mercury.CommunicationStyle,
@@ -161,8 +161,8 @@ internal static class PremiumInterpretationContentSelector
 
         if (context.Venus is not null)
         {
-            supportingClaims.Add(draft.Use(
-                "venus.claim",
+            supportingClaims.Add(registry.Use(
+                "relational-style",
                 ComposeParagraph(
                     context.Venus.RelationalStyle,
                     context.Venus.AttractionStyle,
@@ -171,8 +171,8 @@ internal static class PremiumInterpretationContentSelector
 
         if (context.Mars is not null)
         {
-            supportingClaims.Add(draft.Use(
-                "mars.claim",
+            supportingClaims.Add(registry.Use(
+                "action-style",
                 ComposeParagraph(
                     context.Mars.ActionStyle,
                     context.Mars.DesireStyle,
@@ -195,32 +195,32 @@ internal static class PremiumInterpretationContentSelector
     private static PremiumInterpretationBlockSelection SelectEssentialSummary(
         PremiumInterpretationContext context,
         InterpretationAnalysisResult analysis,
-        ContentDraft draft)
+        PremiumInterpretationClaimRegistry registry)
     {
         var supportingClaims = new List<string>();
 
         var centralPattern = BuildCentralPatternClaim(analysis);
         if (!string.IsNullOrWhiteSpace(centralPattern))
         {
-            supportingClaims.Add(draft.Use("essential.centralPattern", centralPattern));
+            supportingClaims.Add(registry.Use("dominant-core", centralPattern));
         }
 
         var tensionClaim = BuildTensionClaim(analysis);
         if (!string.IsNullOrWhiteSpace(tensionClaim))
         {
-            supportingClaims.Add(draft.Use("essential.tension", tensionClaim));
+            supportingClaims.Add(registry.Use("central-tension", tensionClaim));
         }
 
         var dynamicsClaim = BuildDynamicsClaim(analysis);
         if (!string.IsNullOrWhiteSpace(dynamicsClaim))
         {
-            supportingClaims.Add(draft.Use("essential.dynamics", dynamicsClaim));
+            supportingClaims.Add(registry.Use("personal-dynamics.synthesis", dynamicsClaim));
         }
 
         var growthClaim = BuildGrowthClaim(context, analysis);
         if (!string.IsNullOrWhiteSpace(growthClaim))
         {
-            supportingClaims.Add(draft.Use("essential.growth", growthClaim));
+            supportingClaims.Add(registry.Use("growth-direction", growthClaim));
         }
 
         var filteredClaims = supportingClaims
@@ -236,8 +236,8 @@ internal static class PremiumInterpretationContentSelector
         {
             Key = "essential",
             Title = "Lo esencial de tu carta",
-            MainClaim = draft.Use(
-                "essential.summary",
+            MainClaim = registry.Use(
+                "essential.frame",
                 "La lectura se ordena mejor cuando miras estas piezas como un sistema y no como rasgos aislados."),
             SupportingClaims = filteredClaims,
             Highlights = TakeHighlights(
@@ -249,27 +249,29 @@ internal static class PremiumInterpretationContentSelector
     private static string SelectClosing(
         PremiumInterpretationContext context,
         InterpretationAnalysisResult analysis,
-        ContentDraft draft)
+        PremiumInterpretationClaimRegistry registry)
     {
         var closingHook = FirstOrEmpty(context.Sun?.IntegrationHooks ?? []);
 
         if (!string.IsNullOrWhiteSpace(closingHook))
         {
-            return draft.Use(
-                "closing.sunIntegrationHook",
+            return registry.UseOrFallback(
+                "growth-direction",
                 ComposeParagraph(
                     "Como cierre práctico:",
-                    closingHook));
+                    closingHook),
+                "Como cierre, elige una práctica pequeña que vuelva esta lectura visible en tu vida diaria.");
         }
 
         if (!string.IsNullOrWhiteSpace(analysis.GrowthDirection.Headline))
         {
-            return draft.Use(
-                "closing.growthDirection",
-                "La integración de esta carta empieza cuando conviertes autoconocimiento en una decisión pequeña y concreta.");
+            return registry.UseOrFallback(
+                "growth-direction",
+                "La integración de esta carta empieza cuando conviertes autoconocimiento en una decisión pequeña y concreta.",
+                "Como cierre, quédate con una decisión pequeña y concreta que puedas practicar en lo cotidiano.");
         }
 
-        return draft.Use(
+        return registry.Use(
             "closing.default",
             "La lectura gana fuerza cuando puedes observar estas capas sin reducirte a una sola de ellas.");
     }
@@ -391,34 +393,4 @@ internal static class PremiumInterpretationContentSelector
             : value.Trim();
     }
 
-    private sealed class ContentDraft
-    {
-        private readonly HashSet<string> _usedKeys = new(StringComparer.OrdinalIgnoreCase);
-        private readonly HashSet<string> _usedTexts = new(StringComparer.OrdinalIgnoreCase);
-
-        public string Use(string key, string value)
-        {
-            var normalized = NormalizeText(value);
-
-            if (string.IsNullOrWhiteSpace(normalized))
-            {
-                return string.Empty;
-            }
-
-            if (!_usedKeys.Add(key) || !_usedTexts.Add(normalized))
-            {
-                return string.Empty;
-            }
-
-            return normalized;
-        }
-
-        public IReadOnlyList<string> UseMany(params (string Key, string Value)[] claims)
-        {
-            return claims
-                .Select(claim => Use(claim.Key, claim.Value))
-                .Where(x => !string.IsNullOrWhiteSpace(x))
-                .ToList();
-        }
-    }
 }
