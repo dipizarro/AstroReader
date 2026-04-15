@@ -38,14 +38,7 @@ internal sealed class SwissEphClient : ISwissEphClient
 
         if (EphemerisPath is not null)
         {
-            if (!Directory.Exists(EphemerisPath))
-            {
-                throw new AstroCalculationException(
-                    AstroCalculationErrorCode.Ephemerides,
-                    publicMessage: "Los archivos de efemerides del motor astral no estan disponibles.",
-                    diagnosticMessage: $"El directorio de efemérides configurado no existe: '{EphemerisPath}'.");
-            }
-
+            ValidateEphemerisDirectory(EphemerisPath);
             _contract.SetEphemerisPath.Invoke(_swissEphInstance, [EphemerisPath]);
         }
     }
@@ -151,6 +144,40 @@ internal sealed class SwissEphClient : ISwissEphClient
                 AstroCalculationErrorCode.Wrapper,
                 publicMessage: "El motor astral real no se encuentra disponible en este momento.",
                 diagnosticMessage: "SwissEphNet no pudo cargarse. Verifica que el paquete esté restaurado en AstroReader.AstroEngine.");
+    }
+
+    private static void ValidateEphemerisDirectory(string ephemerisPath)
+    {
+        if (!Directory.Exists(ephemerisPath))
+        {
+            throw new AstroCalculationException(
+                AstroCalculationErrorCode.Ephemerides,
+                publicMessage: "Los archivos de efemerides del motor astral no estan disponibles.",
+                diagnosticMessage: $"El directorio de efemérides configurado no existe: '{ephemerisPath}'.");
+        }
+
+        try
+        {
+            if (!Directory.EnumerateFileSystemEntries(ephemerisPath).Any())
+            {
+                throw new AstroCalculationException(
+                    AstroCalculationErrorCode.Ephemerides,
+                    publicMessage: "Los archivos de efemerides del motor astral no estan disponibles.",
+                    diagnosticMessage: $"El directorio de efemérides configurado está vacío: '{ephemerisPath}'.");
+            }
+        }
+        catch (AstroCalculationException)
+        {
+            throw;
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            throw new AstroCalculationException(
+                AstroCalculationErrorCode.Ephemerides,
+                publicMessage: "Los archivos de efemerides del motor astral no estan disponibles.",
+                diagnosticMessage: $"No fue posible leer el directorio de efemérides configurado: '{ephemerisPath}'.",
+                innerException: exception);
+        }
     }
 
     private static SwissEphContract ResolveContract(Type swissEphType)

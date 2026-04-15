@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using AstroReader.AstroEngine.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -55,7 +56,14 @@ public class HealthController : ControllerBase
             wrapperVersion = metadata.WrapperVersion,
             ephemeris = new
             {
-                customPathConfigured = metadata.UsesCustomEphemerisPath
+                customPathConfigured = metadata.UsesCustomEphemerisPath,
+                effectivePath = smokeCheck.EphemerisPath
+            },
+            runtime = new
+            {
+                os = RuntimeInformation.OSDescription,
+                processArchitecture = RuntimeInformation.ProcessArchitecture.ToString(),
+                framework = RuntimeInformation.FrameworkDescription
             },
             operability = new
             {

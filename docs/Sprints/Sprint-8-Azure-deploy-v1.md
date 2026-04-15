@@ -101,3 +101,5 @@ Riesgos pendientes
 - Validar el smoke check de SwissEph en App Service Linux.
 - Confirmar si el wrapper funciona bien sin `EphemerisPath` custom en producción.
 - Si se usan efemérides propias, empaquetarlas o montarlas en una ruta Linux estable y configurar `AstroEngine__SwissEph__EphemerisPath`.
+- Revisar `/api/health/astro-engine` después del deploy: debe reportar `operability.ok=true`, runtime Linux y wrapper version disponible.
+- Si `AstroEngine__SwissEph__EphemerisPath` está configurado, el directorio debe existir, ser legible por App Service y contener archivos de efemérides.
