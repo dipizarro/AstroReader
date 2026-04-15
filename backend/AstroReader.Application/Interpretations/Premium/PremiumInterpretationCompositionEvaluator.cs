@@ -33,14 +33,12 @@ internal static class PremiumInterpretationCompositionEvaluator
         PremiumInterpretationContext context,
         IReadOnlyList<string> composedBlocks)
     {
-        var hasCoreLayer = composedBlocks.Contains("energyCore") || composedBlocks.Contains("core");
-
         if (context.HasCompleteCoverage && composedBlocks.Count == 4)
         {
             return InterpretationCoverageStatus.Complete;
         }
 
-        if (hasCoreLayer || composedBlocks.Count >= 2)
+        if (HasSubstantivePartialCoverage(context, composedBlocks))
         {
             return InterpretationCoverageStatus.Partial;
         }
@@ -51,5 +49,24 @@ internal static class PremiumInterpretationCompositionEvaluator
     private static bool HasContent(PremiumInterpretationBlock block)
     {
         return !string.IsNullOrWhiteSpace(block.Summary) || block.Paragraphs.Count > 0;
+    }
+
+    private static bool HasSubstantivePartialCoverage(
+        PremiumInterpretationContext context,
+        IReadOnlyList<string> composedBlocks)
+    {
+        var coreCoverageCount = CountAvailable(context.Sun, context.Moon, context.Ascendant);
+        var personalDynamicsCoverageCount = CountAvailable(context.Mercury, context.Venus, context.Mars);
+        var hasCoreComposition = composedBlocks.Contains("energyCore") || composedBlocks.Contains("core");
+        var hasPersonalDynamicsComposition = composedBlocks.Contains("personalDynamics");
+
+        return
+            (coreCoverageCount >= 2 && hasCoreComposition) ||
+            (personalDynamicsCoverageCount >= 2 && hasPersonalDynamicsComposition && composedBlocks.Count >= 2);
+    }
+
+    private static int CountAvailable(params InterpretationEntry?[] entries)
+    {
+        return entries.Count(entry => entry is not null);
     }
 }

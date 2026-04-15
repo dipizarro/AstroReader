@@ -66,6 +66,40 @@ public sealed class PremiumInterpretationCoverageTests
         Assert.Contains("sun.taurus", response.Interpretation.Coverage.MissingEntries);
     }
 
+    [Fact]
+    public void Preview_ShouldReturnFallback_WhenOnlySunEntryIsAvailable()
+    {
+        var useCase = CreateUseCase(CreateSunOnlyCatalog());
+
+        var response = useCase.Execute(CreateRequest());
+
+        Assert.Equal("fallback", response.Interpretation.Coverage.CoverageStatus);
+        Assert.False(response.Interpretation.Coverage.IsPremiumResult);
+        Assert.True(response.Interpretation.Coverage.IsFallback);
+        Assert.Single(response.Interpretation.Coverage.CoveredEntries);
+        Assert.Equal(5, response.Interpretation.Coverage.MissingEntries.Count);
+        Assert.Contains("sun.taurus", response.Interpretation.Coverage.CoveredEntries);
+        Assert.Empty(response.Interpretation.Coverage.ComposedBlocks);
+    }
+
+    [Fact]
+    public void Preview_ShouldReturnPartial_WhenPersonalDynamicsHasAtLeastTwoEntries()
+    {
+        var useCase = CreateUseCase(CreatePersonalDynamicsPartialCatalog());
+
+        var response = useCase.Execute(CreateRequest());
+
+        Assert.Equal("partial", response.Interpretation.Coverage.CoverageStatus);
+        Assert.True(response.Interpretation.Coverage.IsPremiumResult);
+        Assert.False(response.Interpretation.Coverage.IsFallback);
+        Assert.Equal(2, response.Interpretation.Coverage.CoveredEntries.Count);
+        Assert.Equal(4, response.Interpretation.Coverage.MissingEntries.Count);
+        Assert.Contains("mercury.aries", response.Interpretation.Coverage.CoveredEntries);
+        Assert.Contains("venus.taurus", response.Interpretation.Coverage.CoveredEntries);
+        Assert.Contains("personalDynamics", response.Interpretation.Coverage.ComposedBlocks);
+        Assert.Contains("essentialSummary", response.Interpretation.Coverage.ComposedBlocks);
+    }
+
     private static PremiumInterpretationPreviewRequest CreateRequest()
     {
         return new PremiumInterpretationPreviewRequest
@@ -162,6 +196,49 @@ public sealed class PremiumInterpretationCoverageTests
                 Ascendant = new ZodiacInterpretationSet<AscendantInterpretationEntry>(),
                 Mercury = new ZodiacInterpretationSet<MercuryInterpretationEntry>(),
                 Venus = new ZodiacInterpretationSet<VenusInterpretationEntry>(),
+                Mars = new ZodiacInterpretationSet<MarsInterpretationEntry>()
+            }
+        };
+    }
+
+    private static PremiumInterpretationCatalog CreateSunOnlyCatalog()
+    {
+        return new PremiumInterpretationCatalog
+        {
+            Version = "test",
+            Planets = new PremiumInterpretationPlanetCatalog
+            {
+                Sun = new ZodiacInterpretationSet<SunInterpretationEntry>
+                {
+                    Taurus = CreateSunEntry()
+                },
+                Moon = new ZodiacInterpretationSet<MoonInterpretationEntry>(),
+                Ascendant = new ZodiacInterpretationSet<AscendantInterpretationEntry>(),
+                Mercury = new ZodiacInterpretationSet<MercuryInterpretationEntry>(),
+                Venus = new ZodiacInterpretationSet<VenusInterpretationEntry>(),
+                Mars = new ZodiacInterpretationSet<MarsInterpretationEntry>()
+            }
+        };
+    }
+
+    private static PremiumInterpretationCatalog CreatePersonalDynamicsPartialCatalog()
+    {
+        return new PremiumInterpretationCatalog
+        {
+            Version = "test",
+            Planets = new PremiumInterpretationPlanetCatalog
+            {
+                Sun = new ZodiacInterpretationSet<SunInterpretationEntry>(),
+                Moon = new ZodiacInterpretationSet<MoonInterpretationEntry>(),
+                Ascendant = new ZodiacInterpretationSet<AscendantInterpretationEntry>(),
+                Mercury = new ZodiacInterpretationSet<MercuryInterpretationEntry>
+                {
+                    Aries = CreateMercuryEntry()
+                },
+                Venus = new ZodiacInterpretationSet<VenusInterpretationEntry>
+                {
+                    Taurus = CreateVenusEntry()
+                },
                 Mars = new ZodiacInterpretationSet<MarsInterpretationEntry>()
             }
         };
