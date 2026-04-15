@@ -2,6 +2,19 @@ namespace AstroReader.Application.Interpretations.Premium;
 
 internal static class PremiumInterpretationContentSelector
 {
+    private const int HookMaxWords = 28;
+    private const int EnergyCoreMainMaxWords = 36;
+    private const int EnergyCoreClaimMaxWords = 48;
+    private const int CoreMainMaxWords = 34;
+    private const int CoreClaimMaxWords = 46;
+    private const int CoreMaxSupportingClaims = 5;
+    private const int PersonalDynamicsMainMaxWords = 30;
+    private const int PersonalDynamicsClaimMaxWords = 58;
+    private const int EssentialMainMaxWords = 28;
+    private const int EssentialClaimMaxWords = 42;
+    private const int EssentialMaxSupportingClaims = 4;
+    private const int ClosingMaxWords = 34;
+
     public static PremiumInterpretationContentSelectionPlan CreatePlan(
         PremiumInterpretationContext context,
         InterpretationAnalysisResult analysis)
@@ -42,7 +55,7 @@ internal static class PremiumInterpretationContentSelector
             ? $"{dominantAxis}, con un matiz importante: {centralTension.ToLowerInvariant()}."
             : dominantAxis;
 
-        return registry.Use("hook.frame", LimitWords(hook, 28));
+        return UseLimited(registry, "hook.frame", hook, HookMaxWords);
     }
 
     private static string BuildAvailableCoreLabel(PremiumInterpretationContext context)
@@ -86,10 +99,14 @@ internal static class PremiumInterpretationContentSelector
         {
             Key = "energyCore",
             Title = "Tu energía central",
-            MainClaim = registry.Use(
+            MainClaim = UseLimited(
+                registry,
                 "energy-core.integrated-claim",
-                BuildEnergyCoreClaim(context, analysis)),
-            SupportingClaims = registry.UseMany(
+                BuildEnergyCoreClaim(context, analysis),
+                EnergyCoreMainMaxWords),
+            SupportingClaims = UseManyLimited(
+                registry,
+                EnergyCoreClaimMaxWords,
                 ("solar-identity.summary", context.Sun.Summary),
                 ("solar-identity.style", context.Sun.IdentityStyle)),
             Highlights = analysis.DominantCoreTrait.Keywords.Count > 0
@@ -108,15 +125,19 @@ internal static class PremiumInterpretationContentSelector
             return PremiumInterpretationBlockSelection.Empty("core", "Tu núcleo");
         }
 
-        var mainClaim = registry.Use(
+        var mainClaim = UseLimited(
+            registry,
             "core.development-frame",
-            BuildCoreFrame(context));
+            BuildCoreFrame(context),
+            CoreMainMaxWords);
 
         var supportingClaims = new List<string>();
 
         if (context.Moon is not null)
         {
-            supportingClaims.AddRange(registry.UseMany(
+            supportingClaims.AddRange(UseManyLimited(
+                registry,
+                CoreClaimMaxWords,
                 ("emotional-style", context.Moon.EmotionalStyle),
                 ("emotional-needs", context.Moon.EmotionalNeeds),
                 ("security-needs", context.Moon.SecurityNeeds)));
@@ -124,7 +145,9 @@ internal static class PremiumInterpretationContentSelector
 
         if (context.Ascendant is not null)
         {
-            supportingClaims.AddRange(registry.UseMany(
+            supportingClaims.AddRange(UseManyLimited(
+                registry,
+                CoreClaimMaxWords,
                 ("outer-presence", context.Ascendant.OuterStyle),
                 ("social-presence", context.Ascendant.SocialStyle),
                 ("first-impression", context.Ascendant.FirstImpression)));
@@ -132,9 +155,11 @@ internal static class PremiumInterpretationContentSelector
 
         if (!string.IsNullOrWhiteSpace(analysis.CentralTension.Headline))
         {
-            supportingClaims.Add(registry.Use(
+            supportingClaims.Add(UseLimited(
+                registry,
                 "central-tension",
-                BuildTensionDevelopmentClaim(analysis)));
+                BuildTensionDevelopmentClaim(analysis),
+                CoreClaimMaxWords));
         }
 
         return new PremiumInterpretationBlockSelection
@@ -142,7 +167,10 @@ internal static class PremiumInterpretationContentSelector
             Key = "core",
             Title = "Tu núcleo",
             MainClaim = mainClaim,
-            SupportingClaims = supportingClaims.Where(x => !string.IsNullOrWhiteSpace(x)).ToList(),
+            SupportingClaims = supportingClaims
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Take(CoreMaxSupportingClaims)
+                .ToList(),
             Highlights = TakeHighlights(
                 analysis.EmotionalTone.Keywords,
                 context.Ascendant?.Keywords ?? [],
@@ -160,46 +188,48 @@ internal static class PremiumInterpretationContentSelector
             return PremiumInterpretationBlockSelection.Empty("thinkingRelatingActing", "Tu forma de pensar, vincularte y actuar");
         }
 
-        var mainClaim = registry.Use(
+        var mainClaim = UseLimited(
+            registry,
             "personal-dynamics.frame",
-            BuildPersonalDynamicsFrame(context));
+            BuildPersonalDynamicsFrame(context),
+            PersonalDynamicsMainMaxWords);
 
         var supportingClaims = new List<string>();
 
         if (context.Mercury is not null)
         {
-            supportingClaims.Add(registry.Use(
+            supportingClaims.Add(UseLimited(
+                registry,
                 "mental-style",
-                LimitWords(
-                    ComposeParagraph(
-                        context.Mercury.ThinkingStyle,
-                        context.Mercury.CommunicationStyle,
-                        context.Mercury.LearningStyle),
-                    58)));
+                ComposeParagraph(
+                    context.Mercury.ThinkingStyle,
+                    context.Mercury.CommunicationStyle,
+                    context.Mercury.LearningStyle),
+                PersonalDynamicsClaimMaxWords));
         }
 
         if (context.Venus is not null)
         {
-            supportingClaims.Add(registry.Use(
+            supportingClaims.Add(UseLimited(
+                registry,
                 "relational-style",
-                LimitWords(
-                    ComposeParagraph(
-                        context.Venus.RelationalStyle,
-                        context.Venus.AttractionStyle,
-                        context.Venus.AffectiveNeeds),
-                    58)));
+                ComposeParagraph(
+                    context.Venus.RelationalStyle,
+                    context.Venus.AttractionStyle,
+                    context.Venus.AffectiveNeeds),
+                PersonalDynamicsClaimMaxWords));
         }
 
         if (context.Mars is not null)
         {
-            supportingClaims.Add(registry.Use(
+            supportingClaims.Add(UseLimited(
+                registry,
                 "action-style",
-                LimitWords(
-                    ComposeParagraph(
-                        context.Mars.ActionStyle,
-                        context.Mars.DesireStyle,
-                        context.Mars.ConflictStyle),
-                    58)));
+                ComposeParagraph(
+                    context.Mars.ActionStyle,
+                    context.Mars.DesireStyle,
+                    context.Mars.ConflictStyle),
+                PersonalDynamicsClaimMaxWords));
         }
 
         return new PremiumInterpretationBlockSelection
@@ -225,29 +255,46 @@ internal static class PremiumInterpretationContentSelector
         var centralPattern = BuildEssentialCentralClaim(context, analysis);
         if (!string.IsNullOrWhiteSpace(centralPattern))
         {
-            supportingClaims.Add(registry.Use("essential.central-pattern", centralPattern));
+            supportingClaims.Add(UseLimited(
+                registry,
+                "essential.central-pattern",
+                centralPattern,
+                EssentialClaimMaxWords));
         }
 
         var tensionClaim = BuildEssentialTensionClaim(analysis);
         if (!string.IsNullOrWhiteSpace(tensionClaim))
         {
-            supportingClaims.Add(registry.Use("essential.tension", tensionClaim));
+            supportingClaims.Add(UseLimited(
+                registry,
+                "essential.tension",
+                tensionClaim,
+                EssentialClaimMaxWords));
         }
 
         var dynamicsClaim = BuildDynamicsClaim(analysis);
         if (!string.IsNullOrWhiteSpace(dynamicsClaim))
         {
-            supportingClaims.Add(registry.Use("personal-dynamics.synthesis", dynamicsClaim));
+            supportingClaims.Add(UseLimited(
+                registry,
+                "personal-dynamics.synthesis",
+                dynamicsClaim,
+                EssentialClaimMaxWords));
         }
 
         var growthClaim = BuildGrowthClaim(context, analysis);
         if (!string.IsNullOrWhiteSpace(growthClaim))
         {
-            supportingClaims.Add(registry.Use("growth-direction", growthClaim));
+            supportingClaims.Add(UseLimited(
+                registry,
+                "growth-direction",
+                growthClaim,
+                EssentialClaimMaxWords));
         }
 
         var filteredClaims = supportingClaims
             .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Take(EssentialMaxSupportingClaims)
             .ToList();
 
         if (filteredClaims.Count == 0)
@@ -259,9 +306,11 @@ internal static class PremiumInterpretationContentSelector
         {
             Key = "essential",
             Title = "Lo esencial de tu carta",
-            MainClaim = registry.Use(
+            MainClaim = UseLimited(
+                registry,
                 "essential.frame",
-                BuildEssentialFrame(analysis)),
+                BuildEssentialFrame(analysis),
+                EssentialMainMaxWords),
             SupportingClaims = filteredClaims,
             Highlights = TakeHighlights(
                 analysis.DominantCoreTrait.Keywords,
@@ -278,25 +327,31 @@ internal static class PremiumInterpretationContentSelector
 
         if (!string.IsNullOrWhiteSpace(closingHook))
         {
-            return registry.UseOrFallback(
-                "growth-direction",
-                ComposeParagraph(
-                    "Como cierre práctico:",
-                    closingHook),
-                "Como cierre, elige una práctica pequeña que vuelva esta lectura visible en tu vida diaria.");
+            return LimitWords(
+                registry.UseOrFallback(
+                    "growth-direction",
+                    ComposeParagraph(
+                        "Como cierre práctico:",
+                        closingHook),
+                    "Como cierre, elige una práctica pequeña que vuelva esta lectura visible en tu vida diaria."),
+                ClosingMaxWords);
         }
 
         if (!string.IsNullOrWhiteSpace(analysis.GrowthDirection.Headline))
         {
-            return registry.UseOrFallback(
-                "growth-direction",
-                "La integración de esta carta empieza cuando conviertes autoconocimiento en una decisión pequeña y concreta.",
-                "Como cierre, quédate con una decisión pequeña y concreta que puedas practicar en lo cotidiano.");
+            return LimitWords(
+                registry.UseOrFallback(
+                    "growth-direction",
+                    "La integración de esta carta empieza cuando conviertes autoconocimiento en una decisión pequeña y concreta.",
+                    "Como cierre, quédate con una decisión pequeña y concreta que puedas practicar en lo cotidiano."),
+                ClosingMaxWords);
         }
 
-        return registry.Use(
+        return UseLimited(
+            registry,
             "closing.default",
-            "La lectura gana fuerza cuando puedes observar estas capas sin reducirte a una sola de ellas.");
+            "La lectura gana fuerza cuando puedes observar estas capas sin reducirte a una sola de ellas.",
+            ClosingMaxWords);
     }
 
     private static string BuildPersonalDynamicsFrame(PremiumInterpretationContext context)
@@ -466,6 +521,26 @@ internal static class PremiumInterpretationContentSelector
             .ToList();
 
         return string.Join(" ", normalized);
+    }
+
+    private static string UseLimited(
+        PremiumInterpretationClaimRegistry registry,
+        string claimKey,
+        string value,
+        int maxWords)
+    {
+        return registry.Use(claimKey, LimitWords(value, maxWords));
+    }
+
+    private static IReadOnlyList<string> UseManyLimited(
+        PremiumInterpretationClaimRegistry registry,
+        int maxWords,
+        params (string ClaimKey, string Value)[] claims)
+    {
+        return claims
+            .Select(claim => UseLimited(registry, claim.ClaimKey, claim.Value, maxWords))
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .ToList();
     }
 
     private static string JoinNatural(IReadOnlyList<string> parts)
