@@ -328,6 +328,118 @@
       }
     },
     "moon": {
+      "aries": {
+        "summary": "Emocionalmente reaccionas con rapidez, intensidad y una necesidad clara de recuperar autonomía. Tu mundo interno se regula mejor cuando puedes moverte, decidir y expresar lo que sientes sin sentirte atrapado.",
+        "keywords": [
+          "impulso emocional",
+          "autonomía",
+          "franqueza",
+          "reacción rápida",
+          "vitalidad afectiva"
+        ],
+        "strengths": [
+          "Nombras con rapidez lo que te pasa y rara vez permaneces inmóvil ante el malestar.",
+          "Tienes una gran capacidad para reponerte cuando puedes actuar con libertad.",
+          "Tu honestidad emocional puede abrir conversaciones que otros evitan."
+        ],
+        "challenges": [
+          "Puedes reaccionar antes de entender completamente lo que sientes.",
+          "A veces interpretas la espera o la dependencia como amenaza a tu libertad.",
+          "Te cuesta permanecer vulnerable cuando tu primera respuesta es defenderte o avanzar."
+        ],
+        "integrationHooks": [
+          "Antes de responder desde el impulso, dale nombre a la emoción que lo activa.",
+          "Permite que pedir apoyo no se sienta como perder independencia.",
+          "Usa el movimiento para regularte, pero no para escapar de lo que necesitas sentir."
+        ],
+        "emotionalStyle": "Tus emociones tienden a aparecer de forma directa, encendida y corporal. Necesitan salida, movimiento y una sensación de agencia para no convertirse en irritación o urgencia.",
+        "emotionalNeeds": "Necesitas espacio para expresar enojo, deseo o incomodidad sin sentir que eso pone en riesgo el vínculo. Te calma saber que puedes ser honesto y seguir siendo querido.",
+        "securityNeeds": "Te da seguridad sentir que no estás atrapado, que tienes margen de decisión y que tus emociones pueden moverse sin ser controladas por otros."
+      },
+      "taurus": {
+        "summary": "Emocionalmente buscas calma, continuidad y una sensación confiable de sostén. Tu mundo interno se ordena mejor cuando el cuerpo, el ritmo y los vínculos transmiten estabilidad real.",
+        "keywords": [
+          "estabilidad emocional",
+          "calma",
+          "seguridad",
+          "sensualidad",
+          "continuidad"
+        ],
+        "strengths": [
+          "Ofreces una presencia emocional estable que puede tranquilizar a otros.",
+          "Sabes sostener procesos afectivos con paciencia y lealtad.",
+          "Tienes una relación natural con el cuidado concreto, el contacto y la constancia."
+        ],
+        "challenges": [
+          "Puedes resistirte a cambios emocionales incluso cuando ya son necesarios.",
+          "A veces confundes tranquilidad con evitar conversaciones incómodas.",
+          "Te cuesta soltar vínculos, hábitos o seguridades que ya no te nutren."
+        ],
+        "integrationHooks": [
+          "Pregúntate si lo que te calma también te permite crecer.",
+          "Practica cambios pequeños antes de que la vida tenga que empujarte con fuerza.",
+          "Usa tu necesidad de estabilidad como base, no como una forma de cerrarte."
+        ],
+        "emotionalStyle": "Sientes de manera lenta, profunda y persistente. Tus emociones necesitan tiempo para asentarse y suelen expresarse más en gestos concretos que en grandes declaraciones.",
+        "emotionalNeeds": "Necesitas lealtad, previsibilidad, contacto afectivo confiable y un entorno donde el cuidado se demuestre con hechos sostenidos.",
+        "securityNeeds": "Te da seguridad tener ritmos claros, vínculos consistentes y espacios donde tu cuerpo pueda relajarse sin estar anticipando pérdida o cambio brusco."
+      },
+      "gemini": {
+        "summary": "Emocionalmente necesitas entender, conversar y poner en palabras lo que ocurre dentro de ti. Tu mundo interno se regula mejor cuando puedes moverte mentalmente, hacer preguntas y encontrar aire en el intercambio.",
+        "keywords": [
+          "comunicación emocional",
+          "curiosidad",
+          "movilidad interna",
+          "humor",
+          "perspectiva"
+        ],
+        "strengths": [
+          "Puedes tomar distancia suficiente para observar tus emociones con claridad.",
+          "Tienes facilidad para conversar, nombrar matices y abrir posibilidades.",
+          "Tu flexibilidad emocional te ayuda a adaptarte a cambios de ambiente o vínculo."
+        ],
+        "challenges": [
+          "Puedes intelectualizar lo que sientes antes de habitarlo realmente.",
+          "A veces usas el humor o la explicación para evitar vulnerabilidad.",
+          "Te cuesta permanecer en una emoción cuando aparece otra idea, duda o estímulo."
+        ],
+        "integrationHooks": [
+          "Después de explicar lo que sientes, pregúntate dónde lo notas en el cuerpo.",
+          "Elige conversaciones que te acerquen a la emoción, no solo que la analicen.",
+          "Permite que no todo tenga una respuesta inmediata para ser válido."
+        ],
+        "emotionalStyle": "Tus emociones se mueven rápido y suelen buscar salida a través de palabras, ideas o asociaciones. Necesitas aire mental para procesar lo que sientes.",
+        "emotionalNeeds": "Necesitas diálogo, curiosidad mutua y vínculos donde puedas pensar en voz alta sin ser juzgado por cambiar de perspectiva.",
+        "securityNeeds": "Te da seguridad sentir que hay comunicación abierta, margen para preguntar y un entorno donde la emoción no queda encerrada en silencio."
+      },
+      "cancer": {
+        "summary": "Emocionalmente necesitas pertenencia, intimidad y una sensación profunda de cuidado. Tu mundo interno es sensible a los cambios de tono y se regula mejor cuando hay confianza, memoria afectiva y refugio real.",
+        "keywords": [
+          "pertenencia",
+          "cuidado",
+          "sensibilidad",
+          "memoria afectiva",
+          "refugio"
+        ],
+        "strengths": [
+          "Percibes necesidades emocionales sutiles y sabes responder con cuidado.",
+          "Construyes vínculos con memoria, lealtad y una gran capacidad de sostén.",
+          "Tienes talento para crear espacios íntimos donde otros pueden bajar la guardia."
+        ],
+        "challenges": [
+          "Puedes cerrarte o retraerte cuando sientes falta de protección.",
+          "A veces cargas emociones ajenas como si fueran responsabilidad tuya.",
+          "Te cuesta soltar heridas pasadas cuando todavía buscas reparación emocional."
+        ],
+        "integrationHooks": [
+          "Distingue entre cuidar y absorber lo que no te corresponde.",
+          "Permite que tus necesidades sean dichas antes de convertirse en resentimiento.",
+          "Construye refugio interno, no solo dependencia de un entorno seguro."
+        ],
+        "emotionalStyle": "Sientes de manera receptiva, profunda y protectora. Tus emociones suelen venir acompañadas de memoria, intuición y una fuerte necesidad de pertenecer.",
+        "emotionalNeeds": "Necesitas ternura, continuidad afectiva, confianza y vínculos donde tu sensibilidad no sea tratada como exceso.",
+        "securityNeeds": "Te da seguridad sentir hogar emocional: personas, rutinas o espacios donde puedas ser vulnerable sin tener que justificar lo que sientes."
+      },
       "leo": {
         "summary": "Emocionalmente necesitas sentir calor, reconocimiento y espacio para expresarte con dignidad. Tu mundo interno se ordena mejor cuando puedes vivir tus sentimientos con corazón abierto, no en pequeño.",
         "keywords": [
@@ -355,6 +467,202 @@
         "emotionalStyle": "Sientes con intensidad, orgullo y calidez. Tus emociones necesitan circular con vitalidad y suelen mostrarse con claridad cuando el entorno te permite estar presente de verdad.",
         "emotionalNeeds": "Necesitas reconocimiento afectivo, lealtad emocional y vínculos donde tu corazón pueda sentirse celebrado en lugar de apenas tolerado.",
         "securityNeeds": "Te da seguridad sentir que importas, que tu presencia deja huella y que tu entrega emocional recibe respuesta genuina."
+      },
+      "virgo": {
+        "summary": "Emocionalmente buscas orden, claridad y formas concretas de cuidar lo que importa. Tu mundo interno se regula mejor cuando puedes entender lo que ocurre, mejorar lo posible y sentir que la vida cotidiana tiene estructura.",
+        "keywords": [
+          "orden emocional",
+          "discernimiento",
+          "cuidado práctico",
+          "detalle",
+          "regulación"
+        ],
+        "strengths": [
+          "Detectas necesidades pequeñas que pueden mejorar mucho el bienestar de alguien.",
+          "Tienes capacidad para acompañar desde gestos útiles, precisos y concretos.",
+          "Puedes convertir la ansiedad emocional en organización, cuidado y mejora real."
+        ],
+        "challenges": [
+          "Puedes analizar demasiado lo que sientes y terminar desconectado de la emoción.",
+          "A veces transformas preocupación en crítica hacia ti o hacia otros.",
+          "Te cuesta descansar emocionalmente cuando sientes que algo aún no está resuelto."
+        ],
+        "integrationHooks": [
+          "Pregúntate si estás intentando entender para cuidarte o para controlar la emoción.",
+          "Permite que el desorden emocional tenga un lugar antes de corregirlo.",
+          "Practica recibir cuidado sin tener que justificarlo con utilidad."
+        ],
+        "emotionalStyle": "Tus emociones suelen procesarse a través de la observación, el análisis y la búsqueda de soluciones prácticas. Necesitas claridad para sentirte emocionalmente disponible.",
+        "emotionalNeeds": "Necesitas orden, consideración, rutinas que te sostengan y vínculos donde el cuidado también se exprese en detalles concretos.",
+        "securityNeeds": "Te da seguridad sentir que puedes anticipar, ordenar y mejorar tu entorno sin quedar atrapado en exigencia o hipercontrol."
+      },
+      "libra": {
+        "summary": "Emocionalmente necesitas armonía, reciprocidad y un clima relacional cuidado. Tu mundo interno se regula mejor cuando hay diálogo, buen trato y una sensación clara de equilibrio afectivo.",
+        "keywords": [
+          "armonía emocional",
+          "reciprocidad",
+          "diálogo",
+          "consideración",
+          "equilibrio"
+        ],
+        "strengths": [
+          "Tienes sensibilidad para cuidar el tono emocional de los vínculos.",
+          "Puedes mediar, suavizar tensiones y abrir conversaciones con tacto.",
+          "Buscas relaciones donde la belleza, la cortesía y la escucha tengan valor real."
+        ],
+        "challenges": [
+          "Puedes evitar expresar enojo para no alterar la armonía.",
+          "A veces adaptas tus emociones a lo que el vínculo parece necesitar.",
+          "Te cuesta estar en paz si sientes tensión, distancia o falta de reciprocidad."
+        ],
+        "integrationHooks": [
+          "Recuerda que una emoción incómoda también puede cuidar la relación.",
+          "Practica decir lo que necesitas antes de convertirlo en complacencia silenciosa.",
+          "No confundas equilibrio con ocultar una parte importante de ti."
+        ],
+        "emotionalStyle": "Tus emociones buscan proporción, respuesta y espejo vincular. Sueles procesar mejor lo que sientes cuando puedes conversarlo en un clima de respeto.",
+        "emotionalNeeds": "Necesitas reciprocidad, buen trato, consideración y vínculos donde tus necesidades afectivas no queden siempre subordinadas al equilibrio externo.",
+        "securityNeeds": "Te da seguridad sentir que hay diálogo disponible, acuerdos justos y una atmósfera donde el conflicto puede tratarse sin perder dignidad."
+      },
+      "scorpio": {
+        "summary": "Emocionalmente necesitas profundidad, lealtad y una sensación intensa de verdad. Tu mundo interno no se calma con respuestas superficiales: necesita confianza real, intimidad y espacio para transformar lo que duele.",
+        "keywords": [
+          "intensidad emocional",
+          "profundidad",
+          "lealtad",
+          "transformación",
+          "confianza"
+        ],
+        "strengths": [
+          "Puedes sostener emociones complejas sin negar su profundidad.",
+          "Tienes gran intuición para leer lo que no se dice explícitamente.",
+          "Cuando confías, ofreces una presencia afectiva leal, poderosa y transformadora."
+        ],
+        "challenges": [
+          "Puedes cerrarte cuando sientes amenaza, traición o exposición excesiva.",
+          "A veces intentas controlar la emoción para no sentir vulnerabilidad.",
+          "Te cuesta soltar estados intensos aunque ya no te ayuden a protegerte."
+        ],
+        "integrationHooks": [
+          "Pregúntate si tu defensa actual protege una herida real o una amenaza antigua.",
+          "Practica expresar vulnerabilidad antes de que se convierta en prueba o distancia.",
+          "Permite que la confianza sea gradual sin exigir certeza absoluta."
+        ],
+        "emotionalStyle": "Sientes con profundidad, reserva e intensidad. Tus emociones tienden a ir al fondo y necesitan procesos honestos, no explicaciones rápidas.",
+        "emotionalNeeds": "Necesitas lealtad, intimidad emocional, verdad y vínculos donde puedas mostrar zonas sensibles sin sentir que pierdes poder.",
+        "securityNeeds": "Te da seguridad saber que el vínculo resiste conversaciones difíciles, emociones intensas y momentos de transformación sin volverse superficial."
+      },
+      "sagittarius": {
+        "summary": "Emocionalmente necesitas amplitud, sentido y espacio para respirar. Tu mundo interno se regula mejor cuando puedes mirar más allá del problema inmediato y recuperar perspectiva, movimiento y confianza.",
+        "keywords": [
+          "optimismo emocional",
+          "libertad",
+          "sentido",
+          "perspectiva",
+          "movimiento"
+        ],
+        "strengths": [
+          "Puedes recuperar esperanza incluso después de momentos emocionalmente pesados.",
+          "Aportas perspectiva, humor y amplitud cuando el entorno se estrecha.",
+          "Tienes capacidad para convertir experiencias difíciles en aprendizaje vital."
+        ],
+        "challenges": [
+          "Puedes evitar emociones densas buscando una explicación positiva demasiado rápido.",
+          "A veces confundes libertad emocional con no quedarte a reparar lo necesario.",
+          "Te cuesta permanecer en vínculos o procesos que se sienten demasiado cerrados."
+        ],
+        "integrationHooks": [
+          "Permite que una emoción no tenga sentido inmediato antes de buscar aprendizaje.",
+          "Pregúntate si necesitas espacio para respirar o distancia para no sentir.",
+          "Aterriza tu confianza en acciones concretas de cuidado emocional."
+        ],
+        "emotionalStyle": "Tus emociones buscan movimiento, horizonte y significado. Necesitas sentir que lo que vives puede abrir comprensión, no solo encierro.",
+        "emotionalNeeds": "Necesitas libertad afectiva, honestidad, entusiasmo compartido y vínculos donde el crecimiento no se sienta limitado.",
+        "securityNeeds": "Te da seguridad sentir que puedes expandirte, decir la verdad y recuperar perspectiva sin que eso amenace la continuidad del vínculo."
+      },
+      "capricorn": {
+        "summary": "Emocionalmente necesitas estructura, confiabilidad y una sensación de sostén maduro. Tu mundo interno puede ser reservado, pero se estabiliza cuando hay responsabilidad afectiva, límites claros y presencia consistente.",
+        "keywords": [
+          "contención",
+          "responsabilidad emocional",
+          "estructura",
+          "madurez",
+          "confiabilidad"
+        ],
+        "strengths": [
+          "Puedes sostener emociones difíciles con templanza y sentido de responsabilidad.",
+          "Ofreces cuidado a través de compromiso, presencia y actos consistentes.",
+          "Tienes capacidad para construir seguridad emocional a largo plazo."
+        ],
+        "challenges": [
+          "Puedes exigirte fortaleza incluso cuando necesitas apoyo.",
+          "A veces te cuesta mostrar necesidad por miedo a perder control o respeto.",
+          "Puedes convertir la emoción en deber y olvidar que también necesita ternura."
+        ],
+        "integrationHooks": [
+          "Permite que pedir cuidado también sea una expresión de madurez.",
+          "Revisa si estás sosteniendo por amor o por miedo a fallar.",
+          "Incluye suavidad en tus estructuras emocionales, no solo resistencia."
+        ],
+        "emotionalStyle": "Tus emociones suelen procesarse con reserva, autocontrol y sentido práctico. No siempre muestras lo que sientes de inmediato, pero necesitas que sea tomado en serio.",
+        "emotionalNeeds": "Necesitas compromiso, respeto, estabilidad y vínculos donde la vulnerabilidad no sea vista como debilidad.",
+        "securityNeeds": "Te da seguridad contar con personas y estructuras confiables, donde las promesas se sostienen con hechos y el cuidado no depende del ánimo del momento."
+      },
+      "aquarius": {
+        "summary": "Emocionalmente necesitas espacio, perspectiva y libertad para sentir a tu manera. Tu mundo interno se regula mejor cuando puedes tomar distancia sin desconectarte del todo, y cuando tu diferencia emocional es respetada.",
+        "keywords": [
+          "distancia emocional",
+          "independencia",
+          "perspectiva",
+          "originalidad afectiva",
+          "libertad interna"
+        ],
+        "strengths": [
+          "Puedes observar emociones con claridad sin quedar totalmente absorbido por ellas.",
+          "Tienes capacidad para sostener vínculos desde respeto, libertad y mirada amplia.",
+          "Aportas soluciones distintas cuando el entorno emocional está saturado."
+        ],
+        "challenges": [
+          "Puedes parecer distante cuando en realidad estás intentando regularte.",
+          "A veces analizas la emoción desde afuera para no sentir su vulnerabilidad.",
+          "Te cuesta habitar necesidades afectivas que percibes como dependencia."
+        ],
+        "integrationHooks": [
+          "Pregúntate si tu distancia está creando claridad o aislamiento.",
+          "Permite que necesitar a otros no contradiga tu independencia.",
+          "Busca formas propias de expresar afecto sin desaparecer emocionalmente."
+        ],
+        "emotionalStyle": "Tus emociones suelen pasar por la mente, la observación y la necesidad de perspectiva. Necesitas libertad interna para entender lo que sientes sin presión invasiva.",
+        "emotionalNeeds": "Necesitas respeto por tu espacio, vínculos honestos y una forma de pertenencia que no exija uniformidad emocional.",
+        "securityNeeds": "Te da seguridad sentir que puedes ser distinto, tomar aire y mantener autonomía sin que eso sea interpretado como falta de amor."
+      },
+      "pisces": {
+        "summary": "Emocionalmente eres permeable, intuitivo y profundamente sensible a los climas que te rodean. Tu mundo interno se regula mejor cuando hay suavidad, inspiración y límites que protejan tu capacidad de empatizar.",
+        "keywords": [
+          "sensibilidad emocional",
+          "empatía",
+          "intuición",
+          "imaginación",
+          "permeabilidad"
+        ],
+        "strengths": [
+          "Captas matices emocionales que otros no saben expresar.",
+          "Tienes una gran capacidad para acompañar con compasión y delicadeza.",
+          "Puedes transformar emoción en creatividad, inspiración y comprensión profunda."
+        ],
+        "challenges": [
+          "Puedes absorber estados ajenos hasta confundirte con ellos.",
+          "A veces evitas límites por miedo a herir o abandonar a alguien.",
+          "Te cuesta distinguir intuición clara de saturación emocional."
+        ],
+        "integrationHooks": [
+          "Distingue compasión de absorción emocional.",
+          "Crea rutinas de descarga para no cargar con todo lo que percibes.",
+          "Recuerda que un límite claro también puede ser una forma amorosa de cuidado."
+        ],
+        "emotionalStyle": "Sientes de manera fluida, intuitiva y muy receptiva. Tus emociones pueden mezclarse con el entorno, por eso necesitas espacios de silencio y limpieza interna.",
+        "emotionalNeeds": "Necesitas ternura, comprensión, inspiración y vínculos donde tu sensibilidad sea cuidada sin volverte responsable de todo.",
+        "securityNeeds": "Te da seguridad tener límites amables, ambientes emocionalmente suaves y prácticas que te ayuden a volver a ti cuando absorbiste demasiado."
       }
     },
     "ascendant": {
