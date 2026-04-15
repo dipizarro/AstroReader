@@ -1,11 +1,12 @@
-using AstroReader.AstroEngine.Contracts;
 using AstroReader.AstroEngine;
 using AstroReader.AstroEngine.Configuration;
+using AstroReader.AstroEngine.Contracts;
 using AstroReader.Application;
 using AstroReader.Infrastructure;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+const string CorsPolicyName = "AstroReaderFrontend";
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -20,15 +21,27 @@ builder.Services.AddProblemDetails();
 // Configure CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        policy =>
-        {
-            policy.AllowAnyOrigin()
-                  .AllowAnyMethod()
-                  .AllowAnyHeader();
-        });
-});
+    options.AddPolicy(CorsPolicyName, policy =>
+    {
+        var allowedOrigins = builder.Configuration
+            .GetSection("Cors:AllowedOrigins")
+            .Get<string[]>()?
+            .Where(origin => !string.IsNullOrWhiteSpace(origin))
+            .Select(origin => origin.Trim().TrimEnd('/'))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray() ?? [];
 
+        if (allowedOrigins.Length == 0)
+        {
+            throw new InvalidOperationException(
+                "Cors:AllowedOrigins must contain at least one frontend origin. Configure it with environment variables in Azure App Service.");
+        }
+
+        policy.WithOrigins(allowedOrigins)
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 // Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
@@ -89,10 +102,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// app.UseHttpsRedirection(); // Comentado para desarrollo local si no hay certificados HTTPS configurados
+// HTTPS is enforced at Azure App Service level. Keep this disabled to avoid proxy redirect issues on Linux App Service.
 
 // Enable CORS before Authorization and routing endpoints
-app.UseCors("AllowAll");
+app.UseCors(CorsPolicyName);
 
 // Authorization is currently disabled but ready to be added here.
 app.UseAuthorization();

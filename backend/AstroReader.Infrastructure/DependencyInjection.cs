@@ -24,6 +24,10 @@ public static class DependencyInjection
             options.UseSqlServer(connectionString, sql =>
             {
                 sql.MigrationsAssembly(typeof(AstroReaderDbContext).Assembly.FullName);
+                sql.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(10),
+                    errorNumbersToAdd: null);
             });
         });
         services.AddScoped<AstroReader.Application.SavedCharts.Interfaces.ISavedChartRepository, SavedChartRepository>();
