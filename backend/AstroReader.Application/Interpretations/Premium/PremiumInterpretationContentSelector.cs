@@ -34,7 +34,7 @@ internal static class PremiumInterpretationContentSelector
             Core = SelectCore(context, analysis, registry),
             PersonalDynamics = SelectPersonalDynamics(context, analysis, registry),
             EssentialSummary = SelectEssentialSummary(context, analysis, registry),
-            Closing = SelectClosing(context, analysis, registry)
+            Closing = SelectClosing(analysis, registry)
         };
     }
 
@@ -325,39 +325,29 @@ internal static class PremiumInterpretationContentSelector
     }
 
     private static string SelectClosing(
-        PremiumInterpretationContext context,
         InterpretationAnalysisResult analysis,
         PremiumInterpretationClaimRegistry registry)
     {
-        var closingHook = FirstOrEmpty(context.Sun?.IntegrationHooks ?? []);
+        return UseLimited(
+            registry,
+            "closing.coda",
+            BuildClosingCoda(analysis),
+            ClosingMaxWords);
+    }
 
-        if (!string.IsNullOrWhiteSpace(closingHook))
+    private static string BuildClosingCoda(InterpretationAnalysisResult analysis)
+    {
+        if (!string.IsNullOrWhiteSpace(analysis.CentralTension.Headline))
         {
-            return LimitWords(
-                registry.UseOrFallback(
-                    "growth-direction",
-                    ComposeParagraph(
-                        "Como cierre práctico:",
-                        closingHook),
-                    "Como cierre, elige una práctica pequeña que vuelva esta lectura visible en tu vida diaria."),
-                ClosingMaxWords);
+            return "El cierre está en sostener la complejidad sin resolverla a la fuerza: ahí la lectura se vuelve dirección, no etiqueta.";
         }
 
         if (!string.IsNullOrWhiteSpace(analysis.GrowthDirection.Headline))
         {
-            return LimitWords(
-                registry.UseOrFallback(
-                    "growth-direction",
-                    "La integración de esta carta empieza cuando conviertes autoconocimiento en una decisión pequeña y concreta.",
-                    "Como cierre, quédate con una decisión pequeña y concreta que puedas practicar en lo cotidiano."),
-                ClosingMaxWords);
+            return "El valor de esta lectura aparece cuando deja de ser descripción y se convierte en una forma más consciente de elegir.";
         }
 
-        return UseLimited(
-            registry,
-            "closing.default",
-            "La lectura gana fuerza cuando puedes observar estas capas sin reducirte a una sola de ellas.",
-            ClosingMaxWords);
+        return "Quédate con esto: la carta no te reduce, te ofrece un mapa para habitarte con más intención.";
     }
 
     private static string BuildPersonalDynamicsFrame(PremiumInterpretationContext context)
@@ -653,11 +643,6 @@ internal static class PremiumInterpretationContentSelector
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .Take(6)
             .ToList();
-    }
-
-    private static string FirstOrEmpty(IReadOnlyList<string> values)
-    {
-        return values.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x)) ?? string.Empty;
     }
 
     private static string NormalizeText(string value)
