@@ -2,6 +2,12 @@ namespace AstroReader.Application.Interpretations.Premium;
 
 internal static class PremiumInterpretationContentSelector
 {
+    private static readonly string[] EditorialTransitions =
+    [
+        "A la vez,",
+        "En la práctica,"
+    ];
+
     private const int HookMaxWords = 28;
     private const int EnergyCoreMainMaxWords = 36;
     private const int EnergyCoreClaimMaxWords = 48;
@@ -520,7 +526,48 @@ internal static class PremiumInterpretationContentSelector
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
 
-        return string.Join(" ", normalized);
+        if (normalized.Count == 0)
+        {
+            return string.Empty;
+        }
+
+        if (normalized.Count == 1)
+        {
+            return EnsureTerminalPunctuation(normalized[0]);
+        }
+
+        if (normalized[0].EndsWith(':'))
+        {
+            return ComposeAfterLeadIn(normalized);
+        }
+
+        var sentences = new List<string>
+        {
+            EnsureTerminalPunctuation(normalized[0])
+        };
+
+        for (var index = 1; index < normalized.Count; index++)
+        {
+            var transition = EditorialTransitions[(index - 1) % EditorialTransitions.Length];
+            var fragment = LowercaseInitial(normalized[index]);
+
+            sentences.Add(EnsureTerminalPunctuation($"{transition} {fragment}"));
+        }
+
+        return string.Join(" ", sentences);
+    }
+
+    private static string ComposeAfterLeadIn(IReadOnlyList<string> fragments)
+    {
+        var leadIn = fragments[0];
+        var remaining = fragments
+            .Skip(1)
+            .Select(EnsureTerminalPunctuation)
+            .ToList();
+
+        return remaining.Count == 0
+            ? leadIn
+            : $"{leadIn} {string.Join(" ", remaining)}";
     }
 
     private static string UseLimited(
@@ -568,6 +615,34 @@ internal static class PremiumInterpretationContentSelector
         return words.Length <= maxWords
             ? normalized
             : $"{string.Join(" ", words.Take(maxWords))}.";
+    }
+
+    private static string EnsureTerminalPunctuation(string value)
+    {
+        var normalized = NormalizeText(value);
+
+        if (string.IsNullOrWhiteSpace(normalized))
+        {
+            return string.Empty;
+        }
+
+        return normalized[^1] is '.' or '!' or '?' or ':'
+            ? normalized
+            : $"{normalized}.";
+    }
+
+    private static string LowercaseInitial(string value)
+    {
+        var normalized = NormalizeText(value);
+
+        if (string.IsNullOrWhiteSpace(normalized))
+        {
+            return string.Empty;
+        }
+
+        return normalized.Length == 1
+            ? normalized.ToLowerInvariant()
+            : $"{char.ToLowerInvariant(normalized[0])}{normalized[1..]}";
     }
 
     private static IReadOnlyList<string> TakeHighlights(params IReadOnlyList<string>[] keywordSets)
