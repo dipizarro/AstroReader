@@ -1,0 +1,49 @@
+name: Deploy Backend to Azure App Service
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-azure-app-service.yml'
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  BACKEND_WORKING_DIRECTORY: backend
+  API_PROJECT_PATH: AstroReader.Api/AstroReader.Api.csproj
+  PUBLISH_DIR: ${{ github.workspace }}/backend-publish
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore backend
+        working-directory: ${{ env.BACKEND_WORKING_DIRECTORY }}
+        run: dotnet restore AstroReader.slnx
+
+      - name: Build backend
+        working-directory: ${{ env.BACKEND_WORKING_DIRECTORY }}
+        run: dotnet build AstroReader.slnx --configuration Release --no-restore
+
+      - name: Publish API
+        working-directory: ${{ env.BACKEND_WORKING_DIRECTORY }}
+        run: dotnet publish ${{ env.API_PROJECT_PATH }} --configuration Release --no-restore --output ${{ env.PUBLISH_DIR }}
+
+      - name: Deploy API to Azure App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ secrets.AZURE_BACKEND_APP_SERVICE_NAME }}
+          publish-profile: ${{ secrets.AZURE_BACKEND_PUBLISH_PROFILE }}
+          package: ${{ env.PUBLISH_DIR }}
