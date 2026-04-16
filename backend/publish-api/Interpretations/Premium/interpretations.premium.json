@@ -1,0 +1,2021 @@
+{
+  "version": "1.0.0",
+  "planets": {
+    "sun": {
+      "aries": {
+        "summary": "Tu identidad se enciende cuando puedes iniciar, decidir y probar tu fuerza en movimiento. No necesitas tener todo resuelto para avanzar: tu vitalidad aparece cuando te das permiso para actuar con honestidad y coraje.",
+        "keywords": [
+          "iniciativa",
+          "coraje",
+          "autonomía",
+          "decisión",
+          "impulso vital"
+        ],
+        "strengths": [
+          "Abres caminos cuando otros todavía están evaluando posibilidades.",
+          "Tienes una relación directa con el deseo, la acción y la afirmación personal.",
+          "Tu presencia puede activar energía, movimiento y valentía en el entorno."
+        ],
+        "challenges": [
+          "Puedes avanzar tan rápido que no siempre registras el impacto de tus actos.",
+          "A veces confundes independencia con no necesitar colaboración.",
+          "Te cuesta sostener procesos que requieren espera, matiz o negociación."
+        ],
+        "integrationHooks": [
+          "Antes de actuar, distingue entre impulso reactivo y decisión alineada.",
+          "Practica sostener una dirección sin convertir cada diferencia en una batalla.",
+          "Usa tu valentía para iniciar con conciencia, no solo para demostrar fuerza."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la acción directa, la espontaneidad y la necesidad de sentirte dueño de tus decisiones. Te reconoces más en lo que haces que en lo que explicas.",
+        "growthPath": "Tu crecimiento aparece cuando aprendes a unir coraje con continuidad. No se trata de apagar tu impulso, sino de darle una dirección más madura y sostenible."
+      },
+      "taurus": {
+        "summary": "Tu identidad se fortalece cuando puedes construir algo sólido, disfrutable y sostenible. No necesitas correr para sentir valor: lo tuyo es convertir intención en presencia estable y resultados tangibles.",
+        "keywords": [
+          "estabilidad",
+          "constancia",
+          "valor propio",
+          "placer consciente",
+          "realismo"
+        ],
+        "strengths": [
+          "Sostienes procesos con paciencia cuando otros se dispersan.",
+          "Transmites confiabilidad y una sensación concreta de solidez.",
+          "Sabes reconocer qué merece tiempo, energía y cuidado real."
+        ],
+        "challenges": [
+          "Puedes resistirte al cambio incluso cuando ya es necesario.",
+          "A veces confundes seguridad con permanencia excesiva.",
+          "Te cuesta soltar ritmos o vínculos que ya perdieron vitalidad."
+        ],
+        "integrationHooks": [
+          "Pregúntate si lo que sostienes hoy todavía nutre tu crecimiento.",
+          "Haz espacio para cambios graduales en lugar de esperar a que todo se rompa.",
+          "Usa tu constancia como una fuerza creativa, no como una defensa rígida."
+        ],
+        "identityStyle": "Tu identidad avanza con calma, criterio y apego a lo auténtico. Prefieres demostrar valor a través de hechos, consistencia y presencia antes que por promesas o impacto inmediato.",
+        "growthPath": "Tu evolución se acelera cuando aprendes a combinar estabilidad con flexibilidad. No se trata de abandonar tu centro, sino de permitir que también cambie contigo."
+      },
+      "gemini": {
+        "summary": "Tu identidad se activa cuando puedes explorar, conversar, aprender y conectar ideas. Necesitas movimiento mental para sentirte vivo: tu fuerza aparece cuando transformas curiosidad en comprensión útil.",
+        "keywords": [
+          "curiosidad",
+          "adaptabilidad",
+          "comunicación",
+          "agilidad",
+          "conexión"
+        ],
+        "strengths": [
+          "Encuentras relaciones entre ideas, personas y contextos distintos.",
+          "Te adaptas con rapidez a escenarios cambiantes sin perder liviandad.",
+          "Tienes facilidad para nombrar, traducir y abrir conversaciones necesarias."
+        ],
+        "challenges": [
+          "Puedes dispersarte cuando todo parece interesante al mismo tiempo.",
+          "A veces usas el análisis o el humor para evitar una definición más profunda.",
+          "Te cuesta sostener una dirección si no hay estímulo, intercambio o novedad."
+        ],
+        "integrationHooks": [
+          "Elige qué conversaciones merecen convertirse en compromiso real.",
+          "Dale profundidad a tu curiosidad antes de saltar a la siguiente posibilidad.",
+          "Usa tu mente como puente, no como escape de lo que necesita presencia."
+        ],
+        "identityStyle": "Tu identidad se expresa a través de la palabra, el intercambio y la capacidad de leer varias perspectivas a la vez. Te afirmas cuando puedes pensar en voz alta y mantener vivo el diálogo.",
+        "growthPath": "Tu crecimiento aparece cuando pasas de acumular información a construir criterio. La madurez no reduce tu curiosidad: le da foco, profundidad y dirección."
+      },
+      "cancer": {
+        "summary": "Tu identidad se organiza alrededor del cuidado, la memoria emocional y la necesidad de pertenecer a algo significativo. Tu fuerza no siempre es ruidosa: muchas veces aparece en tu capacidad de proteger, nutrir y sostener vínculos con profundidad.",
+        "keywords": [
+          "cuidado",
+          "pertenencia",
+          "sensibilidad",
+          "memoria emocional",
+          "protección"
+        ],
+        "strengths": [
+          "Lees necesidades emocionales que otros pasan por alto.",
+          "Construyes confianza a través de presencia, lealtad y cuidado concreto.",
+          "Tienes una gran capacidad para crear refugio, intimidad y continuidad afectiva."
+        ],
+        "challenges": [
+          "Puedes protegerte demasiado cuando sientes exposición o inseguridad.",
+          "A veces te cuesta diferenciar cuidado de sobrecarga emocional.",
+          "Puedes quedar atado a historias pasadas que ya no explican quién eres hoy."
+        ],
+        "integrationHooks": [
+          "Pregúntate si estás cuidando desde el amor o desde el miedo a perder.",
+          "Permite que tus límites también formen parte de tu manera de amar.",
+          "Honra tu historia sin convertirla en una obligación de repetirla."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la sensibilidad, la protección y la capacidad de crear lazos con sentido. Necesitas sentir raíz emocional para mostrar tu fuerza con confianza.",
+        "growthPath": "Tu crecimiento se abre cuando aprendes a cuidarte con la misma dedicación con que cuidas a otros. La pertenencia más importante empieza por no abandonarte a ti mismo."
+      },
+      "leo": {
+        "summary": "Tu identidad se ilumina cuando puedes expresarte con autenticidad, crear desde el corazón y sentir que tu presencia tiene impacto. No buscas solo atención: necesitas vivir de una manera que tenga calor, orgullo sano y sentido personal.",
+        "keywords": [
+          "expresión",
+          "creatividad",
+          "confianza",
+          "generosidad",
+          "presencia"
+        ],
+        "strengths": [
+          "Aportas vitalidad, entusiasmo y una presencia que puede elevar a otros.",
+          "Tienes talento para liderar desde la inspiración y no solo desde la autoridad.",
+          "Cuando confías en ti, expresas calidez, nobleza y creatividad real."
+        ],
+        "challenges": [
+          "Puedes tomar la falta de reconocimiento como una herida personal.",
+          "A veces proteges tu orgullo antes de mostrar vulnerabilidad.",
+          "Te cuesta sostener espacios donde tu aporte no es visto o celebrado."
+        ],
+        "integrationHooks": [
+          "Distingue entre necesidad legítima de expresión y dependencia de aprobación.",
+          "Permite que tu brillo incluya momentos de humildad y escucha.",
+          "Crea desde lo que amas, no solo desde lo que confirma tu valor."
+        ],
+        "identityStyle": "Tu identidad se afirma cuando puedes mostrar quién eres con calidez, dignidad y presencia creativa. Necesitas sentir que tu vida tiene una firma propia.",
+        "growthPath": "Tu crecimiento aparece cuando tu confianza deja de depender del aplauso externo. Cuanto más auténtico es tu centro, menos necesitas demostrar y más puedes irradiar."
+      },
+      "virgo": {
+        "summary": "Tu identidad se fortalece cuando puedes mejorar, ordenar y volver útil lo que tocas. Tu forma de afirmarte no necesita grandilocuencia: aparece en la precisión, el servicio inteligente y la capacidad de hacer que las cosas funcionen mejor.",
+        "keywords": [
+          "discernimiento",
+          "mejora",
+          "precisión",
+          "servicio",
+          "eficiencia"
+        ],
+        "strengths": [
+          "Detectas detalles importantes que pueden cambiar la calidad de un proceso.",
+          "Tienes una ética natural hacia lo bien hecho y lo funcional.",
+          "Puedes convertir problemas complejos en pasos concretos y manejables."
+        ],
+        "challenges": [
+          "Puedes exigirte tanto que pierdes contacto con el disfrute del proceso.",
+          "A veces confundes mejora con autocrítica constante.",
+          "Te cuesta aceptar que algo puede ser valioso aunque no sea perfecto."
+        ],
+        "integrationHooks": [
+          "Pregúntate si estás corrigiendo para crecer o para calmar ansiedad.",
+          "Permite que lo suficientemente bueno también tenga lugar.",
+          "Usa tu criterio para servir a la vida, no para reducirla a rendimiento."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la observación, la mejora continua y el deseo de aportar algo útil. Te reconoces cuando puedes refinar, cuidar el detalle y elevar la calidad de lo cotidiano.",
+        "growthPath": "Tu crecimiento aparece cuando tu búsqueda de excelencia incluye compasión. La precisión se vuelve más poderosa cuando deja espacio para humanidad, error y descanso."
+      },
+      "libra": {
+        "summary": "Tu identidad se construye en relación con el otro, con la belleza de los acuerdos y con la búsqueda de equilibrio. Tu fuerza aparece cuando puedes crear armonía sin borrarte, unir perspectivas y elegir con elegancia lo que realmente valoras.",
+        "keywords": [
+          "equilibrio",
+          "vínculo",
+          "diplomacia",
+          "criterio estético",
+          "reciprocidad"
+        ],
+        "strengths": [
+          "Tienes sensibilidad para leer dinámicas, tonos y necesidades relacionales.",
+          "Puedes mediar sin perder de vista la importancia de la forma y el respeto.",
+          "Aportas criterio, armonía y una búsqueda genuina de reciprocidad."
+        ],
+        "challenges": [
+          "Puedes postergar decisiones para evitar tensión o desaprobación.",
+          "A veces adaptas demasiado tu deseo para sostener una imagen de armonía.",
+          "Te cuesta tolerar conflictos necesarios cuando rompen el tono ideal."
+        ],
+        "integrationHooks": [
+          "Practica elegir incluso cuando ninguna opción deje a todos satisfechos.",
+          "Recuerda que armonía no significa ausencia de desacuerdo.",
+          "Usa tu capacidad de considerar al otro sin abandonar tu propio centro."
+        ],
+        "identityStyle": "Tu identidad se afirma a través del vínculo, la elección consciente y la búsqueda de proporción. Necesitas que tu vida tenga belleza, diálogo y un sentido claro de reciprocidad.",
+        "growthPath": "Tu crecimiento aparece cuando dejas de confundir paz con complacencia. Cuanto más honesta es tu posición, más auténticas se vuelven tus relaciones."
+      },
+      "scorpio": {
+        "summary": "Tu identidad se fortalece cuando puedes ir al fondo de las cosas, transformar lo que duele y vivir con intensidad honesta. No te satisface lo superficial: necesitas verdad, profundidad y una relación consciente con tu propio poder.",
+        "keywords": [
+          "profundidad",
+          "transformación",
+          "intensidad",
+          "verdad emocional",
+          "poder personal"
+        ],
+        "strengths": [
+          "Tienes capacidad para sostener procesos intensos sin huir de lo complejo.",
+          "Lees motivaciones ocultas y capas emocionales con gran precisión.",
+          "Puedes transformar crisis en claridad, fuerza y madurez."
+        ],
+        "challenges": [
+          "Puedes cerrarte o controlar demasiado cuando percibes amenaza.",
+          "A veces desconfías incluso cuando el vínculo necesita apertura.",
+          "Te cuesta soltar heridas o dinámicas que ya cumplieron su función."
+        ],
+        "integrationHooks": [
+          "Pregúntate si tu reserva protege tu verdad o solo mantiene distancia.",
+          "Usa tu intensidad para transformar, no para vigilar cada posible riesgo.",
+          "Permite que la confianza se construya gradualmente sin exigir certeza total."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la profundidad, la percepción emocional y la necesidad de vivir con autenticidad. Prefieres lo verdadero a lo cómodo, incluso cuando eso exige atravesar zonas difíciles.",
+        "growthPath": "Tu crecimiento aparece cuando tu poder deja de estar al servicio de la defensa y se convierte en capacidad de entrega consciente. Transformarte no siempre implica resistir: a veces implica permitir."
+      },
+      "sagittarius": {
+        "summary": "Tu identidad se expande cuando puedes buscar sentido, explorar posibilidades y vivir con una sensación de horizonte abierto. Necesitas creer que tu vida avanza hacia algo más amplio que la rutina inmediata.",
+        "keywords": [
+          "expansión",
+          "sentido",
+          "libertad",
+          "exploración",
+          "visión"
+        ],
+        "strengths": [
+          "Aportas perspectiva cuando otros se quedan atrapados en lo pequeño.",
+          "Tienes impulso para aprender, moverte y abrir caminos de experiencia.",
+          "Tu entusiasmo puede devolver dirección y confianza al entorno."
+        ],
+        "challenges": [
+          "Puedes evitar compromisos cuando los sientes como pérdida de libertad.",
+          "A veces saltas a conclusiones amplias sin revisar detalles importantes.",
+          "Te cuesta permanecer en procesos que no muestran sentido de inmediato."
+        ],
+        "integrationHooks": [
+          "Aterriza tus grandes visiones en decisiones sostenibles.",
+          "Pregúntate si buscas libertad real o solo escape de una incomodidad.",
+          "Permite que el compromiso también sea una forma de expansión."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la búsqueda, la franqueza y el deseo de vivir con amplitud. Necesitas sentir que tus elecciones tienen sentido y que no estás encerrado en una versión pequeña de ti.",
+        "growthPath": "Tu crecimiento aparece cuando unes visión con responsabilidad. La libertad se vuelve más poderosa cuando puede sostener dirección, coherencia y presencia."
+      },
+      "capricorn": {
+        "summary": "Tu identidad se fortalece cuando puedes construir con responsabilidad, sostener metas y convertir esfuerzo en estructura real. Tu fuerza no depende del reconocimiento inmediato: aparece en tu capacidad de avanzar con madurez y dirección.",
+        "keywords": [
+          "responsabilidad",
+          "estructura",
+          "ambición madura",
+          "disciplina",
+          "solidez"
+        ],
+        "strengths": [
+          "Puedes sostener objetivos de largo plazo con seriedad y consistencia.",
+          "Tienes criterio para priorizar lo que realmente construye futuro.",
+          "Tu presencia transmite capacidad, madurez y sentido de responsabilidad."
+        ],
+        "challenges": [
+          "Puedes cargar demasiado peso sin pedir apoyo a tiempo.",
+          "A veces mides tu valor solo por logro, utilidad o rendimiento.",
+          "Te cuesta descansar sin sentir que estás perdiendo control o avance."
+        ],
+        "integrationHooks": [
+          "Revisa si tus metas expresan deseo propio o solo obligación aprendida.",
+          "Permite que la vulnerabilidad también forme parte de tu autoridad.",
+          "Construye con disciplina, pero no a costa de endurecerte emocionalmente."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la competencia, la perseverancia y la necesidad de construir algo que resista el paso del tiempo. Te reconoces cuando puedes ver progreso concreto.",
+        "growthPath": "Tu crecimiento aparece cuando tu ambición se vuelve más humana. No necesitas abandonar la excelencia; necesitas incluir descanso, apoyo y sentido emocional en lo que construyes."
+      },
+      "aquarius": {
+        "summary": "Tu identidad se activa cuando puedes pensar por cuenta propia, cuestionar lo establecido y aportar una mirada distinta. Necesitas espacio para ser fiel a tu diferencia sin quedar desconectado de lo humano.",
+        "keywords": [
+          "originalidad",
+          "independencia",
+          "visión colectiva",
+          "innovación",
+          "autenticidad"
+        ],
+        "strengths": [
+          "Ves patrones, posibilidades y soluciones que otros no consideran.",
+          "Tienes una relación natural con la independencia mental y la innovación.",
+          "Puedes aportar perspectiva social, futuro y pensamiento libre a tu entorno."
+        ],
+        "challenges": [
+          "Puedes tomar distancia emocional cuando algo se vuelve demasiado intenso.",
+          "A veces defiendes tu diferencia con rigidez, incluso cuando necesitas conexión.",
+          "Te cuesta habitar espacios donde se espera conformidad o pertenencia automática."
+        ],
+        "integrationHooks": [
+          "Pregúntate si tu distancia te da claridad o te aleja de lo que importa.",
+          "Usa tu originalidad para crear puentes, no solo para marcar diferencia.",
+          "Permite que pertenecer no signifique traicionar tu singularidad."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la libertad de pensamiento, la autenticidad y la necesidad de contribuir con una mirada propia. Te reconoces cuando puedes ser diferente sin pedir permiso.",
+        "growthPath": "Tu crecimiento aparece cuando unes independencia con presencia emocional. La visión de futuro se vuelve más potente cuando también puede tocar la realidad afectiva del presente."
+      },
+      "pisces": {
+        "summary": "Tu identidad se vuelve más clara cuando aceptas tu sensibilidad, tu imaginación y tu capacidad de percibir lo que no siempre se puede explicar. Tu fuerza aparece cuando das forma concreta a tu mundo interno sin perderte en él.",
+        "keywords": [
+          "sensibilidad",
+          "imaginación",
+          "empatía",
+          "inspiración",
+          "entrega consciente"
+        ],
+        "strengths": [
+          "Captas matices emocionales, simbólicos y humanos con gran sutileza.",
+          "Tienes una capacidad natural para acompañar, inspirar y suavizar durezas.",
+          "Puedes transformar sensibilidad en creatividad, compasión y comprensión profunda."
+        ],
+        "challenges": [
+          "Puedes absorber demasiado del entorno y perder claridad sobre tus propios límites.",
+          "A veces evitas definirte para no romper posibilidades o decepcionar a otros.",
+          "Te cuesta sostener estructura cuando tu mundo interno está saturado."
+        ],
+        "integrationHooks": [
+          "Distingue empatía de absorción emocional.",
+          "Da forma a tu intuición mediante hábitos, límites y decisiones concretas.",
+          "Recuerda que decir no también puede ser una manera de cuidar tu sensibilidad."
+        ],
+        "identityStyle": "Tu identidad se afirma desde la sensibilidad, la imaginación y la capacidad de conectar con dimensiones sutiles de la experiencia. Necesitas vivir con sentido emocional, inspiración y espacio interno.",
+        "growthPath": "Tu crecimiento aparece cuando tu apertura encuentra contención. No se trata de volverte menos sensible, sino de aprender a darle cauce, forma y protección a lo que percibes."
+      }
+    },
+    "moon": {
+      "aries": {
+        "summary": "Emocionalmente reaccionas con rapidez, intensidad y una necesidad clara de recuperar autonomía. Tu mundo interno se regula mejor cuando puedes moverte, decidir y expresar lo que sientes sin sentirte atrapado.",
+        "keywords": [
+          "impulso emocional",
+          "autonomía",
+          "franqueza",
+          "reacción rápida",
+          "vitalidad afectiva"
+        ],
+        "strengths": [
+          "Nombras con rapidez lo que te pasa y rara vez permaneces inmóvil ante el malestar.",
+          "Tienes una gran capacidad para reponerte cuando puedes actuar con libertad.",
+          "Tu honestidad emocional puede abrir conversaciones que otros evitan."
+        ],
+        "challenges": [
+          "Puedes reaccionar antes de entender completamente lo que sientes.",
+          "A veces interpretas la espera o la dependencia como amenaza a tu libertad.",
+          "Te cuesta permanecer vulnerable cuando tu primera respuesta es defenderte o avanzar."
+        ],
+        "integrationHooks": [
+          "Antes de responder desde el impulso, dale nombre a la emoción que lo activa.",
+          "Permite que pedir apoyo no se sienta como perder independencia.",
+          "Usa el movimiento para regularte, pero no para escapar de lo que necesitas sentir."
+        ],
+        "emotionalStyle": "Tus emociones tienden a aparecer de forma directa, encendida y corporal. Necesitan salida, movimiento y una sensación de agencia para no convertirse en irritación o urgencia.",
+        "emotionalNeeds": "Necesitas espacio para expresar enojo, deseo o incomodidad sin sentir que eso pone en riesgo el vínculo. Te calma saber que puedes ser honesto y seguir siendo querido.",
+        "securityNeeds": "Te da seguridad sentir que no estás atrapado, que tienes margen de decisión y que tus emociones pueden moverse sin ser controladas por otros."
+      },
+      "taurus": {
+        "summary": "Emocionalmente buscas calma, continuidad y una sensación confiable de sostén. Tu mundo interno se ordena mejor cuando el cuerpo, el ritmo y los vínculos transmiten estabilidad real.",
+        "keywords": [
+          "estabilidad emocional",
+          "calma",
+          "seguridad",
+          "sensualidad",
+          "continuidad"
+        ],
+        "strengths": [
+          "Ofreces una presencia emocional estable que puede tranquilizar a otros.",
+          "Sabes sostener procesos afectivos con paciencia y lealtad.",
+          "Tienes una relación natural con el cuidado concreto, el contacto y la constancia."
+        ],
+        "challenges": [
+          "Puedes resistirte a cambios emocionales incluso cuando ya son necesarios.",
+          "A veces confundes tranquilidad con evitar conversaciones incómodas.",
+          "Te cuesta soltar vínculos, hábitos o seguridades que ya no te nutren."
+        ],
+        "integrationHooks": [
+          "Pregúntate si lo que te calma también te permite crecer.",
+          "Practica cambios pequeños antes de que la vida tenga que empujarte con fuerza.",
+          "Usa tu necesidad de estabilidad como base, no como una forma de cerrarte."
+        ],
+        "emotionalStyle": "Sientes de manera lenta, profunda y persistente. Tus emociones necesitan tiempo para asentarse y suelen expresarse más en gestos concretos que en grandes declaraciones.",
+        "emotionalNeeds": "Necesitas lealtad, previsibilidad, contacto afectivo confiable y un entorno donde el cuidado se demuestre con hechos sostenidos.",
+        "securityNeeds": "Te da seguridad tener ritmos claros, vínculos consistentes y espacios donde tu cuerpo pueda relajarse sin estar anticipando pérdida o cambio brusco."
+      },
+      "gemini": {
+        "summary": "Emocionalmente necesitas entender, conversar y poner en palabras lo que ocurre dentro de ti. Tu mundo interno se regula mejor cuando puedes moverte mentalmente, hacer preguntas y encontrar aire en el intercambio.",
+        "keywords": [
+          "comunicación emocional",
+          "curiosidad",
+          "movilidad interna",
+          "humor",
+          "perspectiva"
+        ],
+        "strengths": [
+          "Puedes tomar distancia suficiente para observar tus emociones con claridad.",
+          "Tienes facilidad para conversar, nombrar matices y abrir posibilidades.",
+          "Tu flexibilidad emocional te ayuda a adaptarte a cambios de ambiente o vínculo."
+        ],
+        "challenges": [
+          "Puedes intelectualizar lo que sientes antes de habitarlo realmente.",
+          "A veces usas el humor o la explicación para evitar vulnerabilidad.",
+          "Te cuesta permanecer en una emoción cuando aparece otra idea, duda o estímulo."
+        ],
+        "integrationHooks": [
+          "Después de explicar lo que sientes, pregúntate dónde lo notas en el cuerpo.",
+          "Elige conversaciones que te acerquen a la emoción, no solo que la analicen.",
+          "Permite que no todo tenga una respuesta inmediata para ser válido."
+        ],
+        "emotionalStyle": "Tus emociones se mueven rápido y suelen buscar salida a través de palabras, ideas o asociaciones. Necesitas aire mental para procesar lo que sientes.",
+        "emotionalNeeds": "Necesitas diálogo, curiosidad mutua y vínculos donde puedas pensar en voz alta sin ser juzgado por cambiar de perspectiva.",
+        "securityNeeds": "Te da seguridad sentir que hay comunicación abierta, margen para preguntar y un entorno donde la emoción no queda encerrada en silencio."
+      },
+      "cancer": {
+        "summary": "Emocionalmente necesitas pertenencia, intimidad y una sensación profunda de cuidado. Tu mundo interno es sensible a los cambios de tono y se regula mejor cuando hay confianza, memoria afectiva y refugio real.",
+        "keywords": [
+          "pertenencia",
+          "cuidado",
+          "sensibilidad",
+          "memoria afectiva",
+          "refugio"
+        ],
+        "strengths": [
+          "Percibes necesidades emocionales sutiles y sabes responder con cuidado.",
+          "Construyes vínculos con memoria, lealtad y una gran capacidad de sostén.",
+          "Tienes talento para crear espacios íntimos donde otros pueden bajar la guardia."
+        ],
+        "challenges": [
+          "Puedes cerrarte o retraerte cuando sientes falta de protección.",
+          "A veces cargas emociones ajenas como si fueran responsabilidad tuya.",
+          "Te cuesta soltar heridas pasadas cuando todavía buscas reparación emocional."
+        ],
+        "integrationHooks": [
+          "Distingue entre cuidar y absorber lo que no te corresponde.",
+          "Permite que tus necesidades sean dichas antes de convertirse en resentimiento.",
+          "Construye refugio interno, no solo dependencia de un entorno seguro."
+        ],
+        "emotionalStyle": "Sientes de manera receptiva, profunda y protectora. Tus emociones suelen venir acompañadas de memoria, intuición y una fuerte necesidad de pertenecer.",
+        "emotionalNeeds": "Necesitas ternura, continuidad afectiva, confianza y vínculos donde tu sensibilidad no sea tratada como exceso.",
+        "securityNeeds": "Te da seguridad sentir hogar emocional: personas, rutinas o espacios donde puedas ser vulnerable sin tener que justificar lo que sientes."
+      },
+      "leo": {
+        "summary": "Emocionalmente necesitas sentir calor, reconocimiento y espacio para expresarte con dignidad. Tu mundo interno se ordena mejor cuando puedes vivir tus sentimientos con corazón abierto, no en pequeño.",
+        "keywords": [
+          "calidez",
+          "expresión emocional",
+          "orgullo sano",
+          "generosidad",
+          "visibilidad afectiva"
+        ],
+        "strengths": [
+          "Aportas calor emocional y una presencia afectiva que levanta el ánimo.",
+          "Tienes talento para cuidar desde la generosidad y el entusiasmo.",
+          "Cuando te sientes querido, irradias confianza y nobleza emocional."
+        ],
+        "challenges": [
+          "Puedes sentirte herido cuando no recibes validación o atención suficiente.",
+          "A veces dramatizas para que tu necesidad emocional sea vista.",
+          "Te cuesta bajar la guardia cuando sientes que tu corazón no fue valorado."
+        ],
+        "integrationHooks": [
+          "Busca espacios donde puedas expresarte sin tener que sobreactuar para ser visto.",
+          "Distingue entre necesidad legítima de afecto y dependencia de aprobación.",
+          "Recuerda que tu valor emocional no disminuye cuando nadie lo aplaude."
+        ],
+        "emotionalStyle": "Sientes con intensidad, orgullo y calidez. Tus emociones necesitan circular con vitalidad y suelen mostrarse con claridad cuando el entorno te permite estar presente de verdad.",
+        "emotionalNeeds": "Necesitas reconocimiento afectivo, lealtad emocional y vínculos donde tu corazón pueda sentirse celebrado en lugar de apenas tolerado.",
+        "securityNeeds": "Te da seguridad sentir que importas, que tu presencia deja huella y que tu entrega emocional recibe respuesta genuina."
+      },
+      "virgo": {
+        "summary": "Emocionalmente buscas orden, claridad y formas concretas de cuidar lo que importa. Tu mundo interno se regula mejor cuando puedes entender lo que ocurre, mejorar lo posible y sentir que la vida cotidiana tiene estructura.",
+        "keywords": [
+          "orden emocional",
+          "discernimiento",
+          "cuidado práctico",
+          "detalle",
+          "regulación"
+        ],
+        "strengths": [
+          "Detectas necesidades pequeñas que pueden mejorar mucho el bienestar de alguien.",
+          "Tienes capacidad para acompañar desde gestos útiles, precisos y concretos.",
+          "Puedes convertir la ansiedad emocional en organización, cuidado y mejora real."
+        ],
+        "challenges": [
+          "Puedes analizar demasiado lo que sientes y terminar desconectado de la emoción.",
+          "A veces transformas preocupación en crítica hacia ti o hacia otros.",
+          "Te cuesta descansar emocionalmente cuando sientes que algo aún no está resuelto."
+        ],
+        "integrationHooks": [
+          "Pregúntate si estás intentando entender para cuidarte o para controlar la emoción.",
+          "Permite que el desorden emocional tenga un lugar antes de corregirlo.",
+          "Practica recibir cuidado sin tener que justificarlo con utilidad."
+        ],
+        "emotionalStyle": "Tus emociones suelen procesarse a través de la observación, el análisis y la búsqueda de soluciones prácticas. Necesitas claridad para sentirte emocionalmente disponible.",
+        "emotionalNeeds": "Necesitas orden, consideración, rutinas que te sostengan y vínculos donde el cuidado también se exprese en detalles concretos.",
+        "securityNeeds": "Te da seguridad sentir que puedes anticipar, ordenar y mejorar tu entorno sin quedar atrapado en exigencia o hipercontrol."
+      },
+      "libra": {
+        "summary": "Emocionalmente necesitas armonía, reciprocidad y un clima relacional cuidado. Tu mundo interno se regula mejor cuando hay diálogo, buen trato y una sensación clara de equilibrio afectivo.",
+        "keywords": [
+          "armonía emocional",
+          "reciprocidad",
+          "diálogo",
+          "consideración",
+          "equilibrio"
+        ],
+        "strengths": [
+          "Tienes sensibilidad para cuidar el tono emocional de los vínculos.",
+          "Puedes mediar, suavizar tensiones y abrir conversaciones con tacto.",
+          "Buscas relaciones donde la belleza, la cortesía y la escucha tengan valor real."
+        ],
+        "challenges": [
+          "Puedes evitar expresar enojo para no alterar la armonía.",
+          "A veces adaptas tus emociones a lo que el vínculo parece necesitar.",
+          "Te cuesta estar en paz si sientes tensión, distancia o falta de reciprocidad."
+        ],
+        "integrationHooks": [
+          "Recuerda que una emoción incómoda también puede cuidar la relación.",
+          "Practica decir lo que necesitas antes de convertirlo en complacencia silenciosa.",
+          "No confundas equilibrio con ocultar una parte importante de ti."
+        ],
+        "emotionalStyle": "Tus emociones buscan proporción, respuesta y espejo vincular. Sueles procesar mejor lo que sientes cuando puedes conversarlo en un clima de respeto.",
+        "emotionalNeeds": "Necesitas reciprocidad, buen trato, consideración y vínculos donde tus necesidades afectivas no queden siempre subordinadas al equilibrio externo.",
+        "securityNeeds": "Te da seguridad sentir que hay diálogo disponible, acuerdos justos y una atmósfera donde el conflicto puede tratarse sin perder dignidad."
+      },
+      "scorpio": {
+        "summary": "Emocionalmente necesitas profundidad, lealtad y una sensación intensa de verdad. Tu mundo interno no se calma con respuestas superficiales: necesita confianza real, intimidad y espacio para transformar lo que duele.",
+        "keywords": [
+          "intensidad emocional",
+          "profundidad",
+          "lealtad",
+          "transformación",
+          "confianza"
+        ],
+        "strengths": [
+          "Puedes sostener emociones complejas sin negar su profundidad.",
+          "Tienes gran intuición para leer lo que no se dice explícitamente.",
+          "Cuando confías, ofreces una presencia afectiva leal, poderosa y transformadora."
+        ],
+        "challenges": [
+          "Puedes cerrarte cuando sientes amenaza, traición o exposición excesiva.",
+          "A veces intentas controlar la emoción para no sentir vulnerabilidad.",
+          "Te cuesta soltar estados intensos aunque ya no te ayuden a protegerte."
+        ],
+        "integrationHooks": [
+          "Pregúntate si tu defensa actual protege una herida real o una amenaza antigua.",
+          "Practica expresar vulnerabilidad antes de que se convierta en prueba o distancia.",
+          "Permite que la confianza sea gradual sin exigir certeza absoluta."
+        ],
+        "emotionalStyle": "Sientes con profundidad, reserva e intensidad. Tus emociones tienden a ir al fondo y necesitan procesos honestos, no explicaciones rápidas.",
+        "emotionalNeeds": "Necesitas lealtad, intimidad emocional, verdad y vínculos donde puedas mostrar zonas sensibles sin sentir que pierdes poder.",
+        "securityNeeds": "Te da seguridad saber que el vínculo resiste conversaciones difíciles, emociones intensas y momentos de transformación sin volverse superficial."
+      },
+      "sagittarius": {
+        "summary": "Emocionalmente necesitas amplitud, sentido y espacio para respirar. Tu mundo interno se regula mejor cuando puedes mirar más allá del problema inmediato y recuperar perspectiva, movimiento y confianza.",
+        "keywords": [
+          "optimismo emocional",
+          "libertad",
+          "sentido",
+          "perspectiva",
+          "movimiento"
+        ],
+        "strengths": [
+          "Puedes recuperar esperanza incluso después de momentos emocionalmente pesados.",
+          "Aportas perspectiva, humor y amplitud cuando el entorno se estrecha.",
+          "Tienes capacidad para convertir experiencias difíciles en aprendizaje vital."
+        ],
+        "challenges": [
+          "Puedes evitar emociones densas buscando una explicación positiva demasiado rápido.",
+          "A veces confundes libertad emocional con no quedarte a reparar lo necesario.",
+          "Te cuesta permanecer en vínculos o procesos que se sienten demasiado cerrados."
+        ],
+        "integrationHooks": [
+          "Permite que una emoción no tenga sentido inmediato antes de buscar aprendizaje.",
+          "Pregúntate si necesitas espacio para respirar o distancia para no sentir.",
+          "Aterriza tu confianza en acciones concretas de cuidado emocional."
+        ],
+        "emotionalStyle": "Tus emociones buscan movimiento, horizonte y significado. Necesitas sentir que lo que vives puede abrir comprensión, no solo encierro.",
+        "emotionalNeeds": "Necesitas libertad afectiva, honestidad, entusiasmo compartido y vínculos donde el crecimiento no se sienta limitado.",
+        "securityNeeds": "Te da seguridad sentir que puedes expandirte, decir la verdad y recuperar perspectiva sin que eso amenace la continuidad del vínculo."
+      },
+      "capricorn": {
+        "summary": "Emocionalmente necesitas estructura, confiabilidad y una sensación de sostén maduro. Tu mundo interno puede ser reservado, pero se estabiliza cuando hay responsabilidad afectiva, límites claros y presencia consistente.",
+        "keywords": [
+          "contención",
+          "responsabilidad emocional",
+          "estructura",
+          "madurez",
+          "confiabilidad"
+        ],
+        "strengths": [
+          "Puedes sostener emociones difíciles con templanza y sentido de responsabilidad.",
+          "Ofreces cuidado a través de compromiso, presencia y actos consistentes.",
+          "Tienes capacidad para construir seguridad emocional a largo plazo."
+        ],
+        "challenges": [
+          "Puedes exigirte fortaleza incluso cuando necesitas apoyo.",
+          "A veces te cuesta mostrar necesidad por miedo a perder control o respeto.",
+          "Puedes convertir la emoción en deber y olvidar que también necesita ternura."
+        ],
+        "integrationHooks": [
+          "Permite que pedir cuidado también sea una expresión de madurez.",
+          "Revisa si estás sosteniendo por amor o por miedo a fallar.",
+          "Incluye suavidad en tus estructuras emocionales, no solo resistencia."
+        ],
+        "emotionalStyle": "Tus emociones suelen procesarse con reserva, autocontrol y sentido práctico. No siempre muestras lo que sientes de inmediato, pero necesitas que sea tomado en serio.",
+        "emotionalNeeds": "Necesitas compromiso, respeto, estabilidad y vínculos donde la vulnerabilidad no sea vista como debilidad.",
+        "securityNeeds": "Te da seguridad contar con personas y estructuras confiables, donde las promesas se sostienen con hechos y el cuidado no depende del ánimo del momento."
+      },
+      "aquarius": {
+        "summary": "Emocionalmente necesitas espacio, perspectiva y libertad para sentir a tu manera. Tu mundo interno se regula mejor cuando puedes tomar distancia sin desconectarte del todo, y cuando tu diferencia emocional es respetada.",
+        "keywords": [
+          "distancia emocional",
+          "independencia",
+          "perspectiva",
+          "originalidad afectiva",
+          "libertad interna"
+        ],
+        "strengths": [
+          "Puedes observar emociones con claridad sin quedar totalmente absorbido por ellas.",
+          "Tienes capacidad para sostener vínculos desde respeto, libertad y mirada amplia.",
+          "Aportas soluciones distintas cuando el entorno emocional está saturado."
+        ],
+        "challenges": [
+          "Puedes parecer distante cuando en realidad estás intentando regularte.",
+          "A veces analizas la emoción desde afuera para no sentir su vulnerabilidad.",
+          "Te cuesta habitar necesidades afectivas que percibes como dependencia."
+        ],
+        "integrationHooks": [
+          "Pregúntate si tu distancia está creando claridad o aislamiento.",
+          "Permite que necesitar a otros no contradiga tu independencia.",
+          "Busca formas propias de expresar afecto sin desaparecer emocionalmente."
+        ],
+        "emotionalStyle": "Tus emociones suelen pasar por la mente, la observación y la necesidad de perspectiva. Necesitas libertad interna para entender lo que sientes sin presión invasiva.",
+        "emotionalNeeds": "Necesitas respeto por tu espacio, vínculos honestos y una forma de pertenencia que no exija uniformidad emocional.",
+        "securityNeeds": "Te da seguridad sentir que puedes ser distinto, tomar aire y mantener autonomía sin que eso sea interpretado como falta de amor."
+      },
+      "pisces": {
+        "summary": "Emocionalmente eres permeable, intuitivo y profundamente sensible a los climas que te rodean. Tu mundo interno se regula mejor cuando hay suavidad, inspiración y límites que protejan tu capacidad de empatizar.",
+        "keywords": [
+          "sensibilidad emocional",
+          "empatía",
+          "intuición",
+          "imaginación",
+          "permeabilidad"
+        ],
+        "strengths": [
+          "Captas matices emocionales que otros no saben expresar.",
+          "Tienes una gran capacidad para acompañar con compasión y delicadeza.",
+          "Puedes transformar emoción en creatividad, inspiración y comprensión profunda."
+        ],
+        "challenges": [
+          "Puedes absorber estados ajenos hasta confundirte con ellos.",
+          "A veces evitas límites por miedo a herir o abandonar a alguien.",
+          "Te cuesta distinguir intuición clara de saturación emocional."
+        ],
+        "integrationHooks": [
+          "Distingue compasión de absorción emocional.",
+          "Crea rutinas de descarga para no cargar con todo lo que percibes.",
+          "Recuerda que un límite claro también puede ser una forma amorosa de cuidado."
+        ],
+        "emotionalStyle": "Sientes de manera fluida, intuitiva y muy receptiva. Tus emociones pueden mezclarse con el entorno, por eso necesitas espacios de silencio y limpieza interna.",
+        "emotionalNeeds": "Necesitas ternura, comprensión, inspiración y vínculos donde tu sensibilidad sea cuidada sin volverte responsable de todo.",
+        "securityNeeds": "Te da seguridad tener límites amables, ambientes emocionalmente suaves y prácticas que te ayuden a volver a ti cuando absorbiste demasiado."
+      }
+    },
+    "ascendant": {
+      "aries": {
+        "summary": "Tu forma de entrar al mundo es directa, activa y difícil de ignorar. Sueles abrir espacio con decisión, presencia física y una energía que transmite iniciativa antes incluso de explicar tus intenciones.",
+        "keywords": [
+          "presencia directa",
+          "iniciativa",
+          "franqueza",
+          "movimiento",
+          "autonomía"
+        ],
+        "strengths": [
+          "Generas impulso rápidamente y puedes activar ambientes quietos o indecisos.",
+          "Transmites seguridad cuando hay que tomar una decisión o empezar algo.",
+          "Tu presencia suele sentirse honesta, vital y poco calculada."
+        ],
+        "challenges": [
+          "Puedes parecer impaciente o confrontacional aunque solo estés siendo directo.",
+          "A veces entras en situaciones sin leer del todo el ritmo del entorno.",
+          "Te cuesta suavizar tu forma de avanzar cuando otros necesitan más tiempo."
+        ],
+        "integrationHooks": [
+          "Antes de actuar, observa si el contexto necesita impulso o escucha.",
+          "Usa tu claridad para abrir caminos, no para pasar por encima de otros ritmos.",
+          "Recuerda que firmeza y sensibilidad pueden convivir en tu manera de presentarte."
+        ],
+        "outerStyle": "Te muestras con energía, espontaneidad y una disposición inmediata a actuar. Tu presencia tiende a sentirse frontal, física y orientada al movimiento.",
+        "socialStyle": "Socialmente sueles tomar la iniciativa, ir al punto y preferir interacciones claras. Te vinculas mejor cuando no tienes que fingir calma o rodeos innecesarios.",
+        "firstImpression": "Los demás pueden percibirte como alguien decidido, dinámico, valiente y algo impaciente. Sueles dejar la sensación de que sabes moverte sin esperar permiso."
+      },
+      "taurus": {
+        "summary": "Tu forma de entrar al mundo transmite calma, presencia corporal y una sensación de estabilidad. No necesitas imponerte rápido: sueles generar confianza a través de consistencia, buen gusto y una energía serena.",
+        "keywords": [
+          "calma",
+          "presencia estable",
+          "sensualidad",
+          "confiabilidad",
+          "naturalidad"
+        ],
+        "strengths": [
+          "Transmites tranquilidad y una sensación concreta de seguridad.",
+          "Tu presencia suele ayudar a bajar la velocidad del entorno.",
+          "Tienes una forma natural de hacer que lo simple se sienta valioso y cuidado."
+        ],
+        "challenges": [
+          "Puedes parecer más cerrado o inmóvil de lo que realmente estás.",
+          "A veces tardas en responder a cambios externos aunque ya los hayas registrado.",
+          "Te cuesta entrar en ambientes caóticos o demasiado demandantes sin protegerte."
+        ],
+        "integrationHooks": [
+          "Permite que tu calma no se convierta en resistencia automática.",
+          "Usa tu presencia estable para crear confianza, pero mantente disponible al cambio.",
+          "Recuerda que moverte con lentitud no significa quedarte detenido."
+        ],
+        "outerStyle": "Te muestras con sobriedad, tacto y una presencia que suele sentirse física, firme y agradable. Hay algo en tu manera de estar que busca comodidad, calidad y continuidad.",
+        "socialStyle": "Socialmente prefieres construir confianza poco a poco. Te vinculas desde la constancia, el buen trato y una actitud que valora lo concreto por encima de la exageración.",
+        "firstImpression": "Los demás pueden percibirte como alguien tranquilo, confiable, reservado y sensorialmente presente. Sueles dar una impresión de estabilidad y criterio."
+      },
+      "gemini": {
+        "summary": "Tu forma de entrar al mundo es curiosa, ágil y conectiva. Sueles abrir puertas a través de la palabra, la observación rápida y una capacidad natural para leer señales, hacer preguntas y generar intercambio.",
+        "keywords": [
+          "curiosidad",
+          "comunicación",
+          "agilidad social",
+          "adaptabilidad",
+          "observación"
+        ],
+        "strengths": [
+          "Inicias conversaciones con facilidad y haces que el ambiente se vuelva más liviano.",
+          "Te adaptas rápido a personas, tonos y contextos diferentes.",
+          "Tienes talento para conectar información, ideas y personas."
+        ],
+        "challenges": [
+          "Puedes parecer disperso si cambias de foco demasiado rápido.",
+          "A veces mantienes todo en tono mental para no mostrar vulnerabilidad.",
+          "Te cuesta permanecer en interacciones demasiado rígidas, lentas o silenciosas."
+        ],
+        "integrationHooks": [
+          "Usa tu agilidad para escuchar mejor, no solo para responder más rápido.",
+          "Permite pausas en la conversación sin sentir que debes llenarlas.",
+          "Elige profundidad cuando notes que la curiosidad se está volviendo evasión."
+        ],
+        "outerStyle": "Te muestras despierto, expresivo y atento a lo que cambia en el entorno. Tu presencia suele sentirse móvil, juvenil y mentalmente disponible.",
+        "socialStyle": "Socialmente te acercas desde la conversación, el humor, la pregunta y la flexibilidad. Te resulta natural circular entre grupos o temas distintos.",
+        "firstImpression": "Los demás pueden percibirte como alguien inteligente, inquieto, conversador y adaptable. Sueles dejar la sensación de que siempre estás captando algo más."
+      },
+      "cancer": {
+        "summary": "Tu forma de entrar al mundo es sensible, protectora y atenta al clima emocional. Puedes parecer reservado al inicio, pero tu presencia suele transmitir cuidado, receptividad y una lectura fina de lo que el entorno necesita.",
+        "keywords": [
+          "sensibilidad",
+          "protección",
+          "receptividad",
+          "cuidado",
+          "intimidad"
+        ],
+        "strengths": [
+          "Lees rápidamente el tono emocional de personas y espacios.",
+          "Generas confianza cuando el entorno necesita cuidado, escucha o contención.",
+          "Tienes una presencia que puede hacer que otros se sientan recibidos."
+        ],
+        "challenges": [
+          "Puedes retraerte si el ambiente se siente frío, invasivo o poco seguro.",
+          "A veces proteges tanto tu sensibilidad que pareces inaccesible.",
+          "Te cuesta exponerte en contextos donde todavía no sientes confianza."
+        ],
+        "integrationHooks": [
+          "Permite que tu cautela te cuide sin aislarte de nuevas experiencias.",
+          "No asumas que debes contener emocionalmente a todos para pertenecer.",
+          "Muestra tu sensibilidad de forma gradual, sin convertirla en armadura."
+        ],
+        "outerStyle": "Te muestras receptivo, cuidadoso y emocionalmente atento. Tu presencia puede alternar entre suavidad visible y una reserva protectora.",
+        "socialStyle": "Socialmente tiendes a observar primero y acercarte cuando sientes confianza. Prefieres vínculos con calidez, memoria y señales claras de cuidado.",
+        "firstImpression": "Los demás pueden percibirte como alguien sensible, protector, amable y algo reservado. Sueles dar una impresión de profundidad emocional contenida."
+      },
+      "leo": {
+        "summary": "Tu forma de entrar al mundo tiene calidez, presencia y una necesidad natural de expresarse con dignidad. Sueles llamar la atención no solo por mostrarse, sino por aportar vitalidad y una energía que invita a mirar hacia el corazón de la escena.",
+        "keywords": [
+          "presencia",
+          "calidez",
+          "expresión",
+          "confianza",
+          "carisma"
+        ],
+        "strengths": [
+          "Generas entusiasmo y puedes elevar el ánimo del entorno.",
+          "Tu presencia suele transmitir seguridad, creatividad y generosidad.",
+          "Tienes talento para ocupar espacio de una manera inspiradora."
+        ],
+        "challenges": [
+          "Puedes sentirte herido si tu presencia no recibe respuesta o reconocimiento.",
+          "A veces proteges tu orgullo con una imagen más fuerte de lo que sientes.",
+          "Te cuesta pasar desapercibido cuando necesitas sentir que tu aporte importa."
+        ],
+        "integrationHooks": [
+          "Permite que tu presencia brille sin depender siempre de ser validada.",
+          "Usa tu carisma para incluir, no solo para destacarte.",
+          "Recuerda que la autenticidad conmueve más que una imagen impecable."
+        ],
+        "outerStyle": "Te muestras cálido, expresivo y con una presencia naturalmente visible. Hay algo en tu manera de estar que busca dignidad, creatividad y brillo personal.",
+        "socialStyle": "Socialmente sueles conectar desde la generosidad, el humor y el entusiasmo. Te resulta natural aportar color, gesto y dramatismo a la interacción.",
+        "firstImpression": "Los demás pueden percibirte como alguien carismático, orgulloso, luminoso y seguro. Sueles dejar una impresión fuerte incluso cuando no intentas dominar el espacio."
+      },
+      "virgo": {
+        "summary": "Tu forma de entrar al mundo es observadora, precisa y orientada a entender cómo mejorar lo que ocurre. Sueles presentarte con discreción inteligente, atención al detalle y una disposición práctica para ser útil.",
+        "keywords": [
+          "observación",
+          "precisión",
+          "discreción",
+          "utilidad",
+          "criterio"
+        ],
+        "strengths": [
+          "Detectas rápidamente detalles que otros no notan.",
+          "Tu presencia puede aportar orden, claridad y sentido práctico.",
+          "Generas confianza cuando el entorno necesita cuidado, método o mejora."
+        ],
+        "challenges": [
+          "Puedes parecer crítico o distante cuando en realidad estás observando.",
+          "A veces te cuesta entrar con soltura si no sientes que tienes todo bajo control.",
+          "Puedes exigirte una presentación demasiado correcta antes de permitirte participar."
+        ],
+        "integrationHooks": [
+          "Permite que tu presencia no tenga que ser perfecta para ser valiosa.",
+          "Usa tu capacidad de observar sin convertir cada detalle en corrección.",
+          "Practica mostrarte mientras aprendes, no solo cuando ya ordenaste todo."
+        ],
+        "outerStyle": "Te muestras cuidadoso, atento y con una presencia sobria. Tu forma externa suele transmitir inteligencia práctica, limpieza de intención y sensibilidad al detalle.",
+        "socialStyle": "Socialmente prefieres leer el ambiente antes de intervenir. Te vinculas desde la ayuda concreta, la observación fina y una comunicación que busca ser precisa.",
+        "firstImpression": "Los demás pueden percibirte como alguien reservado, competente, atento y algo exigente. Sueles dar la impresión de notar más de lo que dices."
+      },
+      "libra": {
+        "summary": "Tu forma de entrar al mundo privilegia la armonía, la lectura del otro y una presentación cuidada. Sueles abrir puertas a través del equilibrio, el tono y la capacidad de generar una atmósfera amable.",
+        "keywords": [
+          "armonía",
+          "diplomacia",
+          "estilo social",
+          "equilibrio",
+          "vinculación"
+        ],
+        "strengths": [
+          "Lees rápidamente las dinámicas interpersonales.",
+          "Generas confianza a través del tacto y la cortesía.",
+          "Tienes facilidad para mediar, conectar y suavizar tensiones."
+        ],
+        "challenges": [
+          "Puedes postergar decisiones para evitar incomodar.",
+          "A veces adaptas demasiado tu forma de estar para sostener armonía.",
+          "Te cuesta tolerar escenarios donde no hay reciprocidad ni buen tono."
+        ],
+        "integrationHooks": [
+          "Usa tu diplomacia sin renunciar a tu punto de vista.",
+          "Practica decisiones pequeñas y firmes cuando notes exceso de vacilación.",
+          "Recuerda que armonía no significa siempre agradar."
+        ],
+        "outerStyle": "Te muestras con elegancia relacional, sensibilidad estética y una tendencia natural a considerar el impacto de tu presencia en el entorno.",
+        "socialStyle": "Socialmente sueles vincularte desde el diálogo, el equilibrio y la búsqueda de acuerdos. Tienes talento para abrir conversación sin imponerte.",
+        "firstImpression": "Sueles dar una primera impresión agradable, refinada y atenta a los matices. Los demás pueden percibirte como alguien amable, medido y fácil de tratar."
+      },
+      "scorpio": {
+        "summary": "Tu forma de entrar al mundo es intensa, reservada y perceptiva. No sueles mostrarlo todo de inmediato: tu presencia tiende a observar, medir profundidad y generar una sensación de fuerza contenida.",
+        "keywords": [
+          "intensidad",
+          "reserva",
+          "magnetismo",
+          "percepción",
+          "profundidad"
+        ],
+        "strengths": [
+          "Lees tensiones, motivaciones y señales ocultas con gran precisión.",
+          "Tu presencia puede transmitir poder, concentración y profundidad emocional.",
+          "Generas vínculos fuertes cuando existe confianza real."
+        ],
+        "challenges": [
+          "Puedes parecer inaccesible o desconfiado antes de que otros te conozcan.",
+          "A veces observas tanto que retrasas la apertura o el intercambio.",
+          "Te cuesta entrar en ambientes superficiales sin protegerte o tomar distancia."
+        ],
+        "integrationHooks": [
+          "Permite que tu reserva sea una elección, no una defensa automática.",
+          "Usa tu percepción para conectar con más verdad, no solo para detectar riesgos.",
+          "Practica mostrar pequeñas señales de apertura cuando el entorno sí es seguro."
+        ],
+        "outerStyle": "Te muestras con intensidad, control y una presencia que suele sentirse magnética. Tu estilo externo puede ser sobrio, profundo y difícil de leer por completo.",
+        "socialStyle": "Socialmente prefieres interacciones significativas antes que exposición casual. Sueles observar primero y acercarte cuando percibes autenticidad.",
+        "firstImpression": "Los demás pueden percibirte como alguien intenso, reservado, penetrante y poderoso. Sueles dejar una sensación de misterio o profundidad incluso en encuentros breves."
+      },
+      "sagittarius": {
+        "summary": "Tu forma de entrar al mundo es amplia, franca y orientada a explorar. Sueles presentarte con una energía abierta, directa y vital, como si cada situación pudiera convertirse en experiencia, aprendizaje o aventura.",
+        "keywords": [
+          "apertura",
+          "franqueza",
+          "expansión",
+          "entusiasmo",
+          "libertad"
+        ],
+        "strengths": [
+          "Aportas perspectiva, humor y confianza en contextos cerrados o tensos.",
+          "Tu presencia puede hacer que otros miren más allá del problema inmediato.",
+          "Tienes facilidad para iniciar experiencias, conversaciones y movimientos nuevos."
+        ],
+        "challenges": [
+          "Puedes parecer demasiado directo cuando otros esperan más tacto.",
+          "A veces pasas por alto detalles importantes por mirar el panorama amplio.",
+          "Te cuesta permanecer en ambientes que se sienten estrechos, solemnes o repetitivos."
+        ],
+        "integrationHooks": [
+          "Aterriza tu entusiasmo para que también considere tiempos, detalles y límites.",
+          "Usa tu franqueza con generosidad, no solo con velocidad.",
+          "Recuerda que la libertad también puede expresarse en presencia y compromiso."
+        ],
+        "outerStyle": "Te muestras abierto, expresivo y con una presencia que busca movimiento. Tu estilo externo suele transmitir amplitud, confianza y deseo de ir más allá.",
+        "socialStyle": "Socialmente conectas desde la honestidad, el humor, las historias y la búsqueda de sentido. Te atraen interacciones donde haya aprendizaje o expansión.",
+        "firstImpression": "Los demás pueden percibirte como alguien espontáneo, optimista, franco y aventurero. Sueles dar la sensación de abrir ventanas en el ambiente."
+      },
+      "capricorn": {
+        "summary": "Tu forma de entrar al mundo es sobria, contenida y orientada a transmitir solidez. Sueles presentarte con una energía responsable, capaz y medida, como si primero observaras qué requiere la situación antes de ocupar lugar.",
+        "keywords": [
+          "sobriedad",
+          "responsabilidad",
+          "autoridad",
+          "estructura",
+          "madurez"
+        ],
+        "strengths": [
+          "Transmites confiabilidad y capacidad para sostener responsabilidades.",
+          "Tu presencia puede ordenar situaciones dispersas o poco claras.",
+          "Tienes facilidad para proyectar seriedad, criterio y dirección."
+        ],
+        "challenges": [
+          "Puedes parecer distante o demasiado serio antes de mostrar calidez.",
+          "A veces te exiges control incluso en contextos donde podrías relajarte.",
+          "Te cuesta entrar con espontaneidad si sientes que aún debes demostrar competencia."
+        ],
+        "integrationHooks": [
+          "Permite que tu autoridad incluya cercanía, no solo autocontrol.",
+          "No conviertas cada primer encuentro en una prueba de suficiencia.",
+          "Recuerda que mostrar humanidad también puede fortalecer tu presencia."
+        ],
+        "outerStyle": "Te muestras reservado, estructurado y con una presencia que busca ser confiable. Tu estilo externo tiende a ser sobrio, funcional y orientado a calidad o permanencia.",
+        "socialStyle": "Socialmente sueles acercarte con cautela, respeto y sentido de responsabilidad. Prefieres vínculos que se construyen con tiempo, coherencia y hechos.",
+        "firstImpression": "Los demás pueden percibirte como alguien serio, competente, prudente y con autoridad natural. Sueles dejar una impresión de madurez y autocontrol."
+      },
+      "aquarius": {
+        "summary": "Tu forma de entrar al mundo es independiente, observadora y ligeramente distinta al tono dominante del entorno. Sueles presentarte con una mezcla de distancia, originalidad y mirada amplia que invita a pensar diferente.",
+        "keywords": [
+          "originalidad",
+          "independencia",
+          "distancia",
+          "visión",
+          "singularidad"
+        ],
+        "strengths": [
+          "Aportas perspectiva fresca y soluciones no convencionales.",
+          "Tu presencia puede liberar al entorno de expectativas demasiado rígidas.",
+          "Tienes facilidad para vincularte desde ideas, causas o intereses compartidos."
+        ],
+        "challenges": [
+          "Puedes parecer distante cuando en realidad estás observando o tomando perspectiva.",
+          "A veces marcas diferencia antes de permitir cercanía.",
+          "Te cuesta adaptarte a ambientes donde se espera conformidad social automática."
+        ],
+        "integrationHooks": [
+          "Usa tu diferencia para abrir posibilidades, no solo para proteger distancia.",
+          "Permite que la cercanía no amenace tu independencia.",
+          "Recuerda que pertenecer no exige borrar lo singular de tu presencia."
+        ],
+        "outerStyle": "Te muestras original, mentalmente libre y con una presencia que no siempre sigue códigos esperados. Tu estilo externo puede sentirse moderno, particular o difícil de clasificar.",
+        "socialStyle": "Socialmente conectas mejor desde ideas, afinidades y espacios donde hay libertad. Prefieres vínculos que respeten autonomía y autenticidad.",
+        "firstImpression": "Los demás pueden percibirte como alguien distinto, inteligente, independiente y algo impredecible. Sueles dejar la sensación de tener una mirada propia."
+      },
+      "pisces": {
+        "summary": "Tu forma de entrar al mundo es sensible, permeable y difícil de reducir a una sola impresión. Sueles captar el clima del entorno antes de actuar, y tu presencia puede sentirse suave, imaginativa o profundamente empática.",
+        "keywords": [
+          "sensibilidad",
+          "empatía",
+          "suavidad",
+          "intuición",
+          "permeabilidad"
+        ],
+        "strengths": [
+          "Lees matices emocionales y atmosféricos con gran sutileza.",
+          "Tu presencia puede suavizar tensiones y abrir espacios de comprensión.",
+          "Tienes una forma natural de adaptarte a personas y ambientes diversos."
+        ],
+        "challenges": [
+          "Puedes absorber demasiado del entorno y perder claridad sobre tu propia posición.",
+          "A veces pareces indefinido porque estás sintiendo muchas capas a la vez.",
+          "Te cuesta sostener límites externos cuando quieres cuidar la sensibilidad del ambiente."
+        ],
+        "integrationHooks": [
+          "Antes de adaptarte, pregúntate qué necesitas tú en ese espacio.",
+          "Usa tu empatía sin abandonar tus límites.",
+          "Permite que tu presencia sea suave sin volverse invisible."
+        ],
+        "outerStyle": "Te muestras receptivo, sutil y emocionalmente poroso. Tu estilo externo puede cambiar según el ambiente, pero suele transmitir sensibilidad e imaginación.",
+        "socialStyle": "Socialmente te vinculas desde la empatía, la intuición y una capacidad de acompañar sin imponer. Prefieres ambientes donde haya humanidad, suavidad y aceptación.",
+        "firstImpression": "Los demás pueden percibirte como alguien sensible, amable, soñador o enigmático. Sueles dejar una impresión de apertura emocional y profundidad sutil."
+      }
+    },
+    "mercury": {
+      "aries": {
+        "summary": "Tu mente funciona con rapidez, foco y una necesidad fuerte de ir al punto. Piensas mejor cuando puedes avanzar, nombrar lo esencial y evitar rodeos innecesarios.",
+        "keywords": [
+          "agilidad mental",
+          "franqueza",
+          "decisión",
+          "iniciativa intelectual",
+          "claridad"
+        ],
+        "strengths": [
+          "Captas rápido el núcleo de un problema.",
+          "Te animas a decir lo que otros dudan en formular.",
+          "Piensas con iniciativa y sueles abrir conversaciones o ideas nuevas."
+        ],
+        "challenges": [
+          "Puedes responder antes de haber desarrollado completamente una idea.",
+          "A veces tu tono resulta más brusco de lo que pretendes.",
+          "Te impacienta la lentitud mental, la ambigüedad o la sobreexplicación."
+        ],
+        "integrationHooks": [
+          "Antes de responder, pregúntate si claridad y velocidad están yendo juntas.",
+          "Practica sostener una idea unos segundos más antes de lanzarla.",
+          "Usa tu franqueza como herramienta de precisión, no como descarga."
+        ],
+        "thinkingStyle": "Piensas de forma directa, rápida y orientada a la acción. Tu mente detecta antes el impulso y la solución inicial que la complejidad total del proceso.",
+        "communicationStyle": "Te comunicas con franqueza, energía y poco rodeo. Cuando estás alineado, tu palabra abre camino; cuando no, puede sonar impaciente o cortante.",
+        "learningStyle": "Aprendes mejor con desafío, movimiento y margen para probar por ti mismo. La experiencia activa te enseña más que la teoría demasiado demorada."
+      },
+      "taurus": {
+        "summary": "Tu mente necesita tiempo, evidencia y contacto con lo concreto para confiar en una idea. Piensas mejor cuando puedes bajar la información al cuerpo, al ritmo y a resultados verificables.",
+        "keywords": [
+          "pensamiento práctico",
+          "criterio",
+          "constancia mental",
+          "realismo",
+          "concreción"
+        ],
+        "strengths": [
+          "Desarrollas ideas con paciencia y sentido común.",
+          "Tienes facilidad para traducir conceptos en decisiones prácticas.",
+          "Tu palabra puede transmitir calma, seguridad y consistencia."
+        ],
+        "challenges": [
+          "Puedes tardar en cambiar de opinión aunque la información ya haya cambiado.",
+          "A veces te cierras ante ideas que todavía no tienen una utilidad evidente.",
+          "Te cuesta pensar con agilidad en entornos demasiado veloces o inestables."
+        ],
+        "integrationHooks": [
+          "Permite que una idea nueva exista antes de exigirle utilidad inmediata.",
+          "Revisa si tu criterio está siendo firme o simplemente resistente.",
+          "Usa tu estabilidad mental para profundizar, no para quedarte fijo."
+        ],
+        "thinkingStyle": "Piensas de manera pausada, sensorial y orientada a lo comprobable. Tu mente necesita sustancia, continuidad y una sensación de realidad concreta.",
+        "communicationStyle": "Te comunicas con calma, claridad y peso. Prefieres hablar cuando tienes algo consistente que decir, y tus palabras suelen buscar seguridad más que impacto.",
+        "learningStyle": "Aprendes mejor con repetición, experiencia directa y aplicaciones prácticas. La teoría cobra valor cuando puedes tocar sus resultados."
+      },
+      "gemini": {
+        "summary": "Tu mente se alimenta de variedad, intercambio y movimiento. Piensas mejor cuando puedes conectar datos, conversar posibilidades y mantener abierta la curiosidad sin quedar atrapado en una sola explicación.",
+        "keywords": [
+          "curiosidad mental",
+          "versatilidad",
+          "comunicación",
+          "asociación",
+          "rapidez"
+        ],
+        "strengths": [
+          "Conectas ideas, personas y perspectivas con gran agilidad.",
+          "Aprendes rápido cuando hay estímulo, conversación y diversidad.",
+          "Tienes facilidad para traducir información compleja a un lenguaje accesible."
+        ],
+        "challenges": [
+          "Puedes dispersarte si todo parece igual de interesante.",
+          "A veces acumulas información sin convertirla en criterio propio.",
+          "Te cuesta permanecer en un tema cuando aparece una posibilidad más estimulante."
+        ],
+        "integrationHooks": [
+          "Elige qué preguntas merecen profundidad y no solo velocidad.",
+          "Distingue entre estar informado y haber comprendido realmente.",
+          "Usa tu agilidad mental para crear puentes, no para escapar del foco."
+        ],
+        "thinkingStyle": "Piensas de forma asociativa, rápida y flexible. Tu mente detecta relaciones, matices y alternativas casi en simultáneo.",
+        "communicationStyle": "Te comunicas con viveza, humor y facilidad para adaptar el tono. La conversación es una herramienta de exploración, no solo de transmisión.",
+        "learningStyle": "Aprendes mejor con variedad, diálogo, lectura, ejemplos breves y posibilidad de conectar temas distintos."
+      },
+      "cancer": {
+        "summary": "Tu mente está conectada con la memoria emocional, el contexto y el tono humano de lo que se dice. Piensas mejor cuando la información no está separada de la sensibilidad y de la historia que la rodea.",
+        "keywords": [
+          "memoria",
+          "intuición mental",
+          "sensibilidad comunicativa",
+          "contexto",
+          "cuidado"
+        ],
+        "strengths": [
+          "Recuerdas detalles emocionales que ayudan a comprender mejor a las personas.",
+          "Tienes una comunicación cuidadosa cuando el vínculo te importa.",
+          "Puedes leer el subtexto afectivo detrás de las palabras."
+        ],
+        "challenges": [
+          "Puedes tomar ciertas conversaciones de forma demasiado personal.",
+          "A veces te cuesta separar una idea actual de una herida antigua.",
+          "Puedes callar lo que piensas para proteger el clima emocional."
+        ],
+        "integrationHooks": [
+          "Pregúntate si estás respondiendo al presente o a una memoria emocional.",
+          "Permite que tu sensibilidad informe tu pensamiento sin gobernarlo por completo.",
+          "Practica decir lo que piensas antes de convertirlo en silencio defensivo."
+        ],
+        "thinkingStyle": "Piensas de forma intuitiva, contextual y sensible al clima emocional. Tu mente integra datos con memoria, cuidado y percepción relacional.",
+        "communicationStyle": "Te comunicas con cautela, ternura o reserva según el nivel de confianza. Tus palabras suelen buscar protección, cercanía o reparación.",
+        "learningStyle": "Aprendes mejor cuando la información tiene historia, sentido emocional y un ambiente seguro para procesarla."
+      },
+      "leo": {
+        "summary": "Tu mente se expresa con color, convicción y necesidad de imprimir una voz propia. Piensas mejor cuando puedes crear, narrar y comunicar desde entusiasmo real, no desde neutralidad vacía.",
+        "keywords": [
+          "expresión",
+          "creatividad mental",
+          "convicción",
+          "narrativa",
+          "confianza"
+        ],
+        "strengths": [
+          "Comunicas ideas con presencia, calidez y capacidad de inspirar.",
+          "Tienes talento para dar forma memorable a lo que piensas.",
+          "Tu palabra puede animar, liderar y devolver confianza."
+        ],
+        "challenges": [
+          "Puedes aferrarte a una idea si sientes que cuestionarla toca tu orgullo.",
+          "A veces necesitas ser escuchado antes de estar listo para escuchar.",
+          "Te cuesta comunicar desde vulnerabilidad cuando quieres sostener una imagen fuerte."
+        ],
+        "integrationHooks": [
+          "Permite que una corrección no se sienta como pérdida de valor personal.",
+          "Usa tu expresividad para iluminar ideas, no para imponerte.",
+          "Escucha con la misma presencia con que deseas ser escuchado."
+        ],
+        "thinkingStyle": "Piensas de manera creativa, expresiva y orientada a sentido personal. Tu mente busca una forma propia, cálida y reconocible.",
+        "communicationStyle": "Te comunicas con énfasis, dramatismo sano y deseo de conectar desde el corazón. Cuando estás alineado, tu voz transmite seguridad e inspiración.",
+        "learningStyle": "Aprendes mejor cuando puedes involucrarte creativamente, participar, enseñar o encontrar una conexión personal con el tema."
+      },
+      "virgo": {
+        "summary": "Tu mente funciona con precisión, discernimiento y deseo de mejorar lo que observa. Piensas mejor cuando puedes ordenar información, detectar errores útiles y convertir complejidad en pasos claros.",
+        "keywords": [
+          "precisión",
+          "análisis",
+          "discernimiento",
+          "método",
+          "mejora"
+        ],
+        "strengths": [
+          "Detectas inconsistencias, detalles y oportunidades de mejora.",
+          "Tienes facilidad para organizar procesos y explicar con claridad práctica.",
+          "Tu criterio puede volver más eficiente lo que parecía confuso."
+        ],
+        "challenges": [
+          "Puedes quedar atrapado en el detalle y perder la visión amplia.",
+          "A veces conviertes el pensamiento en autocrítica o exigencia.",
+          "Te cuesta soltar una idea hasta sentir que está perfectamente formulada."
+        ],
+        "integrationHooks": [
+          "Pregúntate si el análisis está aclarando o aumentando ansiedad.",
+          "Permite que una idea sea útil antes de exigirle perfección.",
+          "Usa tu precisión para servir al proceso, no para detenerlo."
+        ],
+        "thinkingStyle": "Piensas de forma analítica, ordenada y orientada a mejorar. Tu mente encuentra sentido cuando puede clasificar, revisar y optimizar.",
+        "communicationStyle": "Te comunicas con detalle, cuidado y búsqueda de exactitud. Puedes ser muy claro cuando no dejas que la exigencia endurezca el tono.",
+        "learningStyle": "Aprendes mejor con método, práctica, ejemplos bien estructurados y posibilidad de corregir sobre la marcha."
+      },
+      "libra": {
+        "summary": "Tu mente busca equilibrio, proporción y comprensión de distintas perspectivas. Piensas mejor cuando puedes comparar opciones, dialogar y encontrar una forma justa de nombrar lo que ocurre.",
+        "keywords": [
+          "equilibrio mental",
+          "diálogo",
+          "criterio",
+          "diplomacia",
+          "perspectiva"
+        ],
+        "strengths": [
+          "Consideras varios puntos de vista antes de formar una opinión.",
+          "Tienes talento para suavizar conversaciones difíciles sin vaciarlas de contenido.",
+          "Tu palabra puede crear acuerdos, puentes y sentido de justicia."
+        ],
+        "challenges": [
+          "Puedes dudar demasiado cuando quieres encontrar la respuesta más equilibrada.",
+          "A veces suavizas tu opinión hasta volverla menos clara.",
+          "Te cuesta sostener una postura si anticipas desacuerdo o tensión."
+        ],
+        "integrationHooks": [
+          "Practica decidir aunque todavía existan matices pendientes.",
+          "No confundas diplomacia con diluir tu pensamiento.",
+          "Usa tu capacidad de escuchar sin abandonar tu propio criterio."
+        ],
+        "thinkingStyle": "Piensas de forma comparativa, relacional y estética. Tu mente evalúa proporciones, consecuencias vinculares y calidad del intercambio.",
+        "communicationStyle": "Te comunicas con tacto, elegancia y búsqueda de acuerdo. Cuando estás centrado, puedes decir verdades difíciles sin perder respeto.",
+        "learningStyle": "Aprendes mejor a través del diálogo, el contraste de ideas y entornos donde haya apertura para matizar."
+      },
+      "scorpio": {
+        "summary": "Tu mente busca profundidad, verdad y capas ocultas de significado. No te satisface una explicación superficial: piensas mejor cuando puedes investigar, conectar señales y llegar al núcleo de lo que no se dice.",
+        "keywords": [
+          "profundidad mental",
+          "investigación",
+          "intuición",
+          "intensidad",
+          "verdad"
+        ],
+        "strengths": [
+          "Lees subtextos, patrones y motivaciones con gran precisión.",
+          "Tienes capacidad para investigar temas complejos sin quedarte en la superficie.",
+          "Tu palabra puede ser transformadora cuando se usa con honestidad."
+        ],
+        "challenges": [
+          "Puedes desconfiar demasiado de explicaciones simples.",
+          "A veces usas el silencio como control o protección excesiva.",
+          "Te cuesta compartir lo que piensas antes de sentir seguridad total."
+        ],
+        "integrationHooks": [
+          "Pregúntate si estás investigando para comprender o para defenderte.",
+          "Usa tu percepción profunda con responsabilidad emocional.",
+          "Permite que algunas conversaciones sean honestas sin volverse pruebas de poder."
+        ],
+        "thinkingStyle": "Piensas de forma penetrante, estratégica e intuitiva. Tu mente busca causas profundas, contradicciones y verdades que requieren valentía.",
+        "communicationStyle": "Te comunicas con intensidad, reserva y precisión. Puedes decir poco, pero cuando hablas suele haber peso e intención.",
+        "learningStyle": "Aprendes mejor investigando, profundizando y conectando teoría con experiencia psicológica o emocional real."
+      },
+      "sagittarius": {
+        "summary": "Tu mente necesita horizonte, sentido y libertad para conectar ideas amplias. Piensas mejor cuando puedes explorar, formular hipótesis y entender cómo una experiencia encaja en una visión más grande.",
+        "keywords": [
+          "visión",
+          "sentido",
+          "franqueza",
+          "exploración mental",
+          "aprendizaje"
+        ],
+        "strengths": [
+          "Conectas experiencias con ideas amplias y aprendizajes vitales.",
+          "Comunicas con entusiasmo, honestidad y capacidad de inspirar.",
+          "Tienes facilidad para abrir perspectivas cuando otros se quedan en lo inmediato."
+        ],
+        "challenges": [
+          "Puedes simplificar detalles para sostener una idea grande.",
+          "A veces tu franqueza llega antes que tu tacto.",
+          "Te cuesta revisar una creencia si ya la convertiste en verdad personal."
+        ],
+        "integrationHooks": [
+          "Aterriza tus ideas grandes en ejemplos y compromisos concretos.",
+          "Pregúntate si tu verdad también está dejando espacio para escuchar.",
+          "Permite que aprender implique revisar creencias, no solo confirmarlas."
+        ],
+        "thinkingStyle": "Piensas de forma expansiva, filosófica y orientada a significado. Tu mente necesita conectar puntos con una dirección amplia.",
+        "communicationStyle": "Te comunicas con franqueza, entusiasmo y sentido de posibilidad. Tu palabra puede abrir caminos, aunque necesita cuidar el impacto.",
+        "learningStyle": "Aprendes mejor explorando, debatiendo, viajando mental o físicamente y conectando conocimiento con experiencia."
+      },
+      "capricorn": {
+        "summary": "Tu mente busca estructura, utilidad y dirección. Piensas mejor cuando puedes ordenar prioridades, evaluar consecuencias y construir una estrategia que resista la realidad.",
+        "keywords": [
+          "estructura mental",
+          "estrategia",
+          "responsabilidad",
+          "criterio práctico",
+          "disciplina"
+        ],
+        "strengths": [
+          "Tienes capacidad para pensar a largo plazo y priorizar con madurez.",
+          "Comunicas con seriedad, precisión y sentido de responsabilidad.",
+          "Puedes convertir ideas ambiciosas en planes realistas."
+        ],
+        "challenges": [
+          "Puedes volverte demasiado duro con ideas que aún están en etapa inicial.",
+          "A veces confundes prudencia con pesimismo.",
+          "Te cuesta mostrar dudas cuando quieres sostener autoridad o control."
+        ],
+        "integrationHooks": [
+          "Permite que una idea crezca antes de exigirle rendimiento inmediato.",
+          "Usa tu criterio para construir, no solo para descartar.",
+          "Recuerda que pensar con seriedad también puede incluir imaginación."
+        ],
+        "thinkingStyle": "Piensas de manera estratégica, responsable y orientada a resultados. Tu mente busca estructura, utilidad y una dirección clara.",
+        "communicationStyle": "Te comunicas con sobriedad, autoridad y cuidado por las consecuencias. Tus palabras suelen tener peso porque no las usas al azar.",
+        "learningStyle": "Aprendes mejor con objetivos claros, práctica sostenida y marcos que muestren para qué sirve lo aprendido."
+      },
+      "aquarius": {
+        "summary": "Tu mente opera con independencia, perspectiva y gusto por pensar fuera de los formatos habituales. Piensas mejor cuando puedes cuestionar supuestos, conectar sistemas y proponer posibilidades no evidentes.",
+        "keywords": [
+          "originalidad mental",
+          "independencia",
+          "innovación",
+          "visión sistémica",
+          "perspectiva"
+        ],
+        "strengths": [
+          "Detectas patrones colectivos, sistemas y alternativas futuras.",
+          "Tienes facilidad para pensar con libertad y desafiar ideas heredadas.",
+          "Puedes aportar soluciones originales sin quedar atrapado en la costumbre."
+        ],
+        "challenges": [
+          "Puedes tomar distancia emocional excesiva de lo que estás pensando.",
+          "A veces defiendes una idea por diferente, no necesariamente por más verdadera.",
+          "Te cuesta comunicar con calidez cuando estás muy enfocado en la abstracción."
+        ],
+        "integrationHooks": [
+          "Pregúntate cómo aterriza tu idea en personas reales, no solo en sistemas.",
+          "Usa tu originalidad para incluir, no para aislarte intelectualmente.",
+          "Permite que la emoción también sea información válida."
+        ],
+        "thinkingStyle": "Piensas de forma independiente, conceptual y orientada a posibilidades futuras. Tu mente suele ver el mapa completo antes que la reacción inmediata.",
+        "communicationStyle": "Te comunicas con perspectiva, singularidad y cierta distancia. Puedes ser muy claro cuando conectas innovación con humanidad.",
+        "learningStyle": "Aprendes mejor con libertad, experimentación, tecnología, pensamiento crítico y temas que abran futuro."
+      },
+      "pisces": {
+        "summary": "Tu mente se mueve por intuición, imágenes, atmósferas y asociaciones sutiles. Piensas mejor cuando puedes integrar sensibilidad, imaginación y comprensión no lineal sin forzar todo a una lógica rígida.",
+        "keywords": [
+          "intuición mental",
+          "imaginación",
+          "sensibilidad",
+          "pensamiento simbólico",
+          "empatía"
+        ],
+        "strengths": [
+          "Percibes matices emocionales y simbólicos que enriquecen la comprensión.",
+          "Tienes facilidad para pensar creativamente y conectar ideas por resonancia.",
+          "Tu comunicación puede ser profundamente empática e inspiradora."
+        ],
+        "challenges": [
+          "Puedes perder claridad si absorbes demasiada información del entorno.",
+          "A veces te cuesta ordenar ideas en una secuencia concreta.",
+          "Puedes evitar definiciones para no reducir una experiencia compleja."
+        ],
+        "integrationHooks": [
+          "Dale forma a tu intuición con palabras simples y pasos concretos.",
+          "Busca espacios de silencio para distinguir percepción propia de ruido externo.",
+          "Recuerda que poner límites a una idea también puede ayudarla a existir."
+        ],
+        "thinkingStyle": "Piensas de manera intuitiva, imaginativa y no lineal. Tu mente entiende por imágenes, sensaciones, metáforas y conexiones sutiles.",
+        "communicationStyle": "Te comunicas con sensibilidad, empatía y tono poético o indirecto. Cuando encuentras claridad, puedes tocar capas profundas con pocas palabras.",
+        "learningStyle": "Aprendes mejor con imágenes, historias, música, práctica intuitiva y entornos donde la sensibilidad no sea descartada."
+      }
+    },
+    "venus": {
+      "aries": {
+        "summary": "En lo afectivo te atrae la chispa, la honestidad y la sensación de deseo vivo. Tiendes a vincularte con franqueza, intensidad inicial y una necesidad clara de que el amor no apague tu autonomía.",
+        "keywords": [
+          "deseo directo",
+          "iniciativa afectiva",
+          "autonomía",
+          "pasión",
+          "franqueza"
+        ],
+        "strengths": [
+          "Tomas iniciativa para expresar interés y abrir movimiento en el vínculo.",
+          "Aportas vitalidad, entusiasmo y honestidad afectiva.",
+          "No sueles esconder lo que deseas cuando algo te importa."
+        ],
+        "challenges": [
+          "Puedes aburrirte si el vínculo pierde desafío o espontaneidad.",
+          "A veces confundes intensidad inicial con profundidad sostenida.",
+          "Te cuesta esperar ritmos afectivos más lentos que el tuyo."
+        ],
+        "integrationHooks": [
+          "Permite que el deseo también aprenda continuidad.",
+          "Distingue entre autonomía sana y huida ante la vulnerabilidad.",
+          "Usa tu honestidad afectiva con cuidado por el ritmo del otro."
+        ],
+        "relationalStyle": "Te vinculas desde la iniciativa, la franqueza y una necesidad de sentir vida en el intercambio. Prefieres relaciones donde el deseo no quede domesticado por exceso de cálculo.",
+        "attractionStyle": "Te atrae lo valiente, espontáneo, activo y directo. Sueles responder a personas que despiertan movimiento, desafío y claridad de intención.",
+        "affectiveNeeds": "Necesitas libertad, deseo explícito, honestidad y vínculos donde puedas acercarte sin sentir que pierdes independencia."
+      },
+      "taurus": {
+        "summary": "En lo afectivo valoras la estabilidad, la coherencia y el placer compartido sin estridencias. Tiendes a amar con profundidad tranquila, cuidando lo que eliges y buscando vínculos que realmente se sostengan.",
+        "keywords": [
+          "lealtad",
+          "placer",
+          "estabilidad afectiva",
+          "sensualidad",
+          "constancia vincular"
+        ],
+        "strengths": [
+          "Ofreces presencia afectiva estable y confiable.",
+          "Sabes construir intimidad a través del tiempo y los gestos concretos.",
+          "Tu forma de amar transmite calma, fidelidad y disfrute real."
+        ],
+        "challenges": [
+          "Puedes apegarte a vínculos cómodos incluso cuando ya no crecen.",
+          "A veces te cuesta mostrar cambio emocional o flexibilizar expectativas.",
+          "Tu necesidad de estabilidad puede volver más lenta la apertura a lo nuevo."
+        ],
+        "integrationHooks": [
+          "Revisa si tu apego nace del amor o del miedo a perder seguridad.",
+          "Permite pequeñas novedades dentro de tus vínculos para que no se rigidicen.",
+          "Haz del placer compartido una práctica consciente, no una rutina automática."
+        ],
+        "relationalStyle": "Te vinculas buscando seguridad, presencia y continuidad. Prefieres relaciones donde la confianza se construye en actos repetidos y no solo en intensidad emocional.",
+        "attractionStyle": "Te atrae lo genuino, lo sensorial, lo estable y lo que transmite valor real sin necesidad de exageración.",
+        "affectiveNeeds": "Necesitas lealtad, constancia, contacto afectivo confiable y una sensación clara de que el vínculo tiene base y dirección."
+      },
+      "gemini": {
+        "summary": "En lo afectivo necesitas conversación, curiosidad y una sensación de movimiento mental. El vínculo se vuelve atractivo cuando hay intercambio, humor, aprendizaje y espacio para descubrirse sin rigidez.",
+        "keywords": [
+          "conversación",
+          "curiosidad afectiva",
+          "ligereza",
+          "versatilidad",
+          "juego"
+        ],
+        "strengths": [
+          "Aportas frescura, humor y comunicación al vínculo.",
+          "Tienes facilidad para mantener viva la curiosidad entre dos personas.",
+          "Puedes adaptarte a distintas formas de afecto sin perder apertura."
+        ],
+        "challenges": [
+          "Puedes dispersarte afectivamente si necesitas estímulo constante.",
+          "A veces hablas sobre lo que sientes más de lo que lo habitas.",
+          "Te cuesta permanecer en vínculos donde no hay diálogo o renovación."
+        ],
+        "integrationHooks": [
+          "Elige conversaciones que profundicen, no solo que entretengan.",
+          "Permite que el silencio también forme parte de la intimidad.",
+          "Distingue curiosidad genuina de evitar una definición afectiva."
+        ],
+        "relationalStyle": "Te vinculas desde la palabra, el juego mental y la exploración. Necesitas que la relación tenga aire, inteligencia y posibilidad de cambio.",
+        "attractionStyle": "Te atrae lo ingenioso, ágil, conversable y mentalmente estimulante. La chispa suele empezar por una idea, una frase o una complicidad verbal.",
+        "affectiveNeeds": "Necesitas diálogo, variedad, humor y libertad para expresar matices sin que cada cambio sea leído como inestabilidad."
+      },
+      "cancer": {
+        "summary": "En lo afectivo buscas ternura, pertenencia y una intimidad que se construya con cuidado real. Tiendes a valorar vínculos donde el amor se siente como refugio, memoria y protección mutua.",
+        "keywords": [
+          "ternura",
+          "pertenencia",
+          "cuidado",
+          "intimidad",
+          "lealtad emocional"
+        ],
+        "strengths": [
+          "Cuidas con sensibilidad y atención a las necesidades emocionales.",
+          "Construyes vínculos con memoria, lealtad y profundidad afectiva.",
+          "Tienes facilidad para crear hogar emocional en la relación."
+        ],
+        "challenges": [
+          "Puedes apegarte desde el miedo a perder seguridad emocional.",
+          "A veces esperas que el otro intuya tus necesidades sin nombrarlas.",
+          "Te cuesta abrirte si antes no sientes suficiente protección."
+        ],
+        "integrationHooks": [
+          "Expresa tus necesidades antes de convertirlas en prueba silenciosa.",
+          "Distingue cuidado amoroso de sobreprotección o dependencia.",
+          "Permite que el vínculo crezca sin exigir garantías emocionales absolutas."
+        ],
+        "relationalStyle": "Te vinculas desde la sensibilidad, la protección y el deseo de construir intimidad segura. El afecto para ti necesita raíz emocional.",
+        "attractionStyle": "Te atrae lo cálido, familiar, tierno y emocionalmente disponible. Sueles valorar personas que transmiten cuidado y continuidad.",
+        "affectiveNeeds": "Necesitas seguridad emocional, ternura, lealtad y señales claras de que el vínculo puede ser refugio sin volverse encierro."
+      },
+      "leo": {
+        "summary": "En lo afectivo necesitas calidez, expresión y una sensación de ser elegido con entusiasmo. Tu forma de amar busca generosidad, orgullo sano y vínculos donde el corazón pueda mostrarse sin achicarse.",
+        "keywords": [
+          "calidez afectiva",
+          "expresión",
+          "generosidad",
+          "romance",
+          "reconocimiento"
+        ],
+        "strengths": [
+          "Amas con presencia, entusiasmo y capacidad de celebrar al otro.",
+          "Tienes talento para hacer que el vínculo se sienta especial.",
+          "Tu afecto puede levantar autoestima, ánimo y deseo de vivir."
+        ],
+        "challenges": [
+          "Puedes sentirte herido si no recibes atención o valoración visible.",
+          "A veces conviertes el orgullo en barrera ante la vulnerabilidad.",
+          "Te cuesta sostener vínculos donde tu entrega no parece reconocida."
+        ],
+        "integrationHooks": [
+          "Distingue ser valorado de necesitar confirmación constante.",
+          "Permite que el amor incluya momentos simples, no solo grandes gestos.",
+          "Usa tu generosidad sin medir todo por la respuesta recibida."
+        ],
+        "relationalStyle": "Te vinculas desde la calidez, la lealtad y el deseo de compartir una experiencia afectiva viva. Necesitas que el amor tenga presencia y brillo.",
+        "attractionStyle": "Te atrae lo noble, expresivo, creativo y seguro de sí. Sueles responder a personas que muestran entusiasmo y autenticidad.",
+        "affectiveNeeds": "Necesitas reconocimiento, lealtad, juego romántico y vínculos donde tu corazón se sienta visto, no apenas tolerado."
+      },
+      "virgo": {
+        "summary": "En lo afectivo valoras el cuidado concreto, la consideración y los gestos que mejoran la vida cotidiana. Tu forma de amar puede ser discreta, pero busca utilidad, atención real y coherencia en los detalles.",
+        "keywords": [
+          "cuidado práctico",
+          "detalle",
+          "consideración",
+          "criterio",
+          "servicio afectivo"
+        ],
+        "strengths": [
+          "Demuestras afecto con gestos útiles, precisos y atentos.",
+          "Notas necesidades pequeñas que pueden hacer gran diferencia.",
+          "Construyes confianza a través de coherencia, cuidado y mejora cotidiana."
+        ],
+        "challenges": [
+          "Puedes expresar amor corrigiendo, incluso cuando el otro necesita ternura.",
+          "A veces te cuesta recibir afecto si no lo sientes suficientemente cuidadoso.",
+          "Puedes medir demasiado el vínculo desde utilidad o rendimiento."
+        ],
+        "integrationHooks": [
+          "Permite que el afecto no siempre tenga que ser productivo.",
+          "Distingue ayudar de intentar perfeccionar al otro.",
+          "Practica recibir amor incluso cuando llega de formas imperfectas."
+        ],
+        "relationalStyle": "Te vinculas desde la atención, la presencia práctica y el deseo de cuidar bien. Prefieres relaciones donde el amor se demuestra en hechos consistentes.",
+        "attractionStyle": "Te atrae lo inteligente, cuidadoso, humilde y confiable. Sueles valorar personas que tienen criterio y respeto por los detalles.",
+        "affectiveNeeds": "Necesitas consideración, orden emocional, cuidado concreto y vínculos donde la mejora no reemplace la aceptación."
+      },
+      "libra": {
+        "summary": "En lo afectivo buscas reciprocidad, belleza y una forma de vínculo donde el trato importe tanto como el sentimiento. El amor se vuelve valioso cuando hay diálogo, equilibrio y una sensación clara de elección mutua.",
+        "keywords": [
+          "reciprocidad",
+          "armonía",
+          "belleza",
+          "diálogo",
+          "elección"
+        ],
+        "strengths": [
+          "Tienes talento para cuidar el tono, la estética y la equidad del vínculo.",
+          "Buscas acuerdos que permitan que ambas partes se sientan consideradas.",
+          "Tu afecto puede crear atmósferas amables, refinadas y colaborativas."
+        ],
+        "challenges": [
+          "Puedes evitar conflictos necesarios para no romper la armonía.",
+          "A veces adaptas demasiado tu deseo a lo que el vínculo parece pedir.",
+          "Te cuesta decidir si temes decepcionar o perder equilibrio."
+        ],
+        "integrationHooks": [
+          "Recuerda que una relación sana también puede atravesar desacuerdos.",
+          "Elige desde tu deseo, no solo desde lo que mantiene la paz.",
+          "Usa tu diplomacia para decir verdad, no para ocultarla."
+        ],
+        "relationalStyle": "Te vinculas desde el diálogo, la consideración y la búsqueda de equilibrio. Necesitas que el amor tenga forma, respeto y reciprocidad visible.",
+        "attractionStyle": "Te atrae lo elegante, armónico, atento y socialmente sensible. Sueles responder a gestos de buen trato y afinidad estética.",
+        "affectiveNeeds": "Necesitas reciprocidad, belleza cotidiana, conversación y vínculos donde tu deseo no quede diluido en la necesidad de agradar."
+      },
+      "scorpio": {
+        "summary": "En lo afectivo buscas profundidad, lealtad y una conexión que no se quede en superficie. Tu forma de amar tiende a ser intensa, reservada y transformadora cuando existe confianza real.",
+        "keywords": [
+          "profundidad afectiva",
+          "intensidad",
+          "lealtad",
+          "intimidad",
+          "transformación"
+        ],
+        "strengths": [
+          "Amas con compromiso emocional y capacidad de atravesar procesos complejos.",
+          "Tienes una percepción fina de la verdad vincular y de lo que no se dice.",
+          "Puedes crear intimidad poderosa cuando te sientes seguro."
+        ],
+        "challenges": [
+          "Puedes desconfiar o controlar cuando sientes vulnerabilidad.",
+          "A veces pruebas al vínculo para confirmar si resiste.",
+          "Te cuesta soltar intensidades que ya no nutren la relación."
+        ],
+        "integrationHooks": [
+          "Pregúntate si buscas profundidad o certeza absoluta.",
+          "Permite que la confianza se construya sin convertir el amor en prueba.",
+          "Usa tu intensidad para sanar, no para retener o vigilar."
+        ],
+        "relationalStyle": "Te vinculas desde la profundidad, la lealtad y el deseo de intimidad real. No te satisface una relación que evita las zonas verdaderas.",
+        "attractionStyle": "Te atrae lo magnético, honesto, intenso y emocionalmente complejo. Sueles responder a personas que transmiten misterio y verdad interna.",
+        "affectiveNeeds": "Necesitas confianza, entrega profunda, lealtad y un vínculo donde puedas mostrar vulnerabilidad sin perder poder personal."
+      },
+      "sagittarius": {
+        "summary": "En lo afectivo necesitas libertad, honestidad y una sensación de crecimiento compartido. El vínculo se vuelve atractivo cuando abre mundo, expande la mirada y no reduce el deseo a rutina o control.",
+        "keywords": [
+          "libertad afectiva",
+          "aventura",
+          "honestidad",
+          "expansión",
+          "entusiasmo"
+        ],
+        "strengths": [
+          "Aportas optimismo, franqueza y deseo de crecer en pareja.",
+          "Tienes facilidad para renovar el vínculo a través de experiencias y aprendizaje.",
+          "Tu afecto puede sentirse amplio, generoso y estimulante."
+        ],
+        "challenges": [
+          "Puedes evitar conversaciones densas si sientes que restringen tu libertad.",
+          "A veces prometes desde entusiasmo más de lo que puedes sostener.",
+          "Te cuesta permanecer cuando el vínculo pierde sentido o movimiento."
+        ],
+        "integrationHooks": [
+          "Distingue libertad real de evitar responsabilidad emocional.",
+          "Aterriza el entusiasmo en presencia concreta.",
+          "Permite que el compromiso también sea una forma de expandir el vínculo."
+        ],
+        "relationalStyle": "Te vinculas desde la honestidad, el entusiasmo y la necesidad de compartir horizonte. Necesitas que el amor tenga aire, aprendizaje y dirección.",
+        "attractionStyle": "Te atrae lo libre, espontáneo, inteligente y aventurero. Sueles responder a personas que amplían tu mundo.",
+        "affectiveNeeds": "Necesitas verdad, espacio, experiencias compartidas y vínculos donde crecer no se sienta incompatible con amar."
+      },
+      "capricorn": {
+        "summary": "En lo afectivo valoras compromiso, madurez y una construcción que pueda sostenerse con hechos. Tu forma de amar puede ser reservada, pero busca seriedad, respeto y una dirección clara.",
+        "keywords": [
+          "compromiso",
+          "madurez afectiva",
+          "responsabilidad",
+          "lealtad práctica",
+          "construcción"
+        ],
+        "strengths": [
+          "Construyes vínculos con paciencia, responsabilidad y visión de largo plazo.",
+          "Demuestras afecto con presencia, hechos y compromiso real.",
+          "Tienes criterio para distinguir deseo pasajero de valor duradero."
+        ],
+        "challenges": [
+          "Puedes protegerte demasiado detrás de autosuficiencia o control.",
+          "A veces te cuesta mostrar ternura antes de sentir seguridad total.",
+          "Puedes medir el vínculo por desempeño y olvidar su dimensión emocional."
+        ],
+        "integrationHooks": [
+          "Permite que la vulnerabilidad también construya confianza.",
+          "No esperes a tener todo bajo control para mostrar afecto.",
+          "Recuerda que el amor necesita estructura, pero también suavidad."
+        ],
+        "relationalStyle": "Te vinculas desde la seriedad, la lealtad y el deseo de construir algo sólido. Prefieres relaciones que muestren coherencia en el tiempo.",
+        "attractionStyle": "Te atrae lo competente, responsable, sobrio y confiable. Valoras personas con dirección, madurez y respeto por los compromisos.",
+        "affectiveNeeds": "Necesitas estabilidad, respeto, compromiso y señales claras de que el vínculo tiene estructura emocional y práctica."
+      },
+      "aquarius": {
+        "summary": "En lo afectivo necesitas libertad, amistad y una conexión que respete la singularidad de cada persona. El vínculo se vuelve valioso cuando permite autenticidad, conversación y espacio para ser distinto.",
+        "keywords": [
+          "libertad vincular",
+          "amistad",
+          "autenticidad",
+          "independencia",
+          "afinidad mental"
+        ],
+        "strengths": [
+          "Amas respetando autonomía, diferencia y espacio personal.",
+          "Tienes facilidad para construir vínculos desde amistad, ideas y causas compartidas.",
+          "Tu afecto puede liberar al otro de expectativas demasiado convencionales."
+        ],
+        "challenges": [
+          "Puedes parecer distante cuando necesitas espacio emocional.",
+          "A veces intelectualizas el vínculo para evitar vulnerabilidad.",
+          "Te cuesta sostener relaciones que demandan fusión o disponibilidad constante."
+        ],
+        "integrationHooks": [
+          "Permite que la intimidad no sea enemiga de tu independencia.",
+          "Explica tu necesidad de espacio antes de que parezca desinterés.",
+          "Usa tu libertad afectiva para crear confianza, no distancia automática."
+        ],
+        "relationalStyle": "Te vinculas desde la amistad, la afinidad mental y el respeto por la diferencia. Necesitas relaciones donde nadie tenga que perder individualidad.",
+        "attractionStyle": "Te atrae lo original, inteligente, libre y poco convencional. Sueles responder a personas que tienen mirada propia.",
+        "affectiveNeeds": "Necesitas espacio, autenticidad, amistad profunda y vínculos donde la cercanía no se convierta en posesión."
+      },
+      "pisces": {
+        "summary": "En lo afectivo buscas sensibilidad, ternura y una conexión que toque capas sutiles de la experiencia. Tu forma de amar puede ser compasiva, imaginativa y profundamente entregada cuando hay cuidado real.",
+        "keywords": [
+          "sensibilidad afectiva",
+          "empatía",
+          "romanticismo",
+          "compasión",
+          "entrega"
+        ],
+        "strengths": [
+          "Amas con delicadeza, intuición y capacidad de acompañar emocionalmente.",
+          "Tienes facilidad para percibir necesidades no dichas.",
+          "Tu afecto puede inspirar, suavizar y abrir espacios de gran ternura."
+        ],
+        "challenges": [
+          "Puedes idealizar vínculos antes de verlos con claridad.",
+          "A veces das demasiado y luego te cuesta reconocer tus propios límites.",
+          "Puedes confundir compasión con responsabilidad por salvar al otro."
+        ],
+        "integrationHooks": [
+          "Distingue amor de rescate emocional.",
+          "Cuida tus límites sin endurecer tu sensibilidad.",
+          "Permite que la realidad del vínculo importe tanto como su potencial imaginado."
+        ],
+        "relationalStyle": "Te vinculas desde la empatía, la imaginación y una apertura emocional profunda. Necesitas que el amor tenga ternura, inspiración y humanidad.",
+        "attractionStyle": "Te atrae lo sensible, artístico, espiritual en sentido humano y emocionalmente resonante. Sueles responder a la suavidad y al misterio.",
+        "affectiveNeeds": "Necesitas comprensión, cuidado delicado, límites sanos y vínculos donde tu sensibilidad sea recibida sin ser explotada."
+      }
+    },
+    "mars": {
+      "aries": {
+        "summary": "Tu energía de acción es directa, rápida y orientada a conquistar movimiento. Cuando deseas algo, necesitas sentir que puedes avanzar sin demasiadas vueltas ni permisos.",
+        "keywords": [
+          "iniciativa",
+          "impulso",
+          "coraje",
+          "competencia",
+          "acción directa"
+        ],
+        "strengths": [
+          "Actúas con decisión cuando aparece un desafío.",
+          "Tienes capacidad para iniciar antes de que otros se atrevan.",
+          "Tu deseo puede ser claro, vital y movilizador."
+        ],
+        "challenges": [
+          "Puedes reaccionar antes de medir consecuencias.",
+          "A veces conviertes la frustración en conflicto inmediato.",
+          "Te cuesta sostener procesos que requieren paciencia estratégica."
+        ],
+        "integrationHooks": [
+          "Antes de actuar, distingue urgencia de dirección real.",
+          "Canaliza tu competitividad hacia objetivos claros.",
+          "Practica pausar sin sentir que pierdes fuerza."
+        ],
+        "actionStyle": "Actúas con rapidez, frontalidad y valentía. Tu impulso se activa cuando hay desafío, deseo o una meta que requiere iniciativa.",
+        "desireStyle": "Deseas de forma directa, intensa y poco ambigua. Necesitas sentir chispa, movimiento y libertad para perseguir lo que te atrae.",
+        "conflictStyle": "En conflicto puedes ser explosivo pero breve. Prefieres confrontar de frente antes que acumular tensión o actuar de manera indirecta."
+      },
+      "taurus": {
+        "summary": "Tu energía de acción es constante, sensorial y resistente. No siempre arrancas rápido, pero cuando decides moverte puedes sostener una dirección con gran fuerza y paciencia.",
+        "keywords": [
+          "persistencia",
+          "resistencia",
+          "deseo corporal",
+          "estabilidad",
+          "determinación"
+        ],
+        "strengths": [
+          "Sostienes esfuerzos prolongados sin perder contacto con lo concreto.",
+          "Tienes gran capacidad para materializar deseos paso a paso.",
+          "Tu energía transmite firmeza y confiabilidad."
+        ],
+        "challenges": [
+          "Puedes resistirte al cambio cuando ya es necesario actuar distinto.",
+          "A veces acumulas enojo hasta que se vuelve difícil de mover con suavidad.",
+          "Te cuesta soltar una estrategia una vez que invertiste energía en ella."
+        ],
+        "integrationHooks": [
+          "Revisa si tu constancia está construyendo o solo manteniendo inercia.",
+          "Expresa frustraciones antes de que se vuelvan rigidez.",
+          "Permite que tu deseo se renueve sin perder estabilidad."
+        ],
+        "actionStyle": "Actúas con lentitud inicial, firmeza y gran capacidad de sostén. Prefieres avanzar sobre terreno real antes que gastar energía en impulsos pasajeros.",
+        "desireStyle": "Deseas con sensualidad, continuidad y apego a lo que se siente valioso. Tu deseo necesita cuerpo, placer y seguridad.",
+        "conflictStyle": "En conflicto puedes parecer tranquilo hasta que llegas a un límite muy claro. Una vez activado, te cuesta ceder rápido."
+      },
+      "gemini": {
+        "summary": "Tu energía de acción se activa a través de ideas, conversación y variedad. Te mueves mejor cuando hay estímulo mental, intercambio y posibilidad de probar caminos distintos.",
+        "keywords": [
+          "agilidad",
+          "movimiento mental",
+          "versatilidad",
+          "debate",
+          "curiosidad activa"
+        ],
+        "strengths": [
+          "Respondes rápido a cambios y puedes actuar en varios frentes.",
+          "Tienes energía para aprender haciendo y ajustar sobre la marcha.",
+          "Tu palabra puede movilizar, provocar y abrir posibilidades."
+        ],
+        "challenges": [
+          "Puedes dispersar energía en demasiadas direcciones.",
+          "A veces discutes por estímulo más que por una causa real.",
+          "Te cuesta sostener una acción cuando desaparece la novedad."
+        ],
+        "integrationHooks": [
+          "Elige qué ideas merecen convertirse en acción concreta.",
+          "Distingue debate productivo de agitación mental.",
+          "Cierra ciclos pequeños para que tu energía no quede repartida en exceso."
+        ],
+        "actionStyle": "Actúas con rapidez, flexibilidad y respuesta mental. Tu energía se mueve a través de palabras, conexiones y cambios de estrategia.",
+        "desireStyle": "Deseas variedad, conversación y estímulo. Te atrae lo que despierta curiosidad y permite juego mental.",
+        "conflictStyle": "En conflicto puedes discutir, argumentar o cambiar de ángulo con velocidad. La palabra es tu primera herramienta de defensa y ataque."
+      },
+      "cancer": {
+        "summary": "Tu energía de acción está profundamente ligada a la emoción, la protección y el sentido de pertenencia. Te movilizas con fuerza cuando algo o alguien importante necesita cuidado o defensa.",
+        "keywords": [
+          "protección",
+          "acción emocional",
+          "cuidado",
+          "defensa",
+          "pertenencia"
+        ],
+        "strengths": [
+          "Actúas con gran fuerza cuando hay algo afectivamente significativo en juego.",
+          "Tienes instinto para proteger, sostener y responder a necesidades sensibles.",
+          "Tu energía puede crear seguridad para otros."
+        ],
+        "challenges": [
+          "Puedes actuar desde heridas antiguas más que desde el presente.",
+          "A veces expresas enojo de forma indirecta si no te sientes seguro.",
+          "Te cuesta separar defensa legítima de reacción protectora excesiva."
+        ],
+        "integrationHooks": [
+          "Pregúntate qué emoción está activando tu impulso de defender.",
+          "Expresa enojo con claridad antes de que salga como retirada o resentimiento.",
+          "Usa tu fuerza protectora sin cargar con todo el mundo emocional del entorno."
+        ],
+        "actionStyle": "Actúas desde el instinto emocional, la memoria y la necesidad de proteger. Tu energía crece cuando hay vínculo, hogar o pertenencia involucrada.",
+        "desireStyle": "Deseas cercanía, cuidado y seguridad afectiva. El deseo se intensifica cuando sientes confianza y conexión emocional.",
+        "conflictStyle": "En conflicto puedes protegerte, retirarte o defender con fuerza a quienes amas. Necesitas sentir seguridad para confrontar directamente."
+      },
+      "leo": {
+        "summary": "Tu energía de acción busca expresión, orgullo sano y una forma de dejar huella. Te movilizas cuando puedes crear, liderar o poner corazón en lo que haces.",
+        "keywords": [
+          "expresión",
+          "liderazgo",
+          "creatividad activa",
+          "orgullo",
+          "coraje visible"
+        ],
+        "strengths": [
+          "Actúas con entusiasmo, presencia y capacidad de inspirar.",
+          "Tienes energía creativa para sostener proyectos con firma propia.",
+          "Puedes liderar desde el corazón cuando te sientes alineado."
+        ],
+        "challenges": [
+          "Puedes tomar la crítica como ataque a tu valor personal.",
+          "A veces necesitas reconocimiento para sostener la motivación.",
+          "Te cuesta actuar en segundo plano si sientes que tu aporte no importa."
+        ],
+        "integrationHooks": [
+          "Actúa desde lo que amas, no solo desde lo que confirma tu importancia.",
+          "Permite que la colaboración no disminuya tu brillo.",
+          "Usa tu orgullo como dignidad, no como defensa rígida."
+        ],
+        "actionStyle": "Actúas con teatralidad sana, confianza y deseo de crear impacto. Tu energía necesita corazón, propósito personal y espacio expresivo.",
+        "desireStyle": "Deseas con calidez, generosidad y necesidad de sentirte elegido. El deseo se enciende cuando hay admiración y juego creativo.",
+        "conflictStyle": "En conflicto puedes defender tu dignidad con fuerza. Te cuesta ceder si sientes que no se reconoció tu valor."
+      },
+      "virgo": {
+        "summary": "Tu energía de acción se dirige a mejorar, ordenar y resolver. Te movilizas cuando hay algo que corregir, cuidar o volver más eficiente con precisión práctica.",
+        "keywords": [
+          "eficiencia",
+          "precisión",
+          "mejora",
+          "servicio",
+          "acción práctica"
+        ],
+        "strengths": [
+          "Actúas con método, atención al detalle y sentido de utilidad.",
+          "Tienes capacidad para resolver problemas concretos con inteligencia práctica.",
+          "Tu energía mejora procesos que otros dejan desordenados."
+        ],
+        "challenges": [
+          "Puedes frustrarte cuando las cosas no cumplen tus estándares.",
+          "A veces conviertes la acción en corrección constante.",
+          "Te cuesta avanzar si todavía ves demasiadas imperfecciones."
+        ],
+        "integrationHooks": [
+          "Permite que la acción avance aunque el plan no esté perfecto.",
+          "Distingue mejora útil de control ansioso.",
+          "Usa tu precisión para cuidar, no para agotarte."
+        ],
+        "actionStyle": "Actúas con análisis, método y orientación a resultados útiles. Tu energía se enfoca en hacer que algo funcione mejor.",
+        "desireStyle": "Deseas de forma selectiva, cuidadosa y atenta al detalle. La confianza crece cuando hay respeto, higiene emocional y consideración práctica.",
+        "conflictStyle": "En conflicto puedes señalar errores, ordenar argumentos o retirarte a resolver. La crítica puede aparecer si no expresas antes la frustración."
+      },
+      "libra": {
+        "summary": "Tu energía de acción se mueve a través del equilibrio, la estrategia social y la búsqueda de acuerdos. Te movilizas mejor cuando puedes actuar sin romper innecesariamente la armonía.",
+        "keywords": [
+          "estrategia relacional",
+          "equilibrio",
+          "diplomacia activa",
+          "justicia",
+          "cooperación"
+        ],
+        "strengths": [
+          "Actúas considerando impacto, contexto y reciprocidad.",
+          "Tienes talento para resolver tensiones sin escalar conflicto.",
+          "Puedes movilizar a otros a través de encanto, criterio y negociación."
+        ],
+        "challenges": [
+          "Puedes postergar una acción para evitar incomodar.",
+          "A veces transformas enojo en complacencia o indecisión.",
+          "Te cuesta actuar con firmeza cuando alguien puede quedar insatisfecho."
+        ],
+        "integrationHooks": [
+          "Recuerda que actuar con claridad también puede cuidar el vínculo.",
+          "No esperes consenso perfecto para defender una posición justa.",
+          "Usa tu diplomacia como fuerza, no como forma de evitar tensión."
+        ],
+        "actionStyle": "Actúas de manera estratégica, social y orientada a equilibrio. Tu energía busca timing, forma y legitimidad relacional.",
+        "desireStyle": "Deseas armonía, belleza y respuesta mutua. El deseo se enciende cuando hay trato cuidado, elegancia y reciprocidad.",
+        "conflictStyle": "En conflicto intentas mediar, negociar o suavizar. Puedes volverte indirecto si temes que la confrontación rompa la relación."
+      },
+      "scorpio": {
+        "summary": "Tu energía de acción es intensa, estratégica y profundamente enfocada. No sueles gastar fuerza en superficie: avanzas mejor cuando hay profundidad, propósito y una razón real para comprometerte.",
+        "keywords": [
+          "intensidad",
+          "estrategia",
+          "determinación",
+          "autocontrol",
+          "profundidad"
+        ],
+        "strengths": [
+          "Tienes una gran capacidad para sostener presión y concentrarte.",
+          "Actúas con potencia cuando algo te importa de verdad.",
+          "Lees tensiones ocultas y sabes mover energía con estrategia."
+        ],
+        "challenges": [
+          "Puedes acumular tensión o enojo antes de expresarlo.",
+          "A veces te rigidizas en dinámicas de control o defensa.",
+          "Tu intensidad puede volverse excesiva si sientes amenaza o traición."
+        ],
+        "integrationHooks": [
+          "Canaliza tu intensidad en objetivos concretos antes de que se vuelva fricción interna.",
+          "Practica expresar malestar antes de llegar al punto de saturación.",
+          "Usa tu poder para transformar, no para quedarte atrapado en la vigilancia."
+        ],
+        "actionStyle": "Actúas con concentración, reserva y gran profundidad. Cuando decides moverte, lo haces con todo tu sistema comprometido y con poca dispersión.",
+        "desireStyle": "Deseas con intensidad y fuerte carga emocional. No te moviliza lo tibio: necesitas sentir implicación, potencia y verdad en lo que persigues.",
+        "conflictStyle": "En conflicto puedes ser silencioso pero muy contundente. Prefieres medir, observar y responder con precisión antes que reaccionar de forma superficial."
+      },
+      "sagittarius": {
+        "summary": "Tu energía de acción busca expansión, experiencia y sentido. Te movilizas cuando hay horizonte, aprendizaje o una causa que te permite sentir libertad en movimiento.",
+        "keywords": [
+          "expansión",
+          "aventura",
+          "franqueza",
+          "entusiasmo",
+          "acción con sentido"
+        ],
+        "strengths": [
+          "Actúas con optimismo, valentía y visión amplia.",
+          "Tienes energía para explorar, aprender y abrir caminos nuevos.",
+          "Tu impulso puede contagiar confianza y movimiento."
+        ],
+        "challenges": [
+          "Puedes actuar desde entusiasmo sin revisar detalles importantes.",
+          "A veces evitas límites o compromisos que parecen reducir libertad.",
+          "Tu franqueza puede volverse brusca en momentos de tensión."
+        ],
+        "integrationHooks": [
+          "Aterriza tu impulso expansivo en pasos concretos.",
+          "Pregúntate si buscas crecimiento o escape.",
+          "Usa tu franqueza con responsabilidad por el impacto."
+        ],
+        "actionStyle": "Actúas con amplitud, rapidez y deseo de explorar. Tu energía necesita sentido, movimiento y una dirección que se sienta viva.",
+        "desireStyle": "Deseas libertad, experiencia y conexión con algo más grande. Te atrae lo que promete expansión, aventura o aprendizaje.",
+        "conflictStyle": "En conflicto puedes ser frontal, exagerar o buscar salida rápida. Necesitas perspectiva para no convertir una tensión puntual en deseo de escapar."
+      },
+      "capricorn": {
+        "summary": "Tu energía de acción es disciplinada, estratégica y orientada a resultados. Te movilizas cuando hay una meta real, una responsabilidad clara o algo que valga el esfuerzo sostenido.",
+        "keywords": [
+          "disciplina",
+          "estrategia",
+          "ambición",
+          "resistencia",
+          "responsabilidad"
+        ],
+        "strengths": [
+          "Sostienes acciones difíciles con paciencia y madurez.",
+          "Tienes capacidad para convertir deseo en plan y plan en logro.",
+          "Tu energía se fortalece cuando hay estructura y dirección."
+        ],
+        "challenges": [
+          "Puedes exigirte demasiado y convertir todo en rendimiento.",
+          "A veces reprimes enojo para mantener control o imagen de competencia.",
+          "Te cuesta actuar por deseo simple si no ves utilidad o resultado."
+        ],
+        "integrationHooks": [
+          "Permite que el deseo tenga lugar, no solo la obligación.",
+          "Revisa si tu disciplina te sostiene o te endurece.",
+          "Expresa frustración antes de que se convierta en distancia fría."
+        ],
+        "actionStyle": "Actúas con estrategia, autocontrol y foco en objetivos. Prefieres avanzar con estructura antes que desperdiciar energía.",
+        "desireStyle": "Deseas con seriedad, paciencia y orientación a lo que puede construirse. El deseo crece cuando hay respeto, capacidad y dirección.",
+        "conflictStyle": "En conflicto puedes volverte frío, firme o controlador. Buscas recuperar estructura y autoridad antes que mostrar vulnerabilidad."
+      },
+      "aquarius": {
+        "summary": "Tu energía de acción se activa cuando hay libertad, ideas propias y posibilidad de romper patrones obsoletos. Te movilizas mejor cuando una acción tiene sentido colectivo, innovador o auténtico.",
+        "keywords": [
+          "independencia",
+          "innovación",
+          "acción disruptiva",
+          "autonomía",
+          "visión"
+        ],
+        "strengths": [
+          "Actúas con originalidad y capacidad de desafiar lo establecido.",
+          "Tienes energía para causas, proyectos o ideas que miran al futuro.",
+          "Puedes mantener distancia suficiente para actuar con perspectiva."
+        ],
+        "challenges": [
+          "Puedes resistirte a instrucciones si las percibes como control.",
+          "A veces actúas desde rebeldía antes de evaluar impacto emocional.",
+          "Te cuesta sostener energía en proyectos que se vuelven demasiado convencionales."
+        ],
+        "integrationHooks": [
+          "Distingue autenticidad de reacción automática contra la norma.",
+          "Aterriza tus ideas disruptivas en acciones sostenibles.",
+          "Permite que colaborar no signifique perder independencia."
+        ],
+        "actionStyle": "Actúas con independencia, visión y orientación a cambios inteligentes. Tu energía necesita libertad mental y margen de innovación.",
+        "desireStyle": "Deseas lo singular, libre y estimulante. Te atrae lo que rompe rutina y permite ser auténtico sin posesión.",
+        "conflictStyle": "En conflicto puedes tomar distancia, argumentar desde principios o rebelarte ante presión. Necesitas espacio para no desconectarte del todo."
+      },
+      "pisces": {
+        "summary": "Tu energía de acción es sensible, intuitiva y a veces difícil de forzar en línea recta. Te movilizas cuando hay inspiración, compasión o una corriente interna que vuelve significativa la acción.",
+        "keywords": [
+          "acción intuitiva",
+          "sensibilidad",
+          "inspiración",
+          "compasión",
+          "fluidez"
+        ],
+        "strengths": [
+          "Actúas con empatía y capacidad de responder a necesidades sutiles.",
+          "Tienes energía creativa cuando algo toca tu sensibilidad.",
+          "Puedes moverte con flexibilidad en contextos complejos o emocionales."
+        ],
+        "challenges": [
+          "Puedes perder dirección si no hay límites o estructura mínima.",
+          "A veces evitas confrontar y dejas que la energía se diluya.",
+          "Te cuesta actuar por deseo propio si estás absorbiendo demasiado del entorno."
+        ],
+        "integrationHooks": [
+          "Dale forma concreta a tu inspiración antes de que se disuelva.",
+          "Practica límites claros para proteger tu energía.",
+          "Recuerda que la compasión también puede actuar con firmeza."
+        ],
+        "actionStyle": "Actúas por intuición, sensibilidad y resonancia interna. Tu energía fluye mejor cuando hay sentido emocional o creativo.",
+        "desireStyle": "Deseas conexión, inspiración y una experiencia que trascienda lo puramente funcional. El deseo se mezcla con imaginación y empatía.",
+        "conflictStyle": "En conflicto puedes retirarte, confundirte o evitar dureza. Necesitas claridad emocional para actuar sin perderte en la sensibilidad del ambiente."
+      }
+    }
+  }
+}
