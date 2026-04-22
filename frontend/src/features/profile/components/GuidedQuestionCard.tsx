@@ -1,3 +1,4 @@
+import type { MouseEvent } from 'react';
 import { Sparkles } from 'lucide-react';
 
 interface GuidedQuestionCardProps {
@@ -25,6 +26,11 @@ export const GuidedQuestionCard = ({
   disabled,
   onChange,
 }: GuidedQuestionCardProps) => {
+  const handleSuggestionClick = (event: MouseEvent<HTMLButtonElement>, suggestion: string) => {
+    event.preventDefault();
+    onChange(suggestion);
+  };
+
   return (
     <section className="rounded-[1.75rem] border border-white/8 bg-surface/80 p-5 shadow-[0_20px_70px_rgba(0,0,0,0.28)]">
       <div className="mb-4 flex items-start gap-3">
@@ -43,7 +49,7 @@ export const GuidedQuestionCard = ({
             key={suggestion}
             type="button"
             disabled={disabled}
-            onClick={() => onChange(suggestion)}
+            onClick={(event) => handleSuggestionClick(event, suggestion)}
             className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-left text-xs text-text-muted transition hover:border-primary/25 hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-60"
           >
             {suggestion}

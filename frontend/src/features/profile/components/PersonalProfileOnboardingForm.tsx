@@ -1,3 +1,4 @@
+import type { MouseEvent } from 'react';
 import { useState } from 'react';
 import { Calendar, Check, ChevronLeft, ChevronRight, Clock, Loader2, MapPin, Sparkles, Stars, UserRound } from 'lucide-react';
 import tzlookup from 'tz-lookup';
@@ -137,6 +138,9 @@ export const PersonalProfileOnboardingForm = () => {
   const [createdProfile, setCreatedProfile] = useState<PersonalProfileDetail | null>(null);
 
   const currentStepIndex = STEP_ORDER.indexOf(currentStep);
+  const totalSteps = STEP_ORDER.length;
+  const isFirstStep = currentStepIndex === 0;
+  const isLastStep = currentStepIndex === totalSteps - 1;
   const currentMeta = STEP_META[currentStep];
 
   const setField = (field: keyof FormState, value: string) => {
@@ -233,6 +237,10 @@ export const PersonalProfileOnboardingForm = () => {
   };
 
   const goToNextStep = () => {
+    if (isLastStep) {
+      return;
+    }
+
     const isValid = currentStep === 'birth' ? validateBirthStep() : validateGuidedStep();
 
     if (!isValid) {
@@ -243,11 +251,16 @@ export const PersonalProfileOnboardingForm = () => {
   };
 
   const goToPreviousStep = () => {
-    if (currentStepIndex === 0) {
+    if (isFirstStep) {
       return;
     }
 
     setCurrentStep(STEP_ORDER[currentStepIndex - 1]);
+  };
+
+  const handleContinueClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    goToNextStep();
   };
 
   const buildRequest = (): CreatePersonalProfileRequest | null => {
@@ -295,6 +308,12 @@ export const PersonalProfileOnboardingForm = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setSubmitError(null);
+
+    // Keep the form resilient against any implicit submit before the final step.
+    if (!isLastStep) {
+      goToNextStep();
+      return;
+    }
 
     const birthStepValid = validateBirthStep();
     const guidedStepValid = validateGuidedStep();
@@ -861,7 +880,7 @@ export const PersonalProfileOnboardingForm = () => {
               <p className="mt-3 max-w-2xl text-sm leading-7 text-text-muted">{currentMeta.description}</p>
             </div>
             <div className="text-sm text-text-muted">
-              {currentStepIndex + 1} de {STEP_ORDER.length}
+              {currentStepIndex + 1} de {totalSteps}
             </div>
           </div>
 
@@ -879,17 +898,18 @@ export const PersonalProfileOnboardingForm = () => {
             <button
               type="button"
               onClick={goToPreviousStep}
-              disabled={currentStepIndex === 0 || submitting}
+              disabled={isFirstStep || submitting}
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <ChevronLeft className="h-4 w-4" />
               Volver
             </button>
 
-            {currentStep !== 'voice' ? (
+            {!isLastStep ? (
               <button
+                key="continue-step"
                 type="button"
-                onClick={goToNextStep}
+                onClick={handleContinueClick}
                 disabled={submitting}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-background shadow-[0_0_20px_rgba(212,175,55,0.25)] transition hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
               >
@@ -898,6 +918,7 @@ export const PersonalProfileOnboardingForm = () => {
               </button>
             ) : (
               <button
+                key="submit-profile"
                 type="submit"
                 disabled={submitting}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-background shadow-[0_0_24px_rgba(212,175,55,0.28)] transition hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
