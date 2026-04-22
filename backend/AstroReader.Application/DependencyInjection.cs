@@ -1,6 +1,8 @@
 using AstroReader.Application.Charts.Interfaces;
 using AstroReader.Application.Charts.UseCases;
 using AstroReader.Application.Interpretations.Premium;
+using AstroReader.Application.PersonalProfiles.Interfaces;
+using AstroReader.Application.PersonalProfiles.UseCases;
 using AstroReader.Application.SavedCharts.Interfaces;
 using AstroReader.Application.SavedCharts.UseCases;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,9 @@ public static class DependencyInjection
         services.AddScoped<IInterpretationComposer, PremiumInterpretationComposer>();
         services.AddScoped<IPremiumInterpretationPreviewUseCase, PremiumInterpretationPreviewUseCase>();
         services.AddScoped<ICalculateNatalChartUseCase, CalculateNatalChartUseCase>();
+        services.AddScoped<ICreatePersonalProfileUseCase, CreatePersonalProfileUseCase>();
+        services.AddScoped<IGetPersonalProfileByIdUseCase, GetPersonalProfileByIdUseCase>();
+        services.AddScoped<IGetPersonalProfileBySavedChartIdUseCase, GetPersonalProfileBySavedChartIdUseCase>();
         services.AddScoped<ISaveChartUseCase, SaveChartUseCase>();
         services.AddScoped<IGetSavedChartByIdUseCase, GetSavedChartByIdUseCase>();
         services.AddScoped<IGetSavedChartsUseCase, GetSavedChartsUseCase>();

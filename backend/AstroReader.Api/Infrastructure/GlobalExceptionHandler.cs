@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AstroReader.AstroEngine.Exceptions;
+using AstroReader.Application.PersonalProfiles.Exceptions;
 using AstroReader.Application.SavedCharts.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -58,6 +59,19 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
                 StatusCodes.Status422UnprocessableEntity,
                 "Error de integridad del guardado",
                 integrityException.Message);
+
+            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+            return true;
+        }
+
+        if (exception is PersonalProfileIntegrityException profileIntegrityException)
+        {
+            var problemDetails = CreateProblemDetails(
+                httpContext,
+                StatusCodes.Status422UnprocessableEntity,
+                "Error de integridad del perfil",
+                profileIntegrityException.Message);
 
             httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
             await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);

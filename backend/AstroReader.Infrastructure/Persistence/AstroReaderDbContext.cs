@@ -12,10 +12,12 @@ public class AstroReaderDbContext : DbContext
     }
 
     public DbSet<SavedChart> SavedCharts => Set<SavedChart>();
+    public DbSet<PersonalProfile> PersonalProfiles => Set<PersonalProfile>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfiguration(new PersonalProfileConfiguration());
         modelBuilder.ApplyConfiguration(new SavedChartConfiguration());
     }
 }

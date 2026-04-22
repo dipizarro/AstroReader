@@ -22,6 +22,86 @@ namespace AstroReader.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AstroReader.Domain.Entities.PersonalProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("BirthDate")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("BirthInstantUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("BirthPlace")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<TimeOnly>("BirthTime")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CurrentChallenge")
+                        .IsRequired()
+                        .HasMaxLength(280)
+                        .HasColumnType("nvarchar(280)");
+
+                    b.Property<string>("DesiredInsight")
+                        .IsRequired()
+                        .HasMaxLength(280)
+                        .HasColumnType("nvarchar(280)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<decimal>("Latitude")
+                        .HasPrecision(9, 6)
+                        .HasColumnType("decimal(9,6)");
+
+                    b.Property<decimal>("Longitude")
+                        .HasPrecision(9, 6)
+                        .HasColumnType("decimal(9,6)");
+
+                    b.Property<Guid?>("SavedChartId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SelfDescription")
+                        .HasMaxLength(600)
+                        .HasColumnType("nvarchar(600)");
+
+                    b.Property<string>("SelfPerceptionFocus")
+                        .IsRequired()
+                        .HasMaxLength(280)
+                        .HasColumnType("nvarchar(280)");
+
+                    b.Property<short>("TimezoneOffsetMinutes")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedAtUtc");
+
+                    b.HasIndex("SavedChartId")
+                        .IsUnique()
+                        .HasFilter("[SavedChartId] IS NOT NULL");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PersonalProfiles", (string)null);
+                });
+
             modelBuilder.Entity("AstroReader.Domain.Entities.SavedChart", b =>
                 {
                     b.Property<Guid>("Id")
@@ -108,6 +188,14 @@ namespace AstroReader.Infrastructure.Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("SavedCharts", (string)null);
+                });
+
+            modelBuilder.Entity("AstroReader.Domain.Entities.PersonalProfile", b =>
+                {
+                    b.HasOne("AstroReader.Domain.Entities.SavedChart", null)
+                        .WithMany()
+                        .HasForeignKey("SavedChartId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 #pragma warning restore 612, 618
         }
