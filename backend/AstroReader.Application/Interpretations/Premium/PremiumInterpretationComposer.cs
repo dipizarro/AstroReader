@@ -7,7 +7,7 @@ public sealed class PremiumInterpretationComposer : IInterpretationComposer
         InterpretationAnalysisResult analysis)
     {
         var plan = PremiumInterpretationContentSelector.CreatePlan(context, analysis);
-        var profiles = PremiumInterpretationProfileNarrative.BuildProfiles(context);
+        var profiles = PremiumInterpretationProfileNarrative.BuildProfiles(context, analysis);
 
         return new PremiumInterpretationCompositionResult
         {
