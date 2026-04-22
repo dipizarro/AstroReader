@@ -18,6 +18,9 @@ export const MainLayout = () => {
             <Link to="/" className="text-sm font-medium text-text-muted transition-colors hover:text-primary">
               Inicio
             </Link>
+            <Link to="/profile/onboarding" className="text-sm font-medium text-text-muted transition-colors hover:text-primary">
+              Perfil guiado
+            </Link>
             <Link to="/chart/calculate" className="text-sm font-medium text-text-muted transition-colors hover:text-primary">
               Carta Natal
             </Link>
@@ -28,7 +31,7 @@ export const MainLayout = () => {
 
           <div className="flex items-center gap-4">
             <Link 
-              to="/chart/calculate"
+              to="/profile/onboarding"
               className="hidden rounded-full border border-primary/30 bg-primary/10 px-5 py-2 text-sm font-medium text-primary shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all hover:bg-primary/20 hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] md:inline-flex"
             >
               Comenzar

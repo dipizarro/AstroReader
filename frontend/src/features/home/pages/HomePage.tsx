@@ -26,11 +26,18 @@ export const HomePage = () => {
 
         <div className="flex flex-col gap-4 sm:flex-row">
           <Link
-            to="/chart/calculate"
+            to="/profile/onboarding"
             className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-primary px-8 py-3 text-sm font-semibold text-[#0a0a0b] transition-all hover:bg-primary-hover shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)]"
           >
             <Sparkles className="h-4 w-4" />
-            <span>Calcular mi Carta Natal</span>
+            <span>Comenzar perfil guiado</span>
+          </Link>
+          <Link
+            to="/chart/calculate"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-medium text-white transition-all hover:bg-white/10 glass-panel"
+          >
+            <Star className="h-4 w-4 text-primary" />
+            <span>Ir directo a mi carta</span>
           </Link>
           <Link
             to="/charts/saved"
