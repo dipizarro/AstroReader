@@ -11,15 +11,18 @@ public class PersonalProfilesController : ControllerBase
     private readonly ICreatePersonalProfileUseCase _createPersonalProfileUseCase;
     private readonly IGetPersonalProfileByIdUseCase _getPersonalProfileByIdUseCase;
     private readonly IGetPersonalProfileBySavedChartIdUseCase _getPersonalProfileBySavedChartIdUseCase;
+    private readonly IUpdatePersonalProfileUseCase _updatePersonalProfileUseCase;
 
     public PersonalProfilesController(
         ICreatePersonalProfileUseCase createPersonalProfileUseCase,
         IGetPersonalProfileByIdUseCase getPersonalProfileByIdUseCase,
-        IGetPersonalProfileBySavedChartIdUseCase getPersonalProfileBySavedChartIdUseCase)
+        IGetPersonalProfileBySavedChartIdUseCase getPersonalProfileBySavedChartIdUseCase,
+        IUpdatePersonalProfileUseCase updatePersonalProfileUseCase)
     {
         _createPersonalProfileUseCase = createPersonalProfileUseCase;
         _getPersonalProfileByIdUseCase = getPersonalProfileByIdUseCase;
         _getPersonalProfileBySavedChartIdUseCase = getPersonalProfileBySavedChartIdUseCase;
+        _updatePersonalProfileUseCase = updatePersonalProfileUseCase;
     }
 
     [HttpPost]
@@ -32,6 +35,21 @@ public class PersonalProfilesController : ControllerBase
     {
         var profile = await _createPersonalProfileUseCase.ExecuteAsync(request, cancellationToken);
         return CreatedAtAction(nameof(GetProfileById), new { id = profile.Id }, profile);
+    }
+
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(PersonalProfileDetailDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> UpdateProfile(
+        Guid id,
+        [FromBody] UpdatePersonalProfileRequest request,
+        [FromQuery] Guid? ownerUserId,
+        CancellationToken cancellationToken)
+    {
+        var profile = await _updatePersonalProfileUseCase.ExecuteAsync(id, request, ownerUserId, cancellationToken);
+        return Ok(profile);
     }
 
     [HttpGet("{id:guid}")]

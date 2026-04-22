@@ -22,6 +22,7 @@ public static class DependencyInjection
         services.AddScoped<ICreatePersonalProfileUseCase, CreatePersonalProfileUseCase>();
         services.AddScoped<IGetPersonalProfileByIdUseCase, GetPersonalProfileByIdUseCase>();
         services.AddScoped<IGetPersonalProfileBySavedChartIdUseCase, GetPersonalProfileBySavedChartIdUseCase>();
+        services.AddScoped<IUpdatePersonalProfileUseCase, UpdatePersonalProfileUseCase>();
         services.AddScoped<ISaveChartUseCase, SaveChartUseCase>();
         services.AddScoped<IGetSavedChartByIdUseCase, GetSavedChartByIdUseCase>();
         services.AddScoped<IGetSavedChartsUseCase, GetSavedChartsUseCase>();

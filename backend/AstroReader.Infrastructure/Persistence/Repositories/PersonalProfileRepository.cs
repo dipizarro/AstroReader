@@ -34,6 +34,19 @@ public class PersonalProfileRepository : IPersonalProfileRepository
         return await query.FirstOrDefaultAsync(cancellationToken);
     }
 
+    public async Task<PersonalProfile?> GetTrackedByIdAsync(Guid id, Guid? ownerUserId = null, CancellationToken cancellationToken = default)
+    {
+        var query = _dbContext.PersonalProfiles
+            .Where(x => x.Id == id);
+
+        if (ownerUserId.HasValue)
+        {
+            query = query.Where(x => x.UserId == ownerUserId.Value);
+        }
+
+        return await query.FirstOrDefaultAsync(cancellationToken);
+    }
+
     public async Task<PersonalProfile?> GetBySavedChartIdAsync(Guid savedChartId, Guid? ownerUserId = null, CancellationToken cancellationToken = default)
     {
         var query = _dbContext.PersonalProfiles
@@ -46,5 +59,10 @@ public class PersonalProfileRepository : IPersonalProfileRepository
         }
 
         return await query.FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }
