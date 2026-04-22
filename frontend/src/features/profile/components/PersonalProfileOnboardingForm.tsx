@@ -86,6 +86,29 @@ const QUESTION_SUGGESTIONS = {
   ],
 };
 
+const SELF_DESCRIPTION_MAX_LENGTH = 420;
+
+const SELF_DESCRIPTION_STARTERS = [
+  {
+    label: 'Cómo me siento',
+    text: 'Últimamente me siento una persona que ',
+  },
+  {
+    label: 'Lo que me mueve',
+    text: 'En este momento me mueve mucho la necesidad de ',
+  },
+  {
+    label: 'Cómo me vivo',
+    text: 'Si tuviera que resumirme hoy, diría que soy alguien que ',
+  },
+];
+
+const SELF_DESCRIPTION_PROMPTS = [
+  'qué estás intentando cuidar más en esta etapa',
+  'qué parte de ti se siente más viva hoy',
+  'qué contradicción sientes que te acompaña',
+];
+
 const initialFormState: FormState = {
   fullName: '',
   birthDate: '',
@@ -316,6 +339,35 @@ export const PersonalProfileOnboardingForm = () => {
     setSubmitError(null);
     setCreatedProfile(null);
     setCurrentStep('birth');
+  };
+
+  const applySelfDescriptionStarter = (starter: string) => {
+    setForm((previous) => {
+      if (previous.selfDescription.trim().length > 0) {
+        return previous;
+      }
+
+      return {
+        ...previous,
+        selfDescription: starter,
+      };
+    });
+  };
+
+  const insertSelfDescriptionPrompt = (prompt: string) => {
+    setForm((previous) => {
+      const base = previous.selfDescription.trim();
+      const addition = base.length > 0
+        ? ` Me doy cuenta de ${prompt}.`
+        : `Podrías empezar por contar ${prompt}.`;
+
+      const nextValue = `${previous.selfDescription}${addition}`.slice(0, SELF_DESCRIPTION_MAX_LENGTH);
+
+      return {
+        ...previous,
+        selfDescription: nextValue,
+      };
+    });
   };
 
   const renderBirthStep = () => (
@@ -598,22 +650,61 @@ export const PersonalProfileOnboardingForm = () => {
         <div className="mb-4">
           <p className="text-sm font-medium text-white">Si tuvieras que describirte en pocas líneas...</p>
           <p className="mt-1 text-sm leading-6 text-text-muted">
-            Esta parte es opcional. Piensa en ella como una pequeña nota tuya para enriquecer la lectura.
+            Esta parte es opcional. Piensa en ella como una pequeña nota tuya para enriquecer la lectura, no como una definición perfecta de quién eres.
           </p>
+        </div>
+
+        <div className="mb-5 rounded-2xl border border-primary/12 bg-primary/10 p-4">
+          <p className="text-xs uppercase tracking-[0.22em] text-primary/80">Ayuda suave</p>
+          <p className="mt-2 text-sm leading-6 text-text-muted">
+            Puedes escribir algo breve y simple. Una o dos frases son suficientes. Si te bloqueas, usa uno de estos comienzos y sigue desde ahí.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            {SELF_DESCRIPTION_STARTERS.map((starter) => (
+              <button
+                key={starter.label}
+                type="button"
+                disabled={submitting || form.selfDescription.trim().length > 0}
+                onClick={() => applySelfDescriptionStarter(starter.text)}
+                className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-text-muted transition hover:border-primary/25 hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {starter.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <textarea
           value={form.selfDescription}
-          maxLength={600}
+          maxLength={SELF_DESCRIPTION_MAX_LENGTH}
           disabled={submitting}
           onChange={(event) => setField('selfDescription', event.target.value)}
-          placeholder="Ej: Soy alguien que siente mucho, piensa demasiado y aun así sigue buscando belleza, sentido y una forma más serena de habitarse."
+          placeholder="Ej: Me considero alguien sensible, observador y muy movedizo por dentro. Estoy aprendiendo a confiar más en lo que siento sin exigirme tener todo resuelto."
           className="min-h-[220px] w-full rounded-2xl border border-white/10 bg-background/70 px-4 py-4 text-sm leading-6 text-white outline-none transition placeholder:text-text-muted/50 focus:border-primary/40"
         />
 
+        <div className="mt-4 flex flex-wrap gap-2">
+          {SELF_DESCRIPTION_PROMPTS.map((prompt) => (
+            <button
+              key={prompt}
+              type="button"
+              disabled={submitting}
+              onClick={() => insertSelfDescriptionPrompt(prompt)}
+              className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-text-muted transition hover:border-primary/25 hover:bg-primary/10 hover:text-primary"
+            >
+              {prompt}
+            </button>
+          ))}
+        </div>
+
         <div className="mt-3 flex items-center justify-between">
-          <span className="text-xs text-text-muted/70">Una voz propia suele decir más que una definición perfecta.</span>
-          <span className="text-xs text-text-muted/70">{form.selfDescription.trim().length}/600</span>
+          <span className="text-xs text-text-muted/70">
+            Una voz propia suele decir más que una definición perfecta.
+          </span>
+          <span className="text-xs text-text-muted/70">
+            {form.selfDescription.trim().length}/{SELF_DESCRIPTION_MAX_LENGTH}
+          </span>
         </div>
       </section>
 
