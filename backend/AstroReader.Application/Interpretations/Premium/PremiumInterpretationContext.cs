@@ -7,6 +7,8 @@ public sealed record PremiumInterpretationContext
 {
     public required NatalChart Chart { get; init; }
 
+    public PremiumReaderProfileContext? ReaderProfile { get; init; }
+
     public required PremiumInterpretationCoverageAssessment Coverage { get; init; }
 
     public required ZodiacSign SunSign { get; init; }

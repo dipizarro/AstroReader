@@ -12,7 +12,7 @@ public sealed class PremiumInterpretationContextResolver : IPremiumInterpretatio
         _catalogProvider = catalogProvider;
     }
 
-    public PremiumInterpretationContext Resolve(NatalChart chart)
+    public PremiumInterpretationContext Resolve(NatalChart chart, PremiumReaderProfileContext? readerProfile = null)
     {
         var sunSign = RequirePlanet(chart, Planet.Sun).Sign;
         var moonSign = RequirePlanet(chart, Planet.Moon).Sign;
@@ -34,6 +34,7 @@ public sealed class PremiumInterpretationContextResolver : IPremiumInterpretatio
         return new PremiumInterpretationContext
         {
             Chart = chart,
+            ReaderProfile = readerProfile,
             Coverage = coverage,
             SunSign = sunSign,
             MoonSign = moonSign,

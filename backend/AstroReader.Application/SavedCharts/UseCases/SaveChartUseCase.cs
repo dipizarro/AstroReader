@@ -31,7 +31,7 @@ public class SaveChartUseCase : ISaveChartUseCase
         var (birthDate, birthTime) = ParseInputFormat(request);
         ValidateSaveIntegrity(request);
 
-        var calculatedChart = CalculateChartOrThrowIntegrityError(request);
+        var calculatedChart = await CalculateChartOrThrowIntegrityErrorAsync(request, cancellationToken);
         ValidateCalculatedChartIntegrity(calculatedChart, request);
 
         var birthInstantUtc = BuildBirthInstantUtc(birthDate, birthTime, request.TimezoneOffsetMinutes);
@@ -111,11 +111,13 @@ public class SaveChartUseCase : ISaveChartUseCase
         }
     }
 
-    private CalculateChartResponse CalculateChartOrThrowIntegrityError(SaveChartRequest request)
+    private async Task<CalculateChartResponse> CalculateChartOrThrowIntegrityErrorAsync(
+        SaveChartRequest request,
+        CancellationToken cancellationToken)
     {
         try
         {
-            return _calculateNatalChartUseCase.Execute(new CalculateChartRequest
+            return await _calculateNatalChartUseCase.ExecuteAsync(new CalculateChartRequest
             {
                 BirthDate = request.BirthDate,
                 BirthTime = request.BirthTime,
@@ -123,7 +125,7 @@ public class SaveChartUseCase : ISaveChartUseCase
                 Longitude = request.Longitude,
                 TimezoneOffsetMinutes = request.TimezoneOffsetMinutes,
                 PlaceName = request.PlaceName
-            });
+            }, cancellationToken);
         }
         catch (SavedChartIntegrityException)
         {

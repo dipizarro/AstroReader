@@ -162,6 +162,34 @@ export const ChartInterpretationSection = ({
         {renderBlock(interpretation.essentialSummary, 'slate')}
       </div>
 
+      {interpretation.profiles?.length > 0 && (
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="h-4 w-1 rounded-full bg-primary/70" />
+            <h3 className="text-sm font-semibold uppercase tracking-[0.24em] text-text-muted">
+              Tu Lectura en Contexto
+            </h3>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2">
+            {interpretation.profiles.map((profile) => (
+              <article
+                key={profile.key}
+                className="rounded-[26px] border border-primary/14 bg-[linear-gradient(135deg,rgba(212,175,55,0.09),rgba(255,255,255,0.025))] p-6 shadow-[0_0_28px_rgba(0,0,0,0.18)]"
+              >
+                <div className="space-y-3">
+                  <span className="inline-flex rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.26em] text-primary/90">
+                    {profile.title}
+                  </span>
+                  <p className="text-sm leading-7 text-white/84">
+                    {profile.summary}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
       {interpretation.closing && (
         <div className="mx-auto max-w-3xl rounded-[28px] border border-primary/15 bg-[linear-gradient(135deg,rgba(212,175,55,0.08),rgba(255,255,255,0.025))] px-7 py-8 text-center shadow-[0_0_34px_rgba(0,0,0,0.18)]">
           <p className="text-base font-display leading-8 text-white/88 md:text-lg">

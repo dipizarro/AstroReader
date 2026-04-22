@@ -4,6 +4,7 @@ import type { CalculateChartRequest } from '../types/chart.types';
 import { LocationAutocomplete } from './LocationAutocomplete';
 import tzlookup from 'tz-lookup';
 import { DateTime } from 'luxon';
+import { personalProfileStorage } from '../../profile/services/personalProfileStorage';
 
 interface CalculateChartFormProps {
   onSubmit: (data: CalculateChartRequest) => Promise<void>;
@@ -161,13 +162,22 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
         finalOffset = 0;
       }
 
+      const lastProfile = personalProfileStorage.getLastProfile();
+      const personalProfileId =
+        lastProfile &&
+        lastProfile.birthDate === birthDate &&
+        lastProfile.birthTime === birthTime
+          ? lastProfile.id
+          : null;
+
       onSubmit({
         birthDate,
         birthTime,
         latitude: finalLat,
         longitude: finalLng,
         timezoneOffsetMinutes: finalOffset,
-        placeName: finalPlaceName
+        placeName: finalPlaceName,
+        personalProfileId
       });
     }
   };

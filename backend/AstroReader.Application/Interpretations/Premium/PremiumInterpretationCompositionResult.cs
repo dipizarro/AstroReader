@@ -12,6 +12,8 @@ public sealed class PremiumInterpretationCompositionResult
 
     public PremiumInterpretationBlock Essential { get; init; } = PremiumInterpretationBlock.Empty("essential", "Lo esencial de tu carta");
 
+    public IReadOnlyList<PremiumInterpretationProfile> Profiles { get; init; } = [];
+
     public string Closing { get; init; } = string.Empty;
 }
 
@@ -35,4 +37,13 @@ public sealed class PremiumInterpretationBlock
             Title = title
         };
     }
+}
+
+public sealed class PremiumInterpretationProfile
+{
+    public string Key { get; init; } = string.Empty;
+
+    public string Title { get; init; } = string.Empty;
+
+    public string Summary { get; init; } = string.Empty;
 }

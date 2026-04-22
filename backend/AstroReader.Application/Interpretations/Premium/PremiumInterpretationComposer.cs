@@ -7,15 +7,17 @@ public sealed class PremiumInterpretationComposer : IInterpretationComposer
         InterpretationAnalysisResult analysis)
     {
         var plan = PremiumInterpretationContentSelector.CreatePlan(context, analysis);
+        var profiles = PremiumInterpretationProfileNarrative.BuildProfiles(context);
 
         return new PremiumInterpretationCompositionResult
         {
-            Hook = plan.Hook,
+            Hook = PremiumInterpretationProfileNarrative.ApplyHookPersonalization(plan.Hook, context.ReaderProfile),
             CentralEnergy = BuildBlock(plan.EnergyCore),
             Core = BuildBlock(plan.Core),
             ThinkingRelatingActing = BuildBlock(plan.PersonalDynamics),
             Essential = BuildBlock(plan.EssentialSummary),
-            Closing = plan.Closing
+            Profiles = profiles,
+            Closing = PremiumInterpretationProfileNarrative.ApplyClosingPersonalization(plan.Closing, context.ReaderProfile)
         };
     }
 

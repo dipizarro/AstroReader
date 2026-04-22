@@ -3,6 +3,7 @@ using System.Linq;
 using AstroReader.Application.Charts.DTOs;
 using AstroReader.Application.Charts.Interfaces;
 using AstroReader.Application.Interpretations.Premium;
+using AstroReader.Application.PersonalProfiles.Interfaces;
 using AstroReader.AstroEngine.Contracts;
 using AstroReader.Domain.Entities;
 using AstroReader.Domain.Enums;
@@ -12,24 +13,75 @@ namespace AstroReader.Application.Charts.UseCases;
 
 public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
 {
+    private sealed class NullPersonalProfileRepository : IPersonalProfileRepository
+    {
+        public Task<PersonalProfile> AddAsync(PersonalProfile personalProfile, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This repository only supports read operations returning no profile context.");
+        }
+
+        public Task<PersonalProfile?> GetByIdAsync(Guid id, Guid? ownerUserId = null, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult<PersonalProfile?>(null);
+        }
+
+        public Task<PersonalProfile?> GetTrackedByIdAsync(Guid id, Guid? ownerUserId = null, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult<PersonalProfile?>(null);
+        }
+
+        public Task<PersonalProfile?> GetBySavedChartIdAsync(Guid savedChartId, Guid? ownerUserId = null, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult<PersonalProfile?>(null);
+        }
+
+        public Task SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    private static readonly IPersonalProfileRepository EmptyPersonalProfileRepository = new NullPersonalProfileRepository();
     private readonly IAstroCalculationEngine _engine;
+    private readonly IPersonalProfileRepository _personalProfileRepository;
     private readonly IPremiumInterpretationContextResolver _premiumInterpretationContextResolver;
     private readonly IInterpretationAnalyzer _interpretationAnalyzer;
     private readonly IInterpretationComposer _interpretationComposer;
 
     public CalculateNatalChartUseCase(
         IAstroCalculationEngine engine,
+        IPersonalProfileRepository personalProfileRepository,
         IPremiumInterpretationContextResolver premiumInterpretationContextResolver,
         IInterpretationAnalyzer interpretationAnalyzer,
         IInterpretationComposer interpretationComposer)
     {
         _engine = engine;
+        _personalProfileRepository = personalProfileRepository;
         _premiumInterpretationContextResolver = premiumInterpretationContextResolver;
         _interpretationAnalyzer = interpretationAnalyzer;
         _interpretationComposer = interpretationComposer;
     }
 
+    public CalculateNatalChartUseCase(
+        IAstroCalculationEngine engine,
+        IPremiumInterpretationContextResolver premiumInterpretationContextResolver,
+        IInterpretationAnalyzer interpretationAnalyzer,
+        IInterpretationComposer interpretationComposer)
+        : this(
+            engine,
+            EmptyPersonalProfileRepository,
+            premiumInterpretationContextResolver,
+            interpretationAnalyzer,
+            interpretationComposer)
+    {
+    }
+
     public CalculateChartResponse Execute(CalculateChartRequest request)
+    {
+        return ExecuteAsync(request).GetAwaiter().GetResult();
+    }
+
+    public async Task<CalculateChartResponse> ExecuteAsync(CalculateChartRequest request, CancellationToken cancellationToken = default)
     {
         // 1. Parsear fecha y hora usando tipos seguros nativos de .NET 8
         if (!DateOnly.TryParseExact(request.BirthDate, "yyyy-MM-dd", out var dateOnly))
@@ -79,13 +131,14 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         
         // Creamos la Carta Natal del Dominio (Pura e inmutable)
         var natalChart = new NatalChart(birthData, geoLoc, planets, houses);
+        var readerProfile = await ResolveReaderProfileContextAsync(request.PersonalProfileId, cancellationToken);
 
         // EXTRA: Obtener Ascendente para el Summary
         var ascendantSign = GetSignFromDegree(engineResult.AscendantDegree);
         var sunSign = natalChart.Planets.FirstOrDefault(p => p.Planet == Planet.Sun)?.Sign ?? ZodiacSign.Aries;
         var moonSign = natalChart.Planets.FirstOrDefault(p => p.Planet == Planet.Moon)?.Sign ?? ZodiacSign.Aries;
 
-        var interpretation = BuildPremiumInterpretation(natalChart, sunSign, moonSign, ascendantSign);
+        var interpretation = BuildPremiumInterpretation(natalChart, sunSign, moonSign, ascendantSign, readerProfile);
 
         // 4. Mapear Entidades de Dominio -> API Response DTO
         return new CalculateChartResponse
@@ -125,9 +178,10 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         NatalChart natalChart,
         ZodiacSign sunSign,
         ZodiacSign moonSign,
-        ZodiacSign ascendantSign)
+        ZodiacSign ascendantSign,
+        PremiumReaderProfileContext? readerProfile)
     {
-        var context = _premiumInterpretationContextResolver.Resolve(natalChart);
+        var context = _premiumInterpretationContextResolver.Resolve(natalChart, readerProfile);
         var coverageAssessment = context.Coverage;
 
         try
@@ -143,7 +197,8 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
                     sunSign,
                     moonSign,
                     ascendantSign,
-                    coverageAssessment.ToDto(status));
+                    coverageAssessment.ToDto(status),
+                    readerProfile);
             }
 
             return PremiumInterpretationResponseMapper.MapComposition(
@@ -158,7 +213,8 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
                 sunSign,
                 moonSign,
                 ascendantSign,
-                coverageAssessment.ToDto(InterpretationCoverageStatus.Fallback));
+                coverageAssessment.ToDto(InterpretationCoverageStatus.Fallback),
+                readerProfile);
         }
         catch (PremiumInterpretationAnalysisException)
         {
@@ -166,8 +222,31 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
                 sunSign,
                 moonSign,
                 ascendantSign,
-                coverageAssessment.ToDto(InterpretationCoverageStatus.Fallback));
+                coverageAssessment.ToDto(InterpretationCoverageStatus.Fallback),
+                readerProfile);
         }
+    }
+
+    private async Task<PremiumReaderProfileContext?> ResolveReaderProfileContextAsync(
+        Guid? personalProfileId,
+        CancellationToken cancellationToken)
+    {
+        if (!personalProfileId.HasValue)
+        {
+            return null;
+        }
+
+        var personalProfile = await _personalProfileRepository.GetByIdAsync(
+            personalProfileId.Value,
+            ownerUserId: null,
+            cancellationToken);
+
+        if (personalProfile is null)
+        {
+            throw new KeyNotFoundException($"Personal profile '{personalProfileId.Value}' was not found.");
+        }
+
+        return PremiumReaderProfileContext.FromPersonalProfile(personalProfile);
     }
 
     private Planet MapPlanetIdToEnum(int id)

@@ -5,6 +5,7 @@ import { DateTime } from 'luxon';
 import { LocationAutocomplete } from '../../chart/components/LocationAutocomplete';
 import { GuidedQuestionCard } from './GuidedQuestionCard';
 import { personalProfileService } from '../services/personalProfileService';
+import { personalProfileStorage } from '../services/personalProfileStorage';
 import type { CreatePersonalProfileRequest, PersonalProfileDetail } from '../types/profile.types';
 
 interface LocationData {
@@ -318,6 +319,7 @@ export const PersonalProfileOnboardingForm = () => {
 
     try {
       const profile = await personalProfileService.createProfile(request);
+      personalProfileStorage.saveLastProfile(profile);
       setCreatedProfile(profile);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'No pudimos guardar tu perfil ahora mismo.');

@@ -4,5 +4,5 @@ namespace AstroReader.Application.Charts.Interfaces;
 
 public interface ICalculateNatalChartUseCase
 {
-    CalculateChartResponse Execute(CalculateChartRequest request);
+    Task<CalculateChartResponse> ExecuteAsync(CalculateChartRequest request, CancellationToken cancellationToken = default);
 }

@@ -4,5 +4,5 @@ namespace AstroReader.Application.Interpretations.Premium;
 
 public interface IPremiumInterpretationContextResolver
 {
-    PremiumInterpretationContext Resolve(NatalChart chart);
+    PremiumInterpretationContext Resolve(NatalChart chart, PremiumReaderProfileContext? readerProfile = null);
 }

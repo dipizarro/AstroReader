@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace AstroReader.Application.Charts.DTOs;
 
@@ -30,4 +31,6 @@ public record CalculateChartRequest
 
     [MaxLength(200, ErrorMessage = "El nombre del lugar no puede exceder los 200 caracteres.")]
     public string? PlaceName { get; init; }
+
+    public Guid? PersonalProfileId { get; init; }
 }

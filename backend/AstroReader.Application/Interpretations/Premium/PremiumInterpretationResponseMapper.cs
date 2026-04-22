@@ -26,7 +26,15 @@ internal static class PremiumInterpretationResponseMapper
             EssentialSummary = MapBlock(composition.Essential),
             TensionsAndPotential = [],
             LifeAreas = [],
-            Profiles = [],
+            Profiles = composition.Profiles
+                .Where(x => !string.IsNullOrWhiteSpace(x.Summary))
+                .Select(x => new InterpretationProfileDto
+                {
+                    Key = x.Key,
+                    Title = x.Title,
+                    Summary = x.Summary
+                })
+                .ToList(),
             Closing = composition.Closing
         };
     }
