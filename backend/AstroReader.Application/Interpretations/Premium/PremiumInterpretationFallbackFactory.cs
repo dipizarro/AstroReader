@@ -34,32 +34,15 @@ internal static class PremiumInterpretationFallbackFactory
 
         const string closing =
             "La base astral de la carta está disponible y es confiable. La diferencia pendiente está en el nivel editorial de la interpretación, no en el cálculo.";
-        var contextProfiles = new List<InterpretationProfileDto>();
-
-        if (readerProfile is not null && readerProfile.HasEditorialContext)
-        {
-            var summaryParts = new List<string>
+        var contextProfiles = PremiumInterpretationProfileNarrative
+            .BuildFallbackProfiles(readerProfile, sunSign, moonSign, ascendantSign)
+            .Select(profile => new InterpretationProfileDto
             {
-                "Aunque esta salida siga siendo una lectura base, tu contexto actual también importa."
-            };
-
-            if (!string.IsNullOrWhiteSpace(readerProfile.SelfPerceptionFocus))
-            {
-                summaryParts.Add($"Hoy te reconoces en {LowercaseInitial(readerProfile.SelfPerceptionFocus)}.");
-            }
-
-            if (!string.IsNullOrWhiteSpace(readerProfile.DesiredInsight))
-            {
-                summaryParts.Add($"Y buscas entender mejor {LowercaseInitial(readerProfile.DesiredInsight)}.");
-            }
-
-            contextProfiles.Add(new InterpretationProfileDto
-            {
-                Key = "self-perception-contrast",
-                Title = "Tu carta y cómo hoy te percibes",
-                Summary = string.Join(" ", summaryParts)
-            });
-        }
+                Key = profile.Key,
+                Title = profile.Title,
+                Summary = profile.Summary
+            })
+            .ToList();
 
         return new ChartInterpretation
         {
@@ -94,18 +77,5 @@ internal static class PremiumInterpretationFallbackFactory
             Profiles = contextProfiles,
             Closing = PremiumInterpretationProfileNarrative.ApplyClosingPersonalization(closing, readerProfile)
         };
-    }
-
-    private static string LowercaseInitial(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return string.Empty;
-        }
-
-        var normalized = value.Trim();
-        return normalized.Length == 1
-            ? normalized.ToLowerInvariant()
-            : $"{char.ToLowerInvariant(normalized[0])}{normalized[1..]}";
     }
 }

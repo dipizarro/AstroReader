@@ -45,9 +45,39 @@ public sealed class CalculateNatalChartUseCaseProfileIntegrityTests
         Assert.Contains("timezoneOffsetMinutes", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
 
-    private static CalculateNatalChartUseCase CreateUseCase(PersonalProfile personalProfile)
+    [Fact]
+    public async Task ExecuteAsync_ShouldKeepContrastAndPriorityProfiles_WhenInterpretationFallsBackWithReaderProfile()
     {
-        var provider = new InMemoryPremiumInterpretationCatalogProvider(CreateCompleteCatalog());
+        var personalProfile = CreatePersonalProfile();
+        var useCase = CreateUseCase(personalProfile, CreateEmptyCatalog());
+        var request = CreateRequest(personalProfile.Id);
+
+        var response = await useCase.ExecuteAsync(request);
+
+        Assert.Equal("fallback", response.Interpretation.Coverage.CoverageStatus);
+        Assert.False(response.Interpretation.Coverage.IsPremiumResult);
+        Assert.True(response.Interpretation.Coverage.IsFallback);
+        Assert.Equal(2, response.Interpretation.Profiles.Count);
+
+        var contrastProfile = Assert.Single(
+            response.Interpretation.Profiles,
+            profile => string.Equals(profile.Key, "self-perception-contrast", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains("lectura base", contrastProfile.Summary, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Sol en Taurus, Luna en Leo y Ascendente en Libra", contrastProfile.Summary);
+        Assert.Contains("claridad emocional", contrastProfile.Summary, StringComparison.OrdinalIgnoreCase);
+
+        var priorityProfile = Assert.Single(
+            response.Interpretation.Profiles,
+            profile => string.Equals(profile.Key, "reading-priority", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains("todavía no desarrolla toda la capa premium", priorityProfile.Summary, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Lo esencial de tu carta", priorityProfile.Summary);
+    }
+
+    private static CalculateNatalChartUseCase CreateUseCase(
+        PersonalProfile personalProfile,
+        PremiumInterpretationCatalog? catalog = null)
+    {
+        var provider = new InMemoryPremiumInterpretationCatalogProvider(catalog ?? CreateCompleteCatalog());
         var resolver = new PremiumInterpretationContextResolver(provider);
         var analyzer = new PremiumInterpretationAnalyzer();
         var composer = new PremiumInterpretationComposer();
@@ -71,6 +101,23 @@ public sealed class CalculateNatalChartUseCaseProfileIntegrityTests
             TimezoneOffsetMinutes = -240,
             PlaceName = "Santiago, Chile",
             PersonalProfileId = personalProfileId
+        };
+    }
+
+    private static PremiumInterpretationCatalog CreateEmptyCatalog()
+    {
+        return new PremiumInterpretationCatalog
+        {
+            Version = "test",
+            Planets = new PremiumInterpretationPlanetCatalog
+            {
+                Sun = new ZodiacInterpretationSet<SunInterpretationEntry>(),
+                Moon = new ZodiacInterpretationSet<MoonInterpretationEntry>(),
+                Ascendant = new ZodiacInterpretationSet<AscendantInterpretationEntry>(),
+                Mercury = new ZodiacInterpretationSet<MercuryInterpretationEntry>(),
+                Venus = new ZodiacInterpretationSet<VenusInterpretationEntry>(),
+                Mars = new ZodiacInterpretationSet<MarsInterpretationEntry>()
+            }
         };
     }
 

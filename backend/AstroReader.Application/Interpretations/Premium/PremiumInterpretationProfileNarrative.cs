@@ -82,6 +82,31 @@ internal static class PremiumInterpretationProfileNarrative
         return profiles;
     }
 
+    public static IReadOnlyList<PremiumInterpretationProfile> BuildFallbackProfiles(
+        PremiumReaderProfileContext? profile,
+        Domain.Enums.ZodiacSign sunSign,
+        Domain.Enums.ZodiacSign moonSign,
+        Domain.Enums.ZodiacSign ascendantSign)
+    {
+        if (profile is null || !profile.HasEditorialContext)
+        {
+            return [];
+        }
+
+        var profiles = new List<PremiumInterpretationProfile>
+        {
+            BuildFallbackContrastProfile(profile, sunSign, moonSign, ascendantSign)
+        };
+
+        var priorityProfile = BuildFallbackPriorityProfile(profile);
+        if (priorityProfile is not null)
+        {
+            profiles.Add(priorityProfile);
+        }
+
+        return profiles;
+    }
+
     private static PremiumInterpretationProfile BuildContrastProfile(
         PremiumInterpretationContext context,
         InterpretationAnalysisResult analysis)
@@ -170,6 +195,70 @@ internal static class PremiumInterpretationProfileNarrative
             Summary =
                 $"Sin mover el centro de la carta, hoy conviene entrar primero por \"{priority.BlockTitle}\". {priority.Reason} " +
                 $"Ese puede ser el mejor punto de apoyo para mirar {EnsureTerminalPunctuation(LowercaseInitial(focus))}"
+        };
+    }
+
+    private static PremiumInterpretationProfile BuildFallbackContrastProfile(
+        PremiumReaderProfileContext profile,
+        Domain.Enums.ZodiacSign sunSign,
+        Domain.Enums.ZodiacSign moonSign,
+        Domain.Enums.ZodiacSign ascendantSign)
+    {
+        var parts = new List<string>
+        {
+            $"Aunque esta salida siga siendo una lectura base, tu carta ya marca un tono de fondo desde Sol en {sunSign}, Luna en {moonSign} y Ascendente en {ascendantSign}."
+        };
+
+        if (!string.IsNullOrWhiteSpace(profile.SelfPerceptionFocus))
+        {
+            parts.Add($"Hoy te reconoces especialmente en {EnsureTerminalPunctuation(LowercaseInitial(profile.SelfPerceptionFocus))}");
+        }
+
+        if (!string.IsNullOrWhiteSpace(profile.CurrentChallenge))
+        {
+            parts.Add(
+                $"Eso convive con algo que hoy pesa de forma concreta: {EnsureTerminalPunctuation(LowercaseInitial(profile.CurrentChallenge))}");
+        }
+
+        if (!string.IsNullOrWhiteSpace(profile.DesiredInsight))
+        {
+            parts.Add(
+                $"Incluso desde esta versión base, la lectura puede ayudarte a mirar con más perspectiva {EnsureTerminalPunctuation(LowercaseInitial(profile.DesiredInsight))}");
+        }
+
+        if (!string.IsNullOrWhiteSpace(profile.SelfDescription))
+        {
+            parts.Add($"Tu propia descripción añade una nota cercana a esta lectura: {TrimAndEnsureTerminal(profile.SelfDescription!, 110)}");
+        }
+
+        return new PremiumInterpretationProfile
+        {
+            Key = "self-perception-contrast",
+            Title = "Tu carta y cómo hoy te percibes",
+            Summary = string.Join(" ", parts)
+        };
+    }
+
+    private static PremiumInterpretationProfile? BuildFallbackPriorityProfile(PremiumReaderProfileContext profile)
+    {
+        var focus = !string.IsNullOrWhiteSpace(profile.DesiredInsight)
+            ? profile.DesiredInsight
+            : profile.CurrentChallenge;
+
+        if (string.IsNullOrWhiteSpace(focus))
+        {
+            return null;
+        }
+
+        var priority = ResolvePriority(focus);
+
+        return new PremiumInterpretationProfile
+        {
+            Key = "reading-priority",
+            Title = "Dónde puede ayudarte más esta lectura hoy",
+            Summary =
+                $"Como esta respuesta todavía no desarrolla toda la capa premium, conviene entrar primero por \"{priority.BlockTitle}\". {priority.Reason} " +
+                $"Es la forma más útil de empezar a mirar {EnsureTerminalPunctuation(LowercaseInitial(focus))} con lo que esta versión ya puede sostener."
         };
     }
 
