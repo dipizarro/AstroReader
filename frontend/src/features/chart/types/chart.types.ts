@@ -99,9 +99,18 @@ export interface SaveChartRequest {
   userId?: string | null;
 }
 
+export interface SavedChartPersonalProfileSummary {
+  id: string;
+  fullName: string;
+  selfPerceptionFocus: string;
+  currentChallenge: string;
+  desiredInsight: string;
+}
+
 export interface SavedChartDetail {
   id: string;
   userId?: string | null;
+  personalProfileId?: string | null;
   profileName: string;
   placeName?: string | null;
   timezoneIana?: string | null;
@@ -117,6 +126,7 @@ export interface SavedChartDetail {
   snapshotVersion: number;
   createdAtUtc: string;
   updatedAtUtc: string;
+  personalProfile?: SavedChartPersonalProfileSummary | null;
   chart: CalculateChartResponse;
 }
 

@@ -22,4 +22,13 @@ export const personalProfileService = {
       throw error;
     }
   },
+
+  async getProfileBySavedChartId(savedChartId: string): Promise<PersonalProfileDetail> {
+    try {
+      return await apiClient.get<PersonalProfileDetail>(`/api/PersonalProfiles/by-saved-chart/${savedChartId}`);
+    } catch (error) {
+      console.error('Error al obtener el perfil asociado a la carta guardada:', error);
+      throw error;
+    }
+  },
 };
