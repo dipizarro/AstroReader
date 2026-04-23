@@ -28,6 +28,10 @@ public sealed class SaveChartUseCaseProfileLinkTests
         Assert.NotEqual(Guid.Empty, response.Id);
         Assert.Equal(personalProfile.Id, chartCalculator.LastRequest?.PersonalProfileId);
         Assert.Equal(response.Id, personalProfile.SavedChartId);
+        Assert.Equal(personalProfile.Id, response.PersonalProfileId);
+        Assert.NotNull(response.PersonalProfile);
+        Assert.Equal(personalProfile.FullName, response.PersonalProfile!.FullName);
+        Assert.Equal(personalProfile.DesiredInsight, response.PersonalProfile.DesiredInsight);
         Assert.Equal(1, profileRepository.SaveChangesCalls);
         Assert.Equal(response.Id, savedChartRepository.LastSavedChart?.Id);
     }

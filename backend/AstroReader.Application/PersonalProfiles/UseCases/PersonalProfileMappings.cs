@@ -1,4 +1,5 @@
 using AstroReader.Application.PersonalProfiles.DTOs;
+using AstroReader.Application.SavedCharts.DTOs;
 using AstroReader.Domain.Entities;
 
 namespace AstroReader.Application.PersonalProfiles.UseCases;
@@ -26,6 +27,18 @@ internal static class PersonalProfileMappings
             SelfDescription = personalProfile.SelfDescription,
             CreatedAtUtc = personalProfile.CreatedAtUtc,
             UpdatedAtUtc = personalProfile.UpdatedAtUtc
+        };
+    }
+
+    public static SavedChartPersonalProfileSummaryDto ToSavedChartSummaryDto(PersonalProfile personalProfile)
+    {
+        return new SavedChartPersonalProfileSummaryDto
+        {
+            Id = personalProfile.Id,
+            FullName = personalProfile.FullName,
+            SelfPerceptionFocus = personalProfile.SelfPerceptionFocus,
+            CurrentChallenge = personalProfile.CurrentChallenge,
+            DesiredInsight = personalProfile.DesiredInsight
         };
     }
 }

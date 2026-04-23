@@ -6,6 +6,7 @@ public record SavedChartDetailDto
 {
     public Guid Id { get; init; }
     public Guid? UserId { get; init; }
+    public Guid? PersonalProfileId { get; init; }
     public string ProfileName { get; init; } = string.Empty;
     public string? PlaceName { get; init; }
     public string? TimezoneIana { get; init; }
@@ -23,5 +24,6 @@ public record SavedChartDetailDto
     public int SnapshotVersion { get; init; }
     public DateTime CreatedAtUtc { get; init; }
     public DateTime UpdatedAtUtc { get; init; }
+    public SavedChartPersonalProfileSummaryDto? PersonalProfile { get; init; }
     public CalculateChartResponse Chart { get; init; } = new();
 }

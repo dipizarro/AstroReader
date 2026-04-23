@@ -71,7 +71,7 @@ public class SaveChartUseCase : ISaveChartUseCase
             await _personalProfileRepository.SaveChangesAsync(cancellationToken);
         }
 
-        return SavedChartMappings.ToDetailDto(persistedChart);
+        return SavedChartMappings.ToDetailDto(persistedChart, personalProfile);
     }
 
     private static (DateOnly BirthDate, TimeOnly BirthTime) ParseInputFormat(SaveChartRequest request)

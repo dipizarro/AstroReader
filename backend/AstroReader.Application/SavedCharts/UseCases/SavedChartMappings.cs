@@ -1,5 +1,6 @@
 using System.Text.Json;
 using AstroReader.Application.Charts.DTOs;
+using AstroReader.Application.PersonalProfiles.UseCases;
 using AstroReader.Application.SavedCharts.DTOs;
 using AstroReader.Domain.Entities;
 
@@ -12,7 +13,7 @@ internal static class SavedChartMappings
         PropertyNameCaseInsensitive = true
     };
 
-    public static SavedChartDetailDto ToDetailDto(SavedChart savedChart)
+    public static SavedChartDetailDto ToDetailDto(SavedChart savedChart, PersonalProfile? personalProfile = null)
     {
         var chart = DeserializeCalculatedChart(savedChart);
 
@@ -20,6 +21,7 @@ internal static class SavedChartMappings
         {
             Id = savedChart.Id,
             UserId = savedChart.UserId,
+            PersonalProfileId = personalProfile?.Id,
             ProfileName = savedChart.ProfileName,
             PlaceName = savedChart.PlaceName,
             TimezoneIana = savedChart.TimezoneIana,
@@ -37,6 +39,9 @@ internal static class SavedChartMappings
             SnapshotVersion = savedChart.SnapshotVersion,
             CreatedAtUtc = savedChart.CreatedAtUtc,
             UpdatedAtUtc = savedChart.UpdatedAtUtc,
+            PersonalProfile = personalProfile is null
+                ? null
+                : PersonalProfileMappings.ToSavedChartSummaryDto(personalProfile),
             Chart = chart
         };
     }
