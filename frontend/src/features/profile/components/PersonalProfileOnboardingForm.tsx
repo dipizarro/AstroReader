@@ -1,5 +1,5 @@
 import type { MouseEvent } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Calendar, Check, ChevronLeft, ChevronRight, Clock, Loader2, MapPin, Sparkles, Stars, UserRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import tzlookup from 'tz-lookup';
@@ -138,12 +138,26 @@ export const PersonalProfileOnboardingForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [createdProfile, setCreatedProfile] = useState<PersonalProfileDetail | null>(null);
+  const [autoContinueEnabled, setAutoContinueEnabled] = useState(false);
 
   const currentStepIndex = STEP_ORDER.indexOf(currentStep);
   const totalSteps = STEP_ORDER.length;
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === totalSteps - 1;
   const currentMeta = STEP_META[currentStep];
+
+  useEffect(() => {
+    if (!createdProfile || !autoContinueEnabled) {
+      return;
+    }
+
+    const chartContext = personalProfileStorage.buildChartContext(createdProfile);
+    const navigationTimer = window.setTimeout(() => {
+      navigate('/chart/calculate', { state: { profileContext: chartContext } });
+    }, 2400);
+
+    return () => window.clearTimeout(navigationTimer);
+  }, [autoContinueEnabled, createdProfile, navigate]);
 
   const setField = (field: keyof FormState, value: string) => {
     setForm((previous) => ({
@@ -265,6 +279,11 @@ export const PersonalProfileOnboardingForm = () => {
     goToNextStep();
   };
 
+  const goToChartCalculation = (profile: PersonalProfileDetail) => {
+    const chartContext = personalProfileStorage.buildChartContext(profile);
+    navigate('/chart/calculate', { state: { profileContext: chartContext } });
+  };
+
   const buildRequest = (): CreatePersonalProfileRequest | null => {
     if (!validateBirthStep() || !validateGuidedStep()) {
       return null;
@@ -342,6 +361,7 @@ export const PersonalProfileOnboardingForm = () => {
       const profile = await personalProfileService.createProfile(request);
       personalProfileStorage.savePendingChartContextFromProfile(profile);
       setCreatedProfile(profile);
+      setAutoContinueEnabled(true);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'No pudimos guardar tu perfil ahora mismo.');
     } finally {
@@ -361,6 +381,7 @@ export const PersonalProfileOnboardingForm = () => {
     setErrors({});
     setSubmitError(null);
     setCreatedProfile(null);
+    setAutoContinueEnabled(false);
     setCurrentStep('birth');
     personalProfileStorage.clearPendingChartContext();
   };
@@ -768,8 +789,6 @@ export const PersonalProfileOnboardingForm = () => {
   );
 
   if (createdProfile) {
-    const chartContext = personalProfileStorage.buildChartContext(createdProfile);
-
     return (
       <div className="rounded-[2rem] border border-primary/20 bg-gradient-to-br from-primary/12 via-surfaceHighlight/80 to-surface/90 p-8 shadow-[0_25px_100px_rgba(0,0,0,0.35)]">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -786,10 +805,17 @@ export const PersonalProfileOnboardingForm = () => {
           <div className="flex flex-col gap-3 sm:items-end">
             <button
               type="button"
-              onClick={() => navigate('/chart/calculate', { state: { profileContext: chartContext } })}
+              onClick={() => goToChartCalculation(createdProfile)}
               className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-background transition hover:bg-primary-hover"
             >
               Calcular mi carta ahora
+            </button>
+            <button
+              type="button"
+              onClick={() => setAutoContinueEnabled(false)}
+              className="inline-flex items-center justify-center rounded-full border border-primary/15 bg-primary/8 px-5 py-2.5 text-sm font-medium text-primary transition hover:bg-primary/12"
+            >
+              Quiero revisar primero
             </button>
             <button
               type="button"
@@ -799,6 +825,15 @@ export const PersonalProfileOnboardingForm = () => {
               Crear otro perfil
             </button>
           </div>
+        </div>
+
+        <div className="mt-6 rounded-[1.75rem] border border-primary/15 bg-black/10 px-5 py-4">
+          <p className="text-xs uppercase tracking-[0.22em] text-primary/80">Siguiente paso recomendado</p>
+          <p className="mt-2 text-sm leading-7 text-text-muted">
+            {autoContinueEnabled
+              ? 'En unos segundos te llevaremos a calcular tu carta con estos datos ya cargados, para que veas la lectura con continuidad natural.'
+              : 'Cuando quieras, el siguiente paso natural es calcular tu carta con estos mismos datos ya preparados.'}
+          </p>
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
