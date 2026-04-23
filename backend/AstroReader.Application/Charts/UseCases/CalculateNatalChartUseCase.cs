@@ -3,6 +3,7 @@ using System.Linq;
 using AstroReader.Application.Charts.DTOs;
 using AstroReader.Application.Charts.Interfaces;
 using AstroReader.Application.Interpretations.Premium;
+using AstroReader.Application.PersonalProfiles.Exceptions;
 using AstroReader.Application.PersonalProfiles.Interfaces;
 using AstroReader.AstroEngine.Contracts;
 using AstroReader.Domain.Entities;
@@ -131,7 +132,14 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
         
         // Creamos la Carta Natal del Dominio (Pura e inmutable)
         var natalChart = new NatalChart(birthData, geoLoc, planets, houses);
-        var readerProfile = await ResolveReaderProfileContextAsync(request.PersonalProfileId, cancellationToken);
+        var readerProfile = await ResolveReaderProfileContextAsync(
+            request.PersonalProfileId,
+            dateOnly,
+            timeOnly,
+            request.Latitude,
+            request.Longitude,
+            request.TimezoneOffsetMinutes,
+            cancellationToken);
 
         // EXTRA: Obtener Ascendente para el Summary
         var ascendantSign = GetSignFromDegree(engineResult.AscendantDegree);
@@ -229,6 +237,11 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
 
     private async Task<PremiumReaderProfileContext?> ResolveReaderProfileContextAsync(
         Guid? personalProfileId,
+        DateOnly birthDate,
+        TimeOnly birthTime,
+        double latitude,
+        double longitude,
+        int timezoneOffsetMinutes,
         CancellationToken cancellationToken)
     {
         if (!personalProfileId.HasValue)
@@ -246,7 +259,67 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
             throw new KeyNotFoundException($"Personal profile '{personalProfileId.Value}' was not found.");
         }
 
+        ValidatePersonalProfileMatchesRequest(
+            personalProfile,
+            birthDate,
+            birthTime,
+            latitude,
+            longitude,
+            timezoneOffsetMinutes);
+
         return PremiumReaderProfileContext.FromPersonalProfile(personalProfile);
+    }
+
+    private static void ValidatePersonalProfileMatchesRequest(
+        PersonalProfile personalProfile,
+        DateOnly birthDate,
+        TimeOnly birthTime,
+        double latitude,
+        double longitude,
+        int timezoneOffsetMinutes)
+    {
+        var mismatchedFields = new List<string>();
+
+        if (personalProfile.BirthDate != birthDate)
+        {
+            mismatchedFields.Add("birthDate");
+        }
+
+        if (personalProfile.BirthTime != birthTime)
+        {
+            mismatchedFields.Add("birthTime");
+        }
+
+        if (!CoordinateMatches(personalProfile.Latitude, latitude))
+        {
+            mismatchedFields.Add("latitude");
+        }
+
+        if (!CoordinateMatches(personalProfile.Longitude, longitude))
+        {
+            mismatchedFields.Add("longitude");
+        }
+
+        if (personalProfile.TimezoneOffsetMinutes != timezoneOffsetMinutes)
+        {
+            mismatchedFields.Add("timezoneOffsetMinutes");
+        }
+
+        if (mismatchedFields.Count == 0)
+        {
+            return;
+        }
+
+        throw new PersonalProfileIntegrityException(
+            "El personalProfileId enviado no coincide con los datos natales usados para calcular la carta. " +
+            $"Campos inconsistentes: {string.Join(", ", mismatchedFields)}.");
+    }
+
+    private static bool CoordinateMatches(decimal profileCoordinate, double requestCoordinate)
+    {
+        var normalizedProfile = decimal.Round(profileCoordinate, 6, MidpointRounding.AwayFromZero);
+        var normalizedRequest = decimal.Round((decimal)requestCoordinate, 6, MidpointRounding.AwayFromZero);
+        return normalizedProfile == normalizedRequest;
     }
 
     private Planet MapPlanetIdToEnum(int id)
