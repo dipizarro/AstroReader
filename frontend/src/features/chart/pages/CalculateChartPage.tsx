@@ -33,6 +33,11 @@ export const CalculateChartPage = () => {
     setProfileContext(navigationProfileContext);
   }, [navigationProfileContext]);
 
+  const handleClearProfileContext = () => {
+    personalProfileStorage.clearPendingChartContext();
+    setProfileContext(null);
+  };
+
   const handleSubmit = async (request: CalculateChartRequest) => {
     setLoading(true);
     setError(null);
@@ -75,7 +80,12 @@ export const CalculateChartPage = () => {
           </div>
         )}
 
-        <CalculateChartForm onSubmit={handleSubmit} isLoading={loading} profileContext={profileContext} />
+        <CalculateChartForm
+          onSubmit={handleSubmit}
+          isLoading={loading}
+          profileContext={profileContext}
+          onClearProfileContext={handleClearProfileContext}
+        />
       </div>
 
       <div className="w-full max-w-4xl mt-12" ref={resultRef}>

@@ -10,6 +10,7 @@ interface CalculateChartFormProps {
   onSubmit: (data: CalculateChartRequest) => Promise<void>;
   isLoading: boolean;
   profileContext?: PersonalProfileChartContext | null;
+  onClearProfileContext?: () => void;
 }
 
 interface LocationData {
@@ -30,7 +31,12 @@ const COORDINATE_PRECISION = 6;
 const coordinatesMatch = (left: number, right: number) =>
   Number(left.toFixed(COORDINATE_PRECISION)) === Number(right.toFixed(COORDINATE_PRECISION));
 
-export const CalculateChartForm = ({ onSubmit, isLoading, profileContext = null }: CalculateChartFormProps) => {
+export const CalculateChartForm = ({
+  onSubmit,
+  isLoading,
+  profileContext = null,
+  onClearProfileContext,
+}: CalculateChartFormProps) => {
   const [birthDate, setBirthDate] = useState('');
   const [birthTime, setBirthTime] = useState('');
   
@@ -241,6 +247,31 @@ export const CalculateChartForm = ({ onSubmit, isLoading, profileContext = null 
       )}
 
       <form className="flex flex-col gap-6 relative z-0" onSubmit={handleSubmit} noValidate>
+        {profileContext && (
+          <div className="rounded-2xl border border-primary/15 bg-primary/10 px-4 py-4 text-sm">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-primary/80">Perfil enriquecido activo</p>
+                <p className="mt-2 text-white">
+                  Prepararemos esta carta con los datos de <span className="font-medium">{profileContext.fullName}</span>.
+                </p>
+                <p className="mt-2 leading-6 text-text-muted">
+                  Si mantienes fecha, hora y ubicación, la lectura se calculará con ese perfil contextual. Si cambias esos datos o desvinculas el perfil, calcularemos la carta sin adjuntarlo.
+                </p>
+              </div>
+
+              {onClearProfileContext && (
+                <button
+                  type="button"
+                  onClick={onClearProfileContext}
+                  className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-white transition hover:bg-white/10"
+                >
+                  Desvincular perfil
+                </button>
+              )}
+            </div>
+          </div>
+        )}
         
         {/* Date of Birth */}
         <div className="flex flex-col gap-2 relative">
@@ -309,11 +340,6 @@ export const CalculateChartForm = ({ onSubmit, isLoading, profileContext = null 
              />
              {errors.placeSearch && <span className="text-xs text-red-400">{errors.placeSearch}</span>}
 
-             {profileContext && (
-               <div className="rounded-xl border border-primary/15 bg-primary/10 px-4 py-3 text-xs leading-6 text-text-muted">
-                 Estás usando el perfil de {profileContext.fullName}. Si mantienes estos datos natales, la lectura se calculará con ese contexto. Si los cambias, calcularemos la carta sin adjuntar ese perfil.
-               </div>
-             )}
            </div>
         )}
 
