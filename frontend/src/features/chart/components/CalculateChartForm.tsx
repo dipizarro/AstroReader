@@ -21,6 +21,7 @@ interface LocationData {
 }
 
 interface ManualLocationForm {
+  placeName: string;
   latitude: string;
   longitude: string;
   timezoneOffsetMinutes: string;
@@ -43,6 +44,7 @@ export const CalculateChartForm = ({
   // Almacena internamente las coordenadas del autocomplete o manuales
   const [selectedLocation, setSelectedLocation] = useState<LocationData | null>(null);
   const [manualLocation, setManualLocation] = useState<ManualLocationForm>({
+    placeName: '',
     latitude: '',
     longitude: '',
     timezoneOffsetMinutes: '',
@@ -68,6 +70,7 @@ export const CalculateChartForm = ({
     });
     setShowAdvanced(false);
     setManualLocation({
+      placeName: profileContext.birthPlace,
       latitude: '',
       longitude: '',
       timezoneOffsetMinutes: '',
@@ -216,7 +219,8 @@ export const CalculateChartForm = ({
       let finalLat = selectedLocation?.latitude ?? 0;
       let finalLng = selectedLocation?.longitude ?? 0;
       let finalOffset = selectedLocation?.timezoneOffsetMinutes ?? 0;
-      let finalPlaceName = selectedLocation?.placeName || "Ubicación Geocodificada";
+      let finalPlaceName = selectedLocation?.placeName || 'Ubicación geocodificada';
+      let finalTimezoneIana: string | undefined;
 
       // ✅ RESOLUCIÓN PRECISA DE TIEMPO:
       // Si el usuario seleccionó un lugar visualmente (no manual con offset harcodeado),
@@ -226,6 +230,7 @@ export const CalculateChartForm = ({
         try {
           // 1. Buscamos el String global IANA del huso horario (ej: "America/Argentina/Buenos_Aires")
           const ianaZone = tzlookup(finalLat, finalLng);
+          finalTimezoneIana = ianaZone;
           
           // 2. Construimos una fecha anclada puramente a esa zona local
           const dt = DateTime.fromISO(`${birthDate}T${birthTime}`, { zone: ianaZone });
@@ -241,7 +246,17 @@ export const CalculateChartForm = ({
         finalLat = Number(manualLocation.latitude.trim());
         finalLng = Number(manualLocation.longitude.trim());
         finalOffset = Number(manualLocation.timezoneOffsetMinutes.trim());
-        finalPlaceName = 'Ubicación manual';
+
+        try {
+          finalTimezoneIana = tzlookup(finalLat, finalLng);
+        } catch (error) {
+          console.warn('No pudimos resolver una zona IANA para la ubicación manual.', error);
+        }
+
+        const manualPlaceName = manualLocation.placeName.trim();
+        finalPlaceName = manualPlaceName.length > 0
+          ? manualPlaceName
+          : `Coordenadas manuales (${finalLat.toFixed(4)}, ${finalLng.toFixed(4)})`;
       }
 
       if (!Number.isFinite(finalLat) || finalLat < -90 || finalLat > 90) {
@@ -293,6 +308,7 @@ export const CalculateChartForm = ({
         longitude: finalLng,
         timezoneOffsetMinutes: finalOffset,
         placeName: finalPlaceName,
+        timezoneIana: finalTimezoneIana,
         personalProfileId
       });
     }
@@ -404,6 +420,10 @@ export const CalculateChartForm = ({
                  onClick={() => {
                    setShowAdvanced(true);
                    setSelectedLocation(null);
+                   setManualLocation(prev => ({
+                     ...prev,
+                     placeName: prev.placeName || selectedLocation?.placeName || profileContext?.birthPlace || '',
+                   }));
                    setErrors(prev => ({
                      ...prev,
                      placeSearch: '',
@@ -442,6 +462,7 @@ export const CalculateChartForm = ({
                    onClick={() => {
                      setShowAdvanced(false);
                      setManualLocation({
+                       placeName: '',
                        latitude: '',
                        longitude: '',
                        timezoneOffsetMinutes: '',
@@ -457,6 +478,19 @@ export const CalculateChartForm = ({
                  >
                    Volver a Buscador
                  </button>
+              </div>
+              <div className="space-y-1">
+                <label className="text-[11px] text-text-muted uppercase">Referencia del Lugar</label>
+                <input
+                  type="text"
+                  value={manualLocation.placeName}
+                  onChange={e => handleManualLocationUpdate('placeName', e.target.value)}
+                  className="w-full bg-background border border-white/10 rounded p-2 text-sm text-white"
+                  placeholder="Ej: Valparaiso, Chile"
+                />
+                <span className="text-[10px] text-text-muted/60">
+                  Opcional. Si no lo completas, guardaremos una referencia legible usando las coordenadas.
+                </span>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">

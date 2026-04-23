@@ -5,6 +5,7 @@ export interface CalculateChartRequest {
   longitude: number;
   timezoneOffsetMinutes: number;
   placeName?: string;
+  timezoneIana?: string;
   personalProfileId?: string | null;
 }
 
