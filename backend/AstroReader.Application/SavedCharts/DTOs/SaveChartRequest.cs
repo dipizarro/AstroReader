@@ -31,5 +31,7 @@ public record SaveChartRequest
     [MaxLength(100, ErrorMessage = "La zona horaria IANA no puede exceder los 100 caracteres.")]
     public string? TimezoneIana { get; init; }
 
+    public Guid? PersonalProfileId { get; init; }
+
     public Guid? UserId { get; init; }
 }

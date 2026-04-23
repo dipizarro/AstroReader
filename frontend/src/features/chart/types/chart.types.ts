@@ -95,6 +95,7 @@ export interface SaveChartRequest {
   longitude: number;
   timezoneOffsetMinutes: number;
   timezoneIana?: string;
+  personalProfileId?: string | null;
   userId?: string | null;
 }
 

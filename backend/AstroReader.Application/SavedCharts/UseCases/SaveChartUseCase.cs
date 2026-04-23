@@ -1,5 +1,7 @@
 using AstroReader.Application.Charts.DTOs;
 using AstroReader.Application.Charts.Interfaces;
+using AstroReader.Application.PersonalProfiles.Exceptions;
+using AstroReader.Application.PersonalProfiles.Interfaces;
 using AstroReader.Application.SavedCharts.DTOs;
 using AstroReader.Application.SavedCharts.Exceptions;
 using AstroReader.Application.SavedCharts.Interfaces;
@@ -11,15 +13,18 @@ namespace AstroReader.Application.SavedCharts.UseCases;
 public class SaveChartUseCase : ISaveChartUseCase
 {
     private readonly ICalculateNatalChartUseCase _calculateNatalChartUseCase;
+    private readonly IPersonalProfileRepository _personalProfileRepository;
     private readonly IAstroEngineTechnicalMetadataProvider _astroEngineTechnicalMetadataProvider;
     private readonly ISavedChartRepository _savedChartRepository;
 
     public SaveChartUseCase(
         ICalculateNatalChartUseCase calculateNatalChartUseCase,
+        IPersonalProfileRepository personalProfileRepository,
         IAstroEngineTechnicalMetadataProvider astroEngineTechnicalMetadataProvider,
         ISavedChartRepository savedChartRepository)
     {
         _calculateNatalChartUseCase = calculateNatalChartUseCase;
+        _personalProfileRepository = personalProfileRepository;
         _astroEngineTechnicalMetadataProvider = astroEngineTechnicalMetadataProvider;
         _savedChartRepository = savedChartRepository;
     }
@@ -30,6 +35,7 @@ public class SaveChartUseCase : ISaveChartUseCase
     {
         var (birthDate, birthTime) = ParseInputFormat(request);
         ValidateSaveIntegrity(request);
+        var personalProfile = await ResolveTrackedPersonalProfileAsync(request, cancellationToken);
 
         var calculatedChart = await CalculateChartOrThrowIntegrityErrorAsync(request, cancellationToken);
         ValidateCalculatedChartIntegrity(calculatedChart, request);
@@ -58,6 +64,13 @@ public class SaveChartUseCase : ISaveChartUseCase
             request.UserId);
 
         var persistedChart = await _savedChartRepository.AddAsync(savedChart, cancellationToken);
+
+        if (personalProfile is not null)
+        {
+            personalProfile.LinkToSavedChart(persistedChart.Id);
+            await _personalProfileRepository.SaveChangesAsync(cancellationToken);
+        }
+
         return SavedChartMappings.ToDetailDto(persistedChart);
     }
 
@@ -124,8 +137,17 @@ public class SaveChartUseCase : ISaveChartUseCase
                 Latitude = request.Latitude,
                 Longitude = request.Longitude,
                 TimezoneOffsetMinutes = request.TimezoneOffsetMinutes,
-                PlaceName = request.PlaceName
+                PlaceName = request.PlaceName,
+                PersonalProfileId = request.PersonalProfileId
             }, cancellationToken);
+        }
+        catch (PersonalProfileIntegrityException)
+        {
+            throw;
+        }
+        catch (KeyNotFoundException)
+        {
+            throw;
         }
         catch (SavedChartIntegrityException)
         {
@@ -140,6 +162,43 @@ public class SaveChartUseCase : ISaveChartUseCase
             throw new SavedChartIntegrityException(
                 "No fue posible generar una carta válida para guardar con los datos natales entregados.");
         }
+    }
+
+    private async Task<PersonalProfile?> ResolveTrackedPersonalProfileAsync(
+        SaveChartRequest request,
+        CancellationToken cancellationToken)
+    {
+        if (!request.PersonalProfileId.HasValue)
+        {
+            return null;
+        }
+
+        var personalProfile = await _personalProfileRepository.GetTrackedByIdAsync(
+            request.PersonalProfileId.Value,
+            ownerUserId: null,
+            cancellationToken);
+
+        if (personalProfile is null)
+        {
+            throw new KeyNotFoundException(
+                $"Personal profile '{request.PersonalProfileId.Value}' was not found.");
+        }
+
+        if (request.UserId.HasValue &&
+            personalProfile.UserId.HasValue &&
+            personalProfile.UserId.Value != request.UserId.Value)
+        {
+            throw new PersonalProfileIntegrityException(
+                "El perfil personal no pertenece al mismo usuario de la carta que se intenta guardar.");
+        }
+
+        if (personalProfile.SavedChartId.HasValue)
+        {
+            throw new PersonalProfileIntegrityException(
+                "El perfil personal ya está vinculado a otra carta guardada.");
+        }
+
+        return personalProfile;
     }
 
     private static void ValidateCalculatedChartIntegrity(CalculateChartResponse chart, SaveChartRequest request)
