@@ -78,6 +78,33 @@ public sealed class PersonalProfileUseCaseTests
     }
 
     [Fact]
+    public async Task GetBySavedChartId_ShouldReturnLinkedProfile()
+    {
+        var savedChartId = Guid.NewGuid();
+        var profile = CreatePersonalProfile(savedChartId);
+        var personalProfileRepository = new InMemoryPersonalProfileRepository(profile);
+        var useCase = new GetPersonalProfileBySavedChartIdUseCase(personalProfileRepository);
+
+        var result = await useCase.ExecuteAsync(savedChartId);
+
+        Assert.Equal(profile.Id, result.Id);
+        Assert.Equal(savedChartId, result.SavedChartId);
+        Assert.Equal(profile.FullName, result.FullName);
+    }
+
+    [Fact]
+    public async Task GetBySavedChartId_ShouldThrow_WhenNoProfileIsLinked()
+    {
+        var personalProfileRepository = new InMemoryPersonalProfileRepository();
+        var useCase = new GetPersonalProfileBySavedChartIdUseCase(personalProfileRepository);
+
+        var exception = await Assert.ThrowsAsync<KeyNotFoundException>(
+            () => useCase.ExecuteAsync(Guid.NewGuid()));
+
+        Assert.Contains("was not found", exception.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
     public async Task Create_ShouldReject_WhenSavedChartAlreadyHasLinkedProfile()
     {
         var savedChart = CreateSavedChart();
