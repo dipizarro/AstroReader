@@ -7,9 +7,10 @@ interface LocationAutocompleteProps {
   disabled?: boolean;
   error?: string;
   onClearError?: () => void;
+  initialPlaceName?: string;
 }
 
-export const LocationAutocomplete = ({ onSelect, disabled, error, onClearError }: LocationAutocompleteProps) => {
+export const LocationAutocomplete = ({ onSelect, disabled, error, onClearError, initialPlaceName }: LocationAutocompleteProps) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<GeocodingResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -28,6 +29,15 @@ export const LocationAutocomplete = ({ onSelect, disabled, error, onClearError }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (!initialPlaceName) {
+      return;
+    }
+
+    setQuery(initialPlaceName);
+    setSelectedPlace(initialPlaceName);
+  }, [initialPlaceName]);
 
   // Debounce para llamadas a la API
   useEffect(() => {

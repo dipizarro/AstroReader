@@ -1,27 +1,80 @@
-import type { PersonalProfileDetail } from '../types/profile.types';
+import type { PersonalProfileChartContext, PersonalProfileDetail } from '../types/profile.types';
 
-const LAST_PROFILE_STORAGE_KEY = 'astroreader:last-personal-profile';
+const PENDING_CHART_CONTEXT_STORAGE_KEY = 'astroreader:pending-chart-profile-context';
+const PENDING_CHART_CONTEXT_TTL_MS = 1000 * 60 * 60 * 2;
+
+interface PendingChartContextEnvelope {
+  context: PersonalProfileChartContext;
+  savedAtUtc: string;
+}
+
+const buildChartContext = (profile: PersonalProfileDetail): PersonalProfileChartContext => ({
+  profileId: profile.id,
+  fullName: profile.fullName,
+  birthDate: profile.birthDate,
+  birthTime: profile.birthTime,
+  birthPlace: profile.birthPlace,
+  latitude: profile.latitude,
+  longitude: profile.longitude,
+  timezoneOffsetMinutes: profile.timezoneOffsetMinutes,
+});
+
+const clearPendingChartContext = (): void => {
+  try {
+    window.localStorage.removeItem(PENDING_CHART_CONTEXT_STORAGE_KEY);
+  } catch (error) {
+    console.warn('No pudimos limpiar el contexto temporal del perfil personal.', error);
+  }
+};
+
+const savePendingChartContext = (context: PersonalProfileChartContext): void => {
+  try {
+    const payload: PendingChartContextEnvelope = {
+      context,
+      savedAtUtc: new Date().toISOString(),
+    };
+
+    window.localStorage.setItem(PENDING_CHART_CONTEXT_STORAGE_KEY, JSON.stringify(payload));
+  } catch (error) {
+    console.warn('No pudimos persistir el contexto temporal del perfil personal.', error);
+  }
+};
 
 export const personalProfileStorage = {
-  saveLastProfile(profile: PersonalProfileDetail): void {
-    try {
-      window.localStorage.setItem(LAST_PROFILE_STORAGE_KEY, JSON.stringify(profile));
-    } catch (error) {
-      console.warn('No pudimos persistir el último perfil personal en localStorage.', error);
-    }
+  buildChartContext,
+  savePendingChartContext,
+
+  savePendingChartContextFromProfile(profile: PersonalProfileDetail): PersonalProfileChartContext {
+    const context = buildChartContext(profile);
+    savePendingChartContext(context);
+    return context;
   },
 
-  getLastProfile(): PersonalProfileDetail | null {
+  getPendingChartContext(): PersonalProfileChartContext | null {
     try {
-      const serialized = window.localStorage.getItem(LAST_PROFILE_STORAGE_KEY);
+      const serialized = window.localStorage.getItem(PENDING_CHART_CONTEXT_STORAGE_KEY);
       if (!serialized) {
         return null;
       }
 
-      return JSON.parse(serialized) as PersonalProfileDetail;
+      const payload = JSON.parse(serialized) as PendingChartContextEnvelope;
+      const savedAt = Date.parse(payload.savedAtUtc);
+
+      if (!payload.context || Number.isNaN(savedAt)) {
+        clearPendingChartContext();
+        return null;
+      }
+
+      if (Date.now() - savedAt > PENDING_CHART_CONTEXT_TTL_MS) {
+        clearPendingChartContext();
+        return null;
+      }
+
+      return payload.context;
     } catch (error) {
-      console.warn('No pudimos leer el último perfil personal desde localStorage.', error);
+      console.warn('No pudimos leer el contexto temporal del perfil personal.', error);
       return null;
     }
   },
+  clearPendingChartContext,
 };

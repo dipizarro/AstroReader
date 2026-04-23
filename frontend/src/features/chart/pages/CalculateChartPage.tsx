@@ -1,16 +1,37 @@
 import { useState, useRef } from 'react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CalculateChartForm } from '../components/CalculateChartForm';
 import { ChartResult } from '../components/ChartResult';
 import { chartService } from '../services/chartService';
 import type { CalculateChartRequest, CalculateChartResponse } from '../types/chart.types';
+import { personalProfileStorage } from '../../profile/services/personalProfileStorage';
+import type { PersonalProfileChartContext } from '../../profile/types/profile.types';
+
+interface CalculateChartPageLocationState {
+  profileContext?: PersonalProfileChartContext;
+}
 
 export const CalculateChartPage = () => {
+  const location = useLocation();
+  const navigationProfileContext = (location.state as CalculateChartPageLocationState | null)?.profileContext ?? null;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [chartData, setChartData] = useState<CalculateChartResponse | null>(null);
   const [lastRequest, setLastRequest] = useState<CalculateChartRequest | null>(null);
+  const [profileContext, setProfileContext] = useState<PersonalProfileChartContext | null>(
+    () => navigationProfileContext ?? personalProfileStorage.getPendingChartContext());
   
   const resultRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!navigationProfileContext) {
+      return;
+    }
+
+    personalProfileStorage.savePendingChartContext(navigationProfileContext);
+    setProfileContext(navigationProfileContext);
+  }, [navigationProfileContext]);
 
   const handleSubmit = async (request: CalculateChartRequest) => {
     setLoading(true);
@@ -54,7 +75,7 @@ export const CalculateChartPage = () => {
           </div>
         )}
 
-        <CalculateChartForm onSubmit={handleSubmit} isLoading={loading} />
+        <CalculateChartForm onSubmit={handleSubmit} isLoading={loading} profileContext={profileContext} />
       </div>
 
       <div className="w-full max-w-4xl mt-12" ref={resultRef}>

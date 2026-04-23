@@ -1,6 +1,7 @@
 import type { MouseEvent } from 'react';
 import { useState } from 'react';
 import { Calendar, Check, ChevronLeft, ChevronRight, Clock, Loader2, MapPin, Sparkles, Stars, UserRound } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import tzlookup from 'tz-lookup';
 import { DateTime } from 'luxon';
 import { LocationAutocomplete } from '../../chart/components/LocationAutocomplete';
@@ -123,6 +124,7 @@ const initialFormState: FormState = {
 };
 
 export const PersonalProfileOnboardingForm = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState<StepId>('birth');
   const [form, setForm] = useState<FormState>(initialFormState);
   const [selectedLocation, setSelectedLocation] = useState<LocationData | null>(null);
@@ -338,7 +340,7 @@ export const PersonalProfileOnboardingForm = () => {
 
     try {
       const profile = await personalProfileService.createProfile(request);
-      personalProfileStorage.saveLastProfile(profile);
+      personalProfileStorage.savePendingChartContextFromProfile(profile);
       setCreatedProfile(profile);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'No pudimos guardar tu perfil ahora mismo.');
@@ -360,6 +362,7 @@ export const PersonalProfileOnboardingForm = () => {
     setSubmitError(null);
     setCreatedProfile(null);
     setCurrentStep('birth');
+    personalProfileStorage.clearPendingChartContext();
   };
 
   const applySelfDescriptionStarter = (starter: string) => {
@@ -765,6 +768,8 @@ export const PersonalProfileOnboardingForm = () => {
   );
 
   if (createdProfile) {
+    const chartContext = personalProfileStorage.buildChartContext(createdProfile);
+
     return (
       <div className="rounded-[2rem] border border-primary/20 bg-gradient-to-br from-primary/12 via-surfaceHighlight/80 to-surface/90 p-8 shadow-[0_25px_100px_rgba(0,0,0,0.35)]">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -778,13 +783,22 @@ export const PersonalProfileOnboardingForm = () => {
               Guardamos tus datos natales y el contexto personal que más importa hoy. Esta base ya puede acompañar lecturas futuras con una capa más íntima y humana.
             </p>
           </div>
-          <button
-            type="button"
-            onClick={resetFlow}
-            className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-white/10"
-          >
-            Crear otro perfil
-          </button>
+          <div className="flex flex-col gap-3 sm:items-end">
+            <button
+              type="button"
+              onClick={() => navigate('/chart/calculate', { state: { profileContext: chartContext } })}
+              className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-background transition hover:bg-primary-hover"
+            >
+              Calcular mi carta ahora
+            </button>
+            <button
+              type="button"
+              onClick={resetFlow}
+              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-white/10"
+            >
+              Crear otro perfil
+            </button>
+          </div>
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">

@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Calendar, Clock, Loader2, MousePointerClick, Settings2 } from 'lucide-react';
 import type { CalculateChartRequest } from '../types/chart.types';
 import { LocationAutocomplete } from './LocationAutocomplete';
 import tzlookup from 'tz-lookup';
 import { DateTime } from 'luxon';
-import { personalProfileStorage } from '../../profile/services/personalProfileStorage';
+import type { PersonalProfileChartContext } from '../../profile/types/profile.types';
 
 interface CalculateChartFormProps {
   onSubmit: (data: CalculateChartRequest) => Promise<void>;
   isLoading: boolean;
+  profileContext?: PersonalProfileChartContext | null;
 }
 
 interface LocationData {
@@ -24,7 +25,12 @@ interface ManualLocationForm {
   timezoneOffsetMinutes: string;
 }
 
-export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormProps) => {
+const COORDINATE_PRECISION = 6;
+
+const coordinatesMatch = (left: number, right: number) =>
+  Number(left.toFixed(COORDINATE_PRECISION)) === Number(right.toFixed(COORDINATE_PRECISION));
+
+export const CalculateChartForm = ({ onSubmit, isLoading, profileContext = null }: CalculateChartFormProps) => {
   const [birthDate, setBirthDate] = useState('');
   const [birthTime, setBirthTime] = useState('');
   
@@ -38,6 +44,28 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
   
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    if (!profileContext) {
+      return;
+    }
+
+    setBirthDate(profileContext.birthDate);
+    setBirthTime(profileContext.birthTime);
+    setSelectedLocation({
+      latitude: profileContext.latitude,
+      longitude: profileContext.longitude,
+      timezoneOffsetMinutes: profileContext.timezoneOffsetMinutes,
+      placeName: profileContext.birthPlace,
+    });
+    setShowAdvanced(false);
+    setManualLocation({
+      latitude: '',
+      longitude: '',
+      timezoneOffsetMinutes: '',
+    });
+    setErrors({});
+  }, [profileContext]);
 
   const hasManualLocationInput =
     manualLocation.latitude.trim().length > 0 &&
@@ -162,12 +190,14 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
         finalOffset = 0;
       }
 
-      const lastProfile = personalProfileStorage.getLastProfile();
       const personalProfileId =
-        lastProfile &&
-        lastProfile.birthDate === birthDate &&
-        lastProfile.birthTime === birthTime
-          ? lastProfile.id
+        profileContext &&
+        profileContext.birthDate === birthDate &&
+        profileContext.birthTime === birthTime &&
+        coordinatesMatch(profileContext.latitude, finalLat) &&
+        coordinatesMatch(profileContext.longitude, finalLng) &&
+        profileContext.timezoneOffsetMinutes === finalOffset
+          ? profileContext.profileId
           : null;
 
       onSubmit({
@@ -275,8 +305,15 @@ export const CalculateChartForm = ({ onSubmit, isLoading }: CalculateChartFormPr
                disabled={isLoading}
                error={errors.placeSearch}
                onClearError={() => setErrors(prev => ({...prev, placeSearch: ''}))}
+               initialPlaceName={selectedLocation?.placeName}
              />
              {errors.placeSearch && <span className="text-xs text-red-400">{errors.placeSearch}</span>}
+
+             {profileContext && (
+               <div className="rounded-xl border border-primary/15 bg-primary/10 px-4 py-3 text-xs leading-6 text-text-muted">
+                 Estás usando el perfil de {profileContext.fullName}. Si mantienes estos datos natales, la lectura se calculará con ese contexto. Si los cambias, calcularemos la carta sin adjuntar ese perfil.
+               </div>
+             )}
            </div>
         )}
 

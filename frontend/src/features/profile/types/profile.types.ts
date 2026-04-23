@@ -33,3 +33,14 @@ export interface PersonalProfileDetail {
   createdAtUtc: string;
   updatedAtUtc: string;
 }
+
+export interface PersonalProfileChartContext {
+  profileId: string;
+  fullName: string;
+  birthDate: string;
+  birthTime: string;
+  birthPlace: string;
+  latitude: number;
+  longitude: number;
+  timezoneOffsetMinutes: number;
+}
