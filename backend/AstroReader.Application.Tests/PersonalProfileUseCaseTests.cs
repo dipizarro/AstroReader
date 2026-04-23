@@ -43,6 +43,24 @@ public sealed class PersonalProfileUseCaseTests
     }
 
     [Fact]
+    public async Task GetList_ShouldReturnProfilesOrderedByNewestFirst()
+    {
+        var olderProfile = CreatePersonalProfile();
+        var newerProfile = CreatePersonalProfile();
+
+        var personalProfileRepository = new InMemoryPersonalProfileRepository(olderProfile, newerProfile);
+        var useCase = new GetPersonalProfilesUseCase(personalProfileRepository);
+
+        var result = await useCase.ExecuteAsync();
+
+        Assert.Equal(2, result.Count);
+        Assert.Equal(newerProfile.Id, result[0].Id);
+        Assert.Equal(olderProfile.Id, result[1].Id);
+        Assert.Equal(newerProfile.BirthPlace, result[0].BirthPlace);
+        Assert.Equal(newerProfile.SelfPerceptionFocus, result[0].SelfPerceptionFocus);
+    }
+
+    [Fact]
     public async Task Update_ShouldModifyExistingProfileAndPersistChanges()
     {
         var profile = CreatePersonalProfile();
@@ -164,6 +182,16 @@ public sealed class PersonalProfileUseCaseTests
         {
             StoredProfiles.Add(personalProfile);
             return Task.FromResult(personalProfile);
+        }
+
+        public Task<IReadOnlyList<PersonalProfile>> GetListAsync(Guid? ownerUserId = null, CancellationToken cancellationToken = default)
+        {
+            IReadOnlyList<PersonalProfile> profiles = StoredProfiles
+                .Where(profile => !ownerUserId.HasValue || profile.UserId == ownerUserId.Value)
+                .OrderByDescending(profile => profile.CreatedAtUtc)
+                .ToList();
+
+            return Task.FromResult(profiles);
         }
 
         public Task<PersonalProfile?> GetByIdAsync(Guid id, Guid? ownerUserId = null, CancellationToken cancellationToken = default)

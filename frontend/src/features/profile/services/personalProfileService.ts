@@ -1,7 +1,16 @@
 import { apiClient } from '../../../core/services/apiClient';
-import type { CreatePersonalProfileRequest, PersonalProfileDetail } from '../types/profile.types';
+import type { CreatePersonalProfileRequest, PersonalProfileDetail, PersonalProfileListItem } from '../types/profile.types';
 
 export const personalProfileService = {
+  async getProfiles(): Promise<PersonalProfileListItem[]> {
+    try {
+      return await apiClient.get<PersonalProfileListItem[]>('/api/PersonalProfiles');
+    } catch (error) {
+      console.error('Error al obtener la lista de perfiles personales:', error);
+      throw error;
+    }
+  },
+
   async createProfile(request: CreatePersonalProfileRequest): Promise<PersonalProfileDetail> {
     try {
       return await apiClient.post<PersonalProfileDetail, CreatePersonalProfileRequest>(

@@ -34,6 +34,20 @@ export interface PersonalProfileDetail {
   updatedAtUtc: string;
 }
 
+export interface PersonalProfileListItem {
+  id: string;
+  savedChartId?: string | null;
+  fullName: string;
+  birthDate: string;
+  birthTime: string;
+  birthPlace: string;
+  latitude: number;
+  longitude: number;
+  timezoneOffsetMinutes: number;
+  selfPerceptionFocus: string;
+  createdAtUtc: string;
+}
+
 export interface PersonalProfileChartContext {
   profileId: string;
   fullName: string;

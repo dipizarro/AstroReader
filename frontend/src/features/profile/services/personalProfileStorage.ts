@@ -1,4 +1,4 @@
-import type { PersonalProfileChartContext, PersonalProfileDetail } from '../types/profile.types';
+import type { PersonalProfileChartContext, PersonalProfileDetail, PersonalProfileListItem } from '../types/profile.types';
 
 const PENDING_CHART_CONTEXT_STORAGE_KEY = 'astroreader:pending-chart-profile-context';
 const PENDING_CHART_CONTEXT_TTL_MS = 1000 * 60 * 60 * 2;
@@ -9,6 +9,17 @@ interface PendingChartContextEnvelope {
 }
 
 const buildChartContext = (profile: PersonalProfileDetail): PersonalProfileChartContext => ({
+  profileId: profile.id,
+  fullName: profile.fullName,
+  birthDate: profile.birthDate,
+  birthTime: profile.birthTime,
+  birthPlace: profile.birthPlace,
+  latitude: profile.latitude,
+  longitude: profile.longitude,
+  timezoneOffsetMinutes: profile.timezoneOffsetMinutes,
+});
+
+const buildChartContextFromListItem = (profile: PersonalProfileListItem): PersonalProfileChartContext => ({
   profileId: profile.id,
   fullName: profile.fullName,
   birthDate: profile.birthDate,
@@ -42,6 +53,7 @@ const savePendingChartContext = (context: PersonalProfileChartContext): void => 
 
 export const personalProfileStorage = {
   buildChartContext,
+  buildChartContextFromListItem,
   savePendingChartContext,
 
   savePendingChartContextFromProfile(profile: PersonalProfileDetail): PersonalProfileChartContext {

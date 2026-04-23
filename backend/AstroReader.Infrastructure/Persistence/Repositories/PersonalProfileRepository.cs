@@ -20,6 +20,22 @@ public class PersonalProfileRepository : IPersonalProfileRepository
         return personalProfile;
     }
 
+    public async Task<IReadOnlyList<PersonalProfile>> GetListAsync(Guid? ownerUserId = null, CancellationToken cancellationToken = default)
+    {
+        var query = _dbContext.PersonalProfiles
+            .AsNoTracking()
+            .AsQueryable();
+
+        if (ownerUserId.HasValue)
+        {
+            query = query.Where(x => x.UserId == ownerUserId.Value);
+        }
+
+        return await query
+            .OrderByDescending(x => x.CreatedAtUtc)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<PersonalProfile?> GetByIdAsync(Guid id, Guid? ownerUserId = null, CancellationToken cancellationToken = default)
     {
         var query = _dbContext.PersonalProfiles

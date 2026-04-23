@@ -5,6 +5,7 @@ import { CalculateChartPage } from './features/chart/pages/CalculateChartPage';
 import { SavedChartsPage } from './features/chart/pages/SavedChartsPage';
 import { SavedChartDetailPage } from './features/chart/pages/SavedChartDetailPage';
 import { PersonalProfileOnboardingPage } from './features/profile/pages/PersonalProfileOnboardingPage';
+import { PersonalProfilesPage } from './features/profile/pages/PersonalProfilesPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="profile/onboarding" element={<PersonalProfileOnboardingPage />} />
+          <Route path="profiles" element={<PersonalProfilesPage />} />
           <Route path="chart/calculate" element={<CalculateChartPage />} />
           <Route path="charts/saved" element={<SavedChartsPage />} />
           <Route path="charts/saved/:chartId" element={<SavedChartDetailPage />} />

@@ -21,6 +21,11 @@ public class CalculateNatalChartUseCase : ICalculateNatalChartUseCase
             throw new NotSupportedException("This repository only supports read operations returning no profile context.");
         }
 
+        public Task<IReadOnlyList<PersonalProfile>> GetListAsync(Guid? ownerUserId = null, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult<IReadOnlyList<PersonalProfile>>([]);
+        }
+
         public Task<PersonalProfile?> GetByIdAsync(Guid id, Guid? ownerUserId = null, CancellationToken cancellationToken = default)
         {
             return Task.FromResult<PersonalProfile?>(null);

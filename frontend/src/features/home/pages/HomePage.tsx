@@ -40,6 +40,13 @@ export const HomePage = () => {
             <span>Ir directo a mi carta</span>
           </Link>
           <Link
+            to="/profiles"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-medium text-white transition-all hover:bg-white/10 glass-panel"
+          >
+            <Star className="h-4 w-4 text-primary" />
+            <span>Retomar un perfil</span>
+          </Link>
+          <Link
             to="/charts/saved"
             className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-medium text-white transition-all hover:bg-white/10 glass-panel"
           >

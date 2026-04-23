@@ -1,4 +1,5 @@
 using AstroReader.Application.SavedCharts.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AstroReader.Infrastructure.Persistence;
 

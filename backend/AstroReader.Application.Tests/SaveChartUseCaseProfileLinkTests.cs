@@ -237,6 +237,11 @@ public sealed class SaveChartUseCaseProfileLinkTests
             throw new NotSupportedException();
         }
 
+        public Task<IReadOnlyList<PersonalProfile>> GetListAsync(Guid? ownerUserId = null, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult<IReadOnlyList<PersonalProfile>>([_personalProfile]);
+        }
+
         public Task<PersonalProfile?> GetByIdAsync(Guid id, Guid? ownerUserId = null, CancellationToken cancellationToken = default)
         {
             return Task.FromResult<PersonalProfile?>(_personalProfile.Id == id ? _personalProfile : null);

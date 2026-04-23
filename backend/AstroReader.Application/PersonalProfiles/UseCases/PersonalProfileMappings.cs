@@ -30,6 +30,24 @@ internal static class PersonalProfileMappings
         };
     }
 
+    public static PersonalProfileListItemDto ToListItemDto(PersonalProfile personalProfile)
+    {
+        return new PersonalProfileListItemDto
+        {
+            Id = personalProfile.Id,
+            SavedChartId = personalProfile.SavedChartId,
+            FullName = personalProfile.FullName,
+            BirthDate = personalProfile.BirthDate.ToString("yyyy-MM-dd"),
+            BirthTime = personalProfile.BirthTime.ToString("HH:mm"),
+            BirthPlace = personalProfile.BirthPlace,
+            Latitude = (double)personalProfile.Latitude,
+            Longitude = (double)personalProfile.Longitude,
+            TimezoneOffsetMinutes = personalProfile.TimezoneOffsetMinutes,
+            SelfPerceptionFocus = personalProfile.SelfPerceptionFocus,
+            CreatedAtUtc = personalProfile.CreatedAtUtc
+        };
+    }
+
     public static SavedChartPersonalProfileSummaryDto ToSavedChartSummaryDto(PersonalProfile personalProfile)
     {
         return new SavedChartPersonalProfileSummaryDto

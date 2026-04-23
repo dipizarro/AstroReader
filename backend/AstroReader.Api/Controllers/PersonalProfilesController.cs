@@ -9,20 +9,31 @@ namespace AstroReader.Api.Controllers;
 public class PersonalProfilesController : ControllerBase
 {
     private readonly ICreatePersonalProfileUseCase _createPersonalProfileUseCase;
+    private readonly IGetPersonalProfilesUseCase _getPersonalProfilesUseCase;
     private readonly IGetPersonalProfileByIdUseCase _getPersonalProfileByIdUseCase;
     private readonly IGetPersonalProfileBySavedChartIdUseCase _getPersonalProfileBySavedChartIdUseCase;
     private readonly IUpdatePersonalProfileUseCase _updatePersonalProfileUseCase;
 
     public PersonalProfilesController(
         ICreatePersonalProfileUseCase createPersonalProfileUseCase,
+        IGetPersonalProfilesUseCase getPersonalProfilesUseCase,
         IGetPersonalProfileByIdUseCase getPersonalProfileByIdUseCase,
         IGetPersonalProfileBySavedChartIdUseCase getPersonalProfileBySavedChartIdUseCase,
         IUpdatePersonalProfileUseCase updatePersonalProfileUseCase)
     {
         _createPersonalProfileUseCase = createPersonalProfileUseCase;
+        _getPersonalProfilesUseCase = getPersonalProfilesUseCase;
         _getPersonalProfileByIdUseCase = getPersonalProfileByIdUseCase;
         _getPersonalProfileBySavedChartIdUseCase = getPersonalProfileBySavedChartIdUseCase;
         _updatePersonalProfileUseCase = updatePersonalProfileUseCase;
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(IReadOnlyList<PersonalProfileListItemDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetProfiles([FromQuery] Guid? ownerUserId, CancellationToken cancellationToken)
+    {
+        var profiles = await _getPersonalProfilesUseCase.ExecuteAsync(ownerUserId, cancellationToken);
+        return Ok(profiles);
     }
 
     [HttpPost]
