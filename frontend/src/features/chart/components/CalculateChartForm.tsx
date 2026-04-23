@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Calendar, Clock, Loader2, MousePointerClick, Settings2 } from 'lucide-react';
 import type { CalculateChartRequest } from '../types/chart.types';
 import { LocationAutocomplete } from './LocationAutocomplete';
@@ -50,9 +50,11 @@ export const CalculateChartForm = ({
   
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [profileContextApplied, setProfileContextApplied] = useState(false);
 
   useEffect(() => {
     if (!profileContext) {
+      setProfileContextApplied(false);
       return;
     }
 
@@ -71,12 +73,90 @@ export const CalculateChartForm = ({
       timezoneOffsetMinutes: '',
     });
     setErrors({});
+    setProfileContextApplied(true);
   }, [profileContext]);
 
   const hasManualLocationInput =
     manualLocation.latitude.trim().length > 0 &&
     manualLocation.longitude.trim().length > 0 &&
     manualLocation.timezoneOffsetMinutes.trim().length > 0;
+
+  const resolvedDraftLocation = useMemo(() => {
+    if (showAdvanced) {
+      const latitude = Number(manualLocation.latitude.trim());
+      const longitude = Number(manualLocation.longitude.trim());
+      const timezoneOffsetMinutes = Number(manualLocation.timezoneOffsetMinutes.trim());
+
+      if (
+        !Number.isFinite(latitude) ||
+        !Number.isFinite(longitude) ||
+        !Number.isInteger(timezoneOffsetMinutes)
+      ) {
+        return null;
+      }
+
+      return {
+        latitude,
+        longitude,
+        timezoneOffsetMinutes,
+      };
+    }
+
+    if (!selectedLocation) {
+      return null;
+    }
+
+    let timezoneOffsetMinutes = selectedLocation.timezoneOffsetMinutes;
+
+    if (birthDate && birthTime) {
+      try {
+        const ianaZone = tzlookup(selectedLocation.latitude, selectedLocation.longitude);
+        const dt = DateTime.fromISO(`${birthDate}T${birthTime}`, { zone: ianaZone });
+
+        if (dt.isValid) {
+          timezoneOffsetMinutes = dt.offset;
+        }
+      } catch (error) {
+        console.error('No pudimos resolver el offset horario para la vista previa del perfil.', error);
+      }
+    }
+
+    return {
+      latitude: selectedLocation.latitude,
+      longitude: selectedLocation.longitude,
+      timezoneOffsetMinutes,
+    };
+  }, [
+    birthDate,
+    birthTime,
+    manualLocation.latitude,
+    manualLocation.longitude,
+    manualLocation.timezoneOffsetMinutes,
+    selectedLocation,
+    showAdvanced,
+  ]);
+
+  const isProfileContextApplicable = useMemo(() => {
+    if (!profileContext || !profileContextApplied) {
+      return false;
+    }
+
+    if (profileContext.birthDate !== birthDate || profileContext.birthTime !== birthTime) {
+      return false;
+    }
+
+    if (!resolvedDraftLocation) {
+      return false;
+    }
+
+    return (
+      coordinatesMatch(profileContext.latitude, resolvedDraftLocation.latitude) &&
+      coordinatesMatch(profileContext.longitude, resolvedDraftLocation.longitude) &&
+      profileContext.timezoneOffsetMinutes === resolvedDraftLocation.timezoneOffsetMinutes
+    );
+  }, [birthDate, birthTime, profileContext, profileContextApplied, resolvedDraftLocation]);
+
+  const shouldShowProfileMismatchNotice = !!profileContext && profileContextApplied && !isProfileContextApplicable;
 
   const validate = (): boolean => {
     const newErrors: { [key: string]: string } = {};
@@ -251,13 +331,20 @@ export const CalculateChartForm = ({
           <div className="rounded-2xl border border-primary/15 bg-primary/10 px-4 py-4 text-sm">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.22em] text-primary/80">Perfil enriquecido activo</p>
+                <p className="text-xs uppercase tracking-[0.22em] text-primary/80">
+                  {shouldShowProfileMismatchNotice ? 'Perfil enriquecido en pausa' : 'Perfil enriquecido activo'}
+                </p>
                 <p className="mt-2 text-white">
                   Prepararemos esta carta con los datos de <span className="font-medium">{profileContext.fullName}</span>.
                 </p>
                 <p className="mt-2 leading-6 text-text-muted">
                   Si mantienes fecha, hora y ubicación, la lectura se calculará con ese perfil contextual. Si cambias esos datos o desvinculas el perfil, calcularemos la carta sin adjuntarlo.
                 </p>
+                {shouldShowProfileMismatchNotice && (
+                  <div className="mt-3 rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm leading-6 text-white/84">
+                    Esta lectura ya no coincide del todo con ese perfil. Seguiremos con la carta actual, solo que sin usar ese contexto personal hasta que los datos vuelvan a alinearse.
+                  </div>
+                )}
               </div>
 
               {onClearProfileContext && (
