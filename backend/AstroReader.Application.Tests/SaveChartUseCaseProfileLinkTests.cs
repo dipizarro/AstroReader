@@ -21,7 +21,8 @@ public sealed class SaveChartUseCaseProfileLinkTests
         var chartCalculator = new FakeCalculateNatalChartUseCase(CreateCalculatedChartResponse());
         var profileRepository = new InMemoryPersonalProfileRepository(personalProfile);
         var savedChartRepository = new InMemorySavedChartRepository();
-        var useCase = CreateUseCase(chartCalculator, profileRepository, savedChartRepository);
+        var transactionManager = new FakeSavedChartTransactionManager();
+        var useCase = CreateUseCase(chartCalculator, profileRepository, savedChartRepository, transactionManager);
 
         var response = await useCase.ExecuteAsync(CreateRequest(personalProfile.Id));
 
@@ -34,6 +35,8 @@ public sealed class SaveChartUseCaseProfileLinkTests
         Assert.Equal(personalProfile.DesiredInsight, response.PersonalProfile.DesiredInsight);
         Assert.Equal(1, profileRepository.SaveChangesCalls);
         Assert.Equal(response.Id, savedChartRepository.LastSavedChart?.Id);
+        Assert.Equal(1, transactionManager.CommitCalls);
+        Assert.Equal(0, transactionManager.RollbackCalls);
     }
 
     [Fact]
@@ -43,13 +46,16 @@ public sealed class SaveChartUseCaseProfileLinkTests
         var chartCalculator = new FakeCalculateNatalChartUseCase(CreateCalculatedChartResponse());
         var profileRepository = new InMemoryPersonalProfileRepository(personalProfile);
         var savedChartRepository = new InMemorySavedChartRepository();
-        var useCase = CreateUseCase(chartCalculator, profileRepository, savedChartRepository);
+        var transactionManager = new FakeSavedChartTransactionManager();
+        var useCase = CreateUseCase(chartCalculator, profileRepository, savedChartRepository, transactionManager);
 
         var exception = await Assert.ThrowsAsync<PersonalProfileIntegrityException>(
             () => useCase.ExecuteAsync(CreateRequest(personalProfile.Id)));
 
         Assert.Contains("ya está vinculado", exception.Message, StringComparison.OrdinalIgnoreCase);
         Assert.Null(savedChartRepository.LastSavedChart);
+        Assert.Equal(0, transactionManager.CommitCalls);
+        Assert.Equal(1, transactionManager.RollbackCalls);
     }
 
     [Fact]
@@ -60,25 +66,48 @@ public sealed class SaveChartUseCaseProfileLinkTests
             exceptionToThrow: new PersonalProfileIntegrityException("El personalProfileId enviado no coincide con los datos natales usados para calcular la carta."));
         var profileRepository = new InMemoryPersonalProfileRepository(personalProfile);
         var savedChartRepository = new InMemorySavedChartRepository();
-        var useCase = CreateUseCase(chartCalculator, profileRepository, savedChartRepository);
+        var transactionManager = new FakeSavedChartTransactionManager();
+        var useCase = CreateUseCase(chartCalculator, profileRepository, savedChartRepository, transactionManager);
 
         var exception = await Assert.ThrowsAsync<PersonalProfileIntegrityException>(
             () => useCase.ExecuteAsync(CreateRequest(personalProfile.Id)));
 
         Assert.Contains("no coincide", exception.Message, StringComparison.OrdinalIgnoreCase);
         Assert.Null(savedChartRepository.LastSavedChart);
+        Assert.Equal(0, transactionManager.CommitCalls);
+        Assert.Equal(0, transactionManager.RollbackCalls);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_ShouldRollbackTransaction_WhenProfileLinkSaveFails()
+    {
+        var personalProfile = CreatePersonalProfile();
+        var chartCalculator = new FakeCalculateNatalChartUseCase(CreateCalculatedChartResponse());
+        var profileRepository = new InMemoryPersonalProfileRepository(personalProfile, failOnSaveChanges: true);
+        var savedChartRepository = new InMemorySavedChartRepository();
+        var transactionManager = new FakeSavedChartTransactionManager();
+        var useCase = CreateUseCase(chartCalculator, profileRepository, savedChartRepository, transactionManager);
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() => useCase.ExecuteAsync(CreateRequest(personalProfile.Id)));
+
+        Assert.Equal(0, transactionManager.CommitCalls);
+        Assert.Equal(1, transactionManager.RollbackCalls);
+        Assert.Equal(1, profileRepository.SaveChangesCalls);
+        Assert.NotNull(savedChartRepository.LastSavedChart);
     }
 
     private static SaveChartUseCase CreateUseCase(
         FakeCalculateNatalChartUseCase chartCalculator,
         InMemoryPersonalProfileRepository profileRepository,
-        InMemorySavedChartRepository savedChartRepository)
+        InMemorySavedChartRepository savedChartRepository,
+        FakeSavedChartTransactionManager transactionManager)
     {
         return new SaveChartUseCase(
             chartCalculator,
             profileRepository,
             new FakeAstroEngineTechnicalMetadataProvider(),
-            savedChartRepository);
+            savedChartRepository,
+            transactionManager);
     }
 
     private static SaveChartRequest CreateRequest(Guid personalProfileId)
@@ -193,10 +222,12 @@ public sealed class SaveChartUseCaseProfileLinkTests
     private sealed class InMemoryPersonalProfileRepository : IPersonalProfileRepository
     {
         private readonly PersonalProfile _personalProfile;
+        private readonly bool _failOnSaveChanges;
 
-        public InMemoryPersonalProfileRepository(PersonalProfile personalProfile)
+        public InMemoryPersonalProfileRepository(PersonalProfile personalProfile, bool failOnSaveChanges = false)
         {
             _personalProfile = personalProfile;
+            _failOnSaveChanges = failOnSaveChanges;
         }
 
         public int SaveChangesCalls { get; private set; }
@@ -224,6 +255,12 @@ public sealed class SaveChartUseCaseProfileLinkTests
         public Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             SaveChangesCalls++;
+
+            if (_failOnSaveChanges)
+            {
+                throw new InvalidOperationException("Simulated persistence failure while linking personal profile.");
+            }
+
             return Task.CompletedTask;
         }
     }
@@ -259,6 +296,29 @@ public sealed class SaveChartUseCaseProfileLinkTests
                 UsesRealEngine: true,
                 UsesCustomEphemerisPath: false,
                 WrapperVersion: "test");
+        }
+    }
+
+    private sealed class FakeSavedChartTransactionManager : ISavedChartTransactionManager
+    {
+        public int CommitCalls { get; private set; }
+        public int RollbackCalls { get; private set; }
+
+        public async Task<T> ExecuteAsync<T>(
+            Func<CancellationToken, Task<T>> operation,
+            CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var result = await operation(cancellationToken);
+                CommitCalls++;
+                return result;
+            }
+            catch
+            {
+                RollbackCalls++;
+                throw;
+            }
         }
     }
 }

@@ -37,6 +37,7 @@ public static class DependencyInjection
         });
         services.AddScoped<AstroReader.Application.PersonalProfiles.Interfaces.IPersonalProfileRepository, PersonalProfileRepository>();
         services.AddScoped<AstroReader.Application.SavedCharts.Interfaces.ISavedChartRepository, SavedChartRepository>();
+        services.AddScoped<AstroReader.Application.SavedCharts.Interfaces.ISavedChartTransactionManager, SavedChartTransactionManager>();
 
         return services;
     }

@@ -16,17 +16,20 @@ public class SaveChartUseCase : ISaveChartUseCase
     private readonly IPersonalProfileRepository _personalProfileRepository;
     private readonly IAstroEngineTechnicalMetadataProvider _astroEngineTechnicalMetadataProvider;
     private readonly ISavedChartRepository _savedChartRepository;
+    private readonly ISavedChartTransactionManager _transactionManager;
 
     public SaveChartUseCase(
         ICalculateNatalChartUseCase calculateNatalChartUseCase,
         IPersonalProfileRepository personalProfileRepository,
         IAstroEngineTechnicalMetadataProvider astroEngineTechnicalMetadataProvider,
-        ISavedChartRepository savedChartRepository)
+        ISavedChartRepository savedChartRepository,
+        ISavedChartTransactionManager transactionManager)
     {
         _calculateNatalChartUseCase = calculateNatalChartUseCase;
         _personalProfileRepository = personalProfileRepository;
         _astroEngineTechnicalMetadataProvider = astroEngineTechnicalMetadataProvider;
         _savedChartRepository = savedChartRepository;
+        _transactionManager = transactionManager;
     }
 
     public async Task<SavedChartDetailDto> ExecuteAsync(
@@ -35,43 +38,45 @@ public class SaveChartUseCase : ISaveChartUseCase
     {
         var (birthDate, birthTime) = ParseInputFormat(request);
         ValidateSaveIntegrity(request);
-        var personalProfile = await ResolveTrackedPersonalProfileAsync(request, cancellationToken);
-
         var calculatedChart = await CalculateChartOrThrowIntegrityErrorAsync(request, cancellationToken);
         ValidateCalculatedChartIntegrity(calculatedChart, request);
 
-        var birthInstantUtc = BuildBirthInstantUtc(birthDate, birthTime, request.TimezoneOffsetMinutes);
-        var snapshotJson = SavedChartMappings.SerializeSnapshot(calculatedChart);
-        var technicalMetadata = _astroEngineTechnicalMetadataProvider.GetCurrent();
-
-        var savedChart = new SavedChart(
-            request.ProfileName,
-            request.PlaceName,
-            request.TimezoneIana,
-            birthDate,
-            birthTime,
-            (short)request.TimezoneOffsetMinutes,
-            birthInstantUtc,
-            (decimal)request.Latitude,
-            (decimal)request.Longitude,
-            calculatedChart.Summary.Sun,
-            calculatedChart.Summary.Moon,
-            calculatedChart.Summary.Ascendant,
-            technicalMetadata.CalculationEngine,
-            technicalMetadata.HouseSystemCode,
-            SavedChart.CurrentSnapshotVersion,
-            snapshotJson,
-            request.UserId);
-
-        var persistedChart = await _savedChartRepository.AddAsync(savedChart, cancellationToken);
-
-        if (personalProfile is not null)
+        return await _transactionManager.ExecuteAsync(async transactionCancellationToken =>
         {
-            personalProfile.LinkToSavedChart(persistedChart.Id);
-            await _personalProfileRepository.SaveChangesAsync(cancellationToken);
-        }
+            var personalProfile = await ResolveTrackedPersonalProfileAsync(request, transactionCancellationToken);
+            var birthInstantUtc = BuildBirthInstantUtc(birthDate, birthTime, request.TimezoneOffsetMinutes);
+            var snapshotJson = SavedChartMappings.SerializeSnapshot(calculatedChart);
+            var technicalMetadata = _astroEngineTechnicalMetadataProvider.GetCurrent();
 
-        return SavedChartMappings.ToDetailDto(persistedChart, personalProfile);
+            var savedChart = new SavedChart(
+                request.ProfileName,
+                request.PlaceName,
+                request.TimezoneIana,
+                birthDate,
+                birthTime,
+                (short)request.TimezoneOffsetMinutes,
+                birthInstantUtc,
+                (decimal)request.Latitude,
+                (decimal)request.Longitude,
+                calculatedChart.Summary.Sun,
+                calculatedChart.Summary.Moon,
+                calculatedChart.Summary.Ascendant,
+                technicalMetadata.CalculationEngine,
+                technicalMetadata.HouseSystemCode,
+                SavedChart.CurrentSnapshotVersion,
+                snapshotJson,
+                request.UserId);
+
+            var persistedChart = await _savedChartRepository.AddAsync(savedChart, transactionCancellationToken);
+
+            if (personalProfile is not null)
+            {
+                personalProfile.LinkToSavedChart(persistedChart.Id);
+                await _personalProfileRepository.SaveChangesAsync(transactionCancellationToken);
+            }
+
+            return SavedChartMappings.ToDetailDto(persistedChart, personalProfile);
+        }, cancellationToken);
     }
 
     private static (DateOnly BirthDate, TimeOnly BirthTime) ParseInputFormat(SaveChartRequest request)
